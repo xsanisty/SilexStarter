@@ -1,0 +1,39 @@
+{
+    "name": "xsanisty/silex-starter",
+    "description": "A starter application based on Silex framework",
+    "require": {
+        "php": ">= 5.4.0",
+        "silex/silex": "~1.2",
+        "twig/twig": "~1.16",
+        "cartalyst/sentry" : "2.*",
+        "illuminate/database": "~4.2"
+    },
+    "require-dev":{
+        "phpunit/phpunit" : "4.*",
+        "silex/web-profiler" : "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "" : [
+                "src/",
+                "app/controllers/",
+                "app/models/",
+                "app/middlewares/",
+                "app/modules/",
+                "app/repositories/",
+                "app/services",
+                "app/tests/app",
+                "app/tests/src",
+                "app/tests"
+            ]
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ikhsan Agustian",
+            "email": "ikhsan017@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,11 @@
+<?php
+
+namespace SilexStarter\StaticProxies;
+
+use Illuminate\Support\Facades\Facade as StaticProxy;
+
+class RequestProxy extends StaticProxy{
+    protected static function getFacadeAccessor(){
+        return 'request';
+    }
+}

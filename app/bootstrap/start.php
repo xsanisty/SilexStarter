@@ -30,9 +30,6 @@ if($app['environment'] == 'development'){
     $app->registerServices($app['config']['services']['development']);
 }
 
-/** temporary, until we move to new TwigServiceProvider */
-$app['twig.loader.filesystem']->addPath(APP_PATH.'templates');
-
 /** Load module provider if enabled */
 if($app['enable_module']){
     $app['module']->registerModules($app['config']['modules']);

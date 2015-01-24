@@ -18,7 +18,7 @@ class ResponseProxy extends StaticProxy{
      * @param  string  $content
      * @param  int     $status
      * @param  array   $headers
-     * @return \Illuminate\Http\Response
+     * @return Symfony\Component\HttpFoundation\Response
      */
     public static function make($content = '', $status = 200, array $headers = [])
     {
@@ -32,7 +32,7 @@ class ResponseProxy extends StaticProxy{
      * @param  int    $status
      * @param  array  $headers
      * @param  int    $options
-     * @return \Illuminate\Http\JsonResponse
+     * @return Symfony\Component\HttpFoundation\JsonResponse
      */
     public static function json($data = [], $status = 200, array $headers = [])
     {

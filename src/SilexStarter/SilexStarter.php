@@ -98,7 +98,7 @@ class SilexStarter extends Application{
                 foreach ($constructorParameters as $parameterReflection) {
                     $parameterClassName = $parameterReflection->getClass()->getName();
 
-                    switch(ltrim($parameterClassName, '\\')){
+                    switch($parameterClassName){
                         case 'Silex\Application':
                             $invocationParameters[] = $app;
                             break;
@@ -129,5 +129,23 @@ class SilexStarter extends Application{
                 return $controllerReflection->newInstance();
             }
         };
+    }
+
+    /**
+     * Register filter middleware to the ap container
+     * @param  string        $name          The name of the filter callback
+     * @param  \Closure|null $callback      The closure callback to be registered
+     * @return \Closure|null
+     */
+    public function filter($name, \Closure $callback = null){
+        if(is_null($callback)){
+            return $this['filter.'.$name];
+        }
+
+        $this['filter.'.$name] = $this->protect($callback);
+    }
+
+    public function middleware($name, \Closure $callback = null){
+        return $this->filter($name, $callback);
     }
 }

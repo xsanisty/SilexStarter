@@ -4,9 +4,9 @@ return [
     'common' => [
         'Silex\Provider\SessionServiceProvider',
         'Silex\Provider\ServiceControllerServiceProvider',
-        'Silex\Provider\TwigServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Module\ModuleServiceProvider',
+        'SilexStarter\Providers\TwigServiceProvider',
         'SilexStarter\Providers\EloquentServiceProvider',
         'SilexStarter\Providers\SentryServiceProvider',
     ],

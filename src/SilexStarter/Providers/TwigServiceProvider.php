@@ -43,6 +43,10 @@ class TwigServiceProvider implements ServiceProviderInterface{
                 $twigEnv->addExtension(new \Twig_Extension_Debug());
             }
 
+            if($app['enable_profiler']){
+                $twigEnv->addGlobal('app', $app);
+            }
+
             if (class_exists('Symfony\Bridge\Twig\Extension\RoutingExtension')) {
                 if (isset($app['url_generator'])) {
                     $twigEnv->addExtension(new RoutingExtension($app['url_generator']));

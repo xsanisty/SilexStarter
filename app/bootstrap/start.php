@@ -24,10 +24,10 @@ $app->register(new ConfigurationServiceProvider, ['config.path' => APP_PATH.'con
 $app['config']->load('app');
 
 /** Register the service provider listed in app/config/services.php */
-$app->registerServices($app['config']['services']['common']);
+$app->registerServices($app['config']['services.common']);
 
 if($app['environment'] == 'development'){
-    $app->registerServices($app['config']['services']['development']);
+    $app->registerServices($app['config']['services.development']);
 }
 
 /** Load module provider if enabled */

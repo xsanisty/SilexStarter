@@ -13,19 +13,19 @@ class AssetManager{
         $this->basepath = $basepath;
     }
 
-    public function js($jsfile, $option = array()){
+    public function js($jsfile, $option = []){
 
     }
 
-    public function javascript($jsfile, $option = array()){
+    public function javascript($jsfile, $option = []){
         $this->js($jsfile, $option);
     }
 
-    public function css($cssfile, $option = array()){
+    public function css($cssfile, $option = []){
 
     }
 
-    public function stylesheet($cssfile, $option = array()){
+    public function stylesheet($cssfile, $option = []){
         $this->css($cssfile, $option);
     }
 

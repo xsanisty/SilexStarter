@@ -2,6 +2,6 @@
 
 namespace SilexStarter\Asset;
 
-class JavascriptAsset{
+class CssAsset{
 
 }

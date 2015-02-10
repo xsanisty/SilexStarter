@@ -4,6 +4,7 @@ namespace SilexStarter\Module;
 
 use ArrayAccess;
 use Silex\Application;
+use SilexStarter\Exception\ModuleRequiredException;
 use SilexStarter\Contracts\ModuleProviderInterface;
 
 class ModuleManager{
@@ -12,6 +13,7 @@ class ModuleManager{
     protected $modules;
     protected $routes;
     protected $middlewares;
+    protected $config;
 
     public function __construct(Application $app){
         $this->app          = $app;
@@ -46,36 +48,45 @@ class ModuleManager{
         /** Check for required module, if not satisfied, throw exception immediately */
         foreach ($module->getRequiredModules() as $requiredModule) {
             if(!$moduleManager->isRegistered($requiredModule)){
-                throw new \Exception($module->getModuleAccessor().' module require '.$requiredModule.' as its dependency', 1);
+                throw new ModuleRequiredException($module->getModuleAccessor().' module require '.$requiredModule.' as its dependency');
             }
         }
 
         /** Get the module path via the class reflection */
         $moduleReflection = new \ReflectionClass($module);
         $modulePath       = dirname($moduleReflection->getFileName());
+        $moduleResources  = $module->getResources();
 
         /** If controller_as_service enabled, register the controllers as service */
         if($this->app['controller_as_service']){
             $this->app->registerControllerDirectory(
-                $modulePath.DIRECTORY_SEPARATOR.$module->getControllerDirectory(),
-                $moduleReflection->getNamespaceName().'\\'.$module->getControllerDirectory()
+                $modulePath.DIRECTORY_SEPARATOR.$moduleResources['controllers'],
+                $moduleReflection->getNamespaceName().'\\'.$moduleResources['controllers']
+            );
+        }
+
+        /** if config dir exists, add namespace to the config reader */
+        if(isset($moduleResources['config'])){
+            $this->app['config']->addDirectory(
+                $modulePath.DIRECTORY_SEPARATOR.$moduleResources['config'],
+                $module->getModuleAccessor()
             );
         }
 
         /** if route file exists, queue for later include */
-        if($module->getRouteFile()){
-            $moduleManager->addRouteFile($modulePath.'/'.$module->getRouteFile());
+        if(isset($moduleResources['routes'])){
+            $moduleManager->addRouteFile($modulePath.'/'.$moduleResources['routes']);
         }
 
         /** if middleware file exists, queue for later include */
-        if($module->getMiddlewareFile()){
-            $moduleManager->addMiddlewareFile($modulePath.'/'.$module->getMiddlewareFile());
+        if($moduleResources['middlewares']){
+            $moduleManager->addMiddlewareFile($modulePath.'/'.$moduleResources['middlewares']);
         }
 
         /** if template file exists, register new template path under new namespace */
-        if($module->getTemplateDirectory()){
+        if($moduleResources['views']){
             $this->app['twig.loader.filesystem']->addPath(
-                $modulePath.'/'.$module->getTemplateDirectory(),
+                $modulePath.'/'.$moduleResources['views'],
                 $module->getModuleAccessor()
             );
         }

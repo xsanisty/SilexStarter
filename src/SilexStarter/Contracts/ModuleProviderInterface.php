@@ -4,28 +4,18 @@ namespace SilexStarter\Contracts;
 
 interface ModuleProviderInterface extends ModuleInterface{
     /**
-     * get the module routes file to be appended to the application route
-     * @return string   the route file location, relative to the ModuleProvider class file
+     * get the module resources to be registered to the application
+     * @return array
+     * [
+     *     'routes'     => 'the routes file',
+     *     'middlewares'=> 'the middleware files',
+     *     'controllers'=> 'the controllers directory',
+     *     'views'      => 'the template directory',
+     *     'services'   => 'the services file',
+     *     'config'     => 'the config directory'
+     * ]
      */
-    public function getRouteFile();
-
-    /**
-     * get the module middlewares file to be appended to the application middleware
-     * @return string   the middleware file location, relative to the ModuleProvider class file
-     */
-    public function getMiddlewareFile();
-
-    /**
-     * get the module templates path, to be registered under new namespace based on moduleAccessor
-     * @return string   the templates directory, relative to the ModuleProvider class file
-     */
-    public function getTemplateDirectory();
-
-    /**
-     * [getControllerDirectory description]
-     * @return [type] [description]
-     */
-    public function getControllerDirectory();
+    public function getResources();
 
     /**
      * register the module, module's service provider, or twig extension here

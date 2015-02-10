@@ -12,7 +12,7 @@ class JavascriptAssetCollection{
 
     }
 
-    public function renderScriptTag(){
+    public function render(){
 
     }
 

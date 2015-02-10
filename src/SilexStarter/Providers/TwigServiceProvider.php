@@ -68,23 +68,6 @@ class TwigServiceProvider implements ServiceProviderInterface{
                     // fallback for BC, to be removed in 1.3
                     $twigEnv->addExtension(new TwigCoreExtension());
                 }
-
-                if (isset($app['form.factory'])) {
-                    $app['twig.form.engine'] = $app->share(function ($app) {
-                        return new TwigRendererEngine($app['twig.form.templates']);
-                    });
-
-                    $app['twig.form.renderer'] = $app->share(function ($app) {
-                        return new TwigRenderer($app['twig.form.engine'], $app['form.csrf_provider']);
-                    });
-
-                    $twigEnv->addExtension(new FormExtension($app['twig.form.renderer']));
-
-                    // add loader for Symfony built-in form templates
-                    $reflected = new \ReflectionClass('Symfony\Bridge\Twig\Extension\FormExtension');
-                    $path = dirname($reflected->getFileName()).'/../Resources/views/Form';
-                    $app['twig.loader']->addLoader(new \Twig_Loader_Filesystem($path));
-                }
             }
 
             return $twigEnv;

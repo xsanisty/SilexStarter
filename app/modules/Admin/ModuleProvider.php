@@ -25,25 +25,19 @@ class ModuleProvider implements ModuleProviderInterface{
         return [];
     }
 
-    public function getRouteFile(){
-        return 'Resources/routes.php';
-    }
-
-    public function getMiddlewareFile(){
-        return 'Resources/middlewares.php';
-    }
-
-    public function getTemplateDirectory(){
-        return 'Resources/views';
-    }
-
-    public function getControllerDirectory(){
-        return 'Controllers';
+    public function getResources(){
+        return [
+            'routes'        => 'Resources/routes.php',
+            'middlewares'   => 'Resources/middlewares.php',
+            'views'         => 'Resources/views',
+            'controllers'   => 'Controllers',
+            'config'        => 'Resources/config'
+        ];
     }
 
     public function register(){
         $this->app->registerServices(
-            $this->app['config']['xsanisty-admin:services']
+            $this->app['config']['xsanisty-admin::services']
         );
     }
 

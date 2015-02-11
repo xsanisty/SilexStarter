@@ -9,16 +9,17 @@ class ConfigurationContainer implements ArrayAccess{
 
     protected $config;
     protected $app;
+    protected $basePath;
     protected $configPath = [];
     protected $namespacedPath = [];
 
     /**
      * ConfigurationContainer constructor
-     * @param Application $app      [instance of Silex Application]
-     * @param string      $configPath [the path where configuration file located]
+     * @param Application $app          [instance of Silex Application]
+     * @param string      $configPath   [the base path where configuration file located]
      */
-    public function __construct(Application $app, $configPath){
-        $this->configPath[] = rtrim($configPath, DIRECTORY_SEPARATOR);
+    public function __construct(Application $app, $basePath){
+        $this->basePath     = rtrim($basePath, '/');
         $this->config       = [];
         $this->app          = $app;
     }
@@ -32,7 +33,7 @@ class ConfigurationContainer implements ArrayAccess{
     public function load($file, $configKey = null){
         $fileChunk  = explode('::', $file, 2);
         $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
-        $filename   = (count($fileChunk) > 1) ? $fileChunk[1] : $fileChunk[0];
+        $filename   = (is_null($namespace))   ? $fileChunk[0] : $fileChunk[1];
         $filename   = ('.php' == substr($filename, -4, 4)) ? $filename : $filename.'.php';
         $configKey  = (!$configKey) ? explode('.', $file)[0] : $configKey;
         $filePath   = null;
@@ -42,14 +43,24 @@ class ConfigurationContainer implements ArrayAccess{
             return;
         }
 
-        /** try to load the configuration file */
-        if(is_null($namespace)){
+        /** try to load the configuration file from the basepath */
+        if(is_null($namespace) && file_exists($this->basePath.'/'.$filename)){
+            $filePath = $this->basePath.'/'.$filename;
+
+        /** if no config file found, walk through available config dir */
+        }elseif(is_null($namespace)){
             foreach($this->configPath as $configPath){
                 if(file_exists($configPath.'/'.$filename)){
                     $filePath = $configPath.'/'.$filename;
                     break;
                 }
             }
+
+        /** if namespace present, try to load published config */
+        }elseif(!is_null($namespace) && file_exists($this->basePath.'/'.$namespace.'/'.$filename)){
+            $filePath = $this->basePath.'/'.$namespace.'/'.$filename;
+
+        /** finally, load the config from the module namespace */
         }elseif(file_exists($this->namespacedPath[$namespace].'/'.$filename)){
             $filePath = $this->namespacedPath[$namespace].'/'.$filename;
         }

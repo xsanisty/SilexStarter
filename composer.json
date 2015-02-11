@@ -6,6 +6,7 @@
         "silex/silex": "~1.2",
         "twig/twig": "~1.16",
         "cartalyst/sentry" : "2.*",
+        "symfony/filesystem" : "~2.6",
         "illuminate/database": "~4.2"
     },
     "require-dev":{

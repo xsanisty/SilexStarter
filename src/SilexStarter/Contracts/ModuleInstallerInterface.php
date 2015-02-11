@@ -6,7 +6,6 @@ interface ModuleInstallerInterface extends ModuleInterface{
 
     /**
      * Installing the module, covering:
-     *     - publishing configuration
      *     - publishing assets file
      *     - creating the database table
      *     - etc
@@ -17,21 +16,11 @@ interface ModuleInstallerInterface extends ModuleInterface{
     /**
      * Uninstalling the module, covering:
      *     - dropping table
-     *     - removing configuration file
      *     - removing asset file
      *     - etc
      * @return [type] [description]
      */
     public function uninstall();
-
-    /**
-     * Get the module directory, a directory relative to the ModuleInstaller class file contain all
-     * configuration files.
-     * all file inside this directory will be copied to the app/config/{this.getModuleAccessor}
-     * and can be accessed via Config::get('{this.getModuleAccessor}:config_file.some_key.some_sub_key')
-     * @return string
-     */
-    public function getConfigDirectory();
 
     /**
      * Get the assets directory, a directory relative to the ModuleInstaller class contain all asset

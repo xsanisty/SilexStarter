@@ -4,6 +4,6 @@ namespace SilexStarter\Exception;
 
 use Exception;
 
-class moduleRequiredException extends Exception{
+class ModuleRequiredException extends Exception{
 
 }

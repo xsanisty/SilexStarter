@@ -9,7 +9,7 @@ class ViewProxy extends StaticProxy{
         return 'twig';
     }
 
-    public static function make($template, $data){
+    public static function make($template, $data = []){
         return static::$app['twig']->render($template.'.twig', $data);
     }
 }

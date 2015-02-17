@@ -18,11 +18,11 @@ class RouteProxy extends StaticProxy{
      */
     public static function group($prefix, \Closure $callable){
         $prefix = '/'.ltrim($prefix, '/');
-        $controllerCollection = self::$app['controllers_factory'];
+        $controllerCollection = static::$app['controllers_factory'];
 
         $callable($controllerCollection);
 
-        return self::$app->mount($prefix, $controllerCollection);
+        return static::$app->mount($prefix, $controllerCollection);
     }
 
     /**
@@ -32,8 +32,8 @@ class RouteProxy extends StaticProxy{
      * @return [type]             [description]
      */
     public static function resource($prefix, $controller){
-        $routeCollection    = self::$app['controllers_factory'];
-        $routePrefixName    = $prefix;
+        $routeCollection    = static::$app['controllers_factory'];
+        $routePrefixName    = Str::slug($prefix);
 
         $resourceRoutes     = array(
             'get'           => array(
@@ -83,7 +83,7 @@ class RouteProxy extends StaticProxy{
                             ->bind($routePrefixName.'_'.$routeName);
         }
 
-        return self::$app->mount($prefix, $routeCollection);
+        return static::$app->mount($prefix, $routeCollection);
     }
 
     /**
@@ -96,7 +96,7 @@ class RouteProxy extends StaticProxy{
 
         $class              = new \ReflectionClass($controller);
         $controllerMethods  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
-        $routeCollection    = self::$app['controllers_factory'];
+        $routeCollection    = static::$app['controllers_factory'];
         $uppercase          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         foreach ($controllerMethods as $method) {
@@ -111,7 +111,7 @@ class RouteProxy extends StaticProxy{
                 $httpMethod = substr($methodName, 0, $pos);
 
                 /** the url path, index => getIndex */
-                $urlPath    = lcfirst(strpbrk($methodName, $uppercase));
+                $urlPath    = Str::snake(strpbrk($methodName, $uppercase));
 
                 /**
                  * Build the route
@@ -141,6 +141,6 @@ class RouteProxy extends StaticProxy{
             }
         }
 
-        return self::$app->mount($prefix, $routeCollection);
+        return static::$app->mount($prefix, $routeCollection);
     }
 }

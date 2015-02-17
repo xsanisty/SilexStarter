@@ -14,7 +14,7 @@ return [
     ],
 
     'development' => [
-        'Silex\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH.'storage/profiler'],
+        'SilexStarter\Providers\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH.'storage/profiler'],
     ],
 
     'console'   => [

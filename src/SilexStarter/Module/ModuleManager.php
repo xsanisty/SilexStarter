@@ -58,35 +58,35 @@ class ModuleManager{
         $moduleResources  = $module->getResources();
 
         /** If controller_as_service enabled, register the controllers as service */
-        if($this->app['controller_as_service']){
+        if($this->app['controller_as_service'] && $moduleResources->controllers){
             $this->app->registerControllerDirectory(
-                $modulePath.DIRECTORY_SEPARATOR.$moduleResources['controllers'],
-                $moduleReflection->getNamespaceName().'\\'.$moduleResources['controllers']
+                $modulePath . DIRECTORY_SEPARATOR . $moduleResources->controllers,
+                $moduleReflection->getNamespaceName() . '\\' . $moduleResources->controllers
             );
         }
 
         /** if config dir exists, add namespace to the config reader */
-        if(isset($moduleResources['config'])){
+        if($moduleResources->config){
             $this->app['config']->addDirectory(
-                $modulePath.DIRECTORY_SEPARATOR.$moduleResources['config'],
+                $modulePath . DIRECTORY_SEPARATOR . $moduleResources->config,
                 $module->getModuleAccessor()
             );
         }
 
         /** if route file exists, queue for later include */
-        if(isset($moduleResources['routes'])){
-            $moduleManager->addRouteFile($modulePath.'/'.$moduleResources['routes']);
+        if($moduleResources->routes){
+            $moduleManager->addRouteFile($modulePath . '/' . $moduleResources->routes);
         }
 
         /** if middleware file exists, queue for later include */
-        if($moduleResources['middlewares']){
-            $moduleManager->addMiddlewareFile($modulePath.'/'.$moduleResources['middlewares']);
+        if($moduleResources->middlewares){
+            $moduleManager->addMiddlewareFile($modulePath . '/' . $moduleResources->middlewares);
         }
 
         /** if template file exists, register new template path under new namespace */
-        if($moduleResources['views']){
+        if($moduleResources->views){
             $this->app['twig.loader.filesystem']->addPath(
-                $modulePath.'/'.$moduleResources['views'],
+                $modulePath . '/' . $moduleResources->views,
                 $module->getModuleAccessor()
             );
         }

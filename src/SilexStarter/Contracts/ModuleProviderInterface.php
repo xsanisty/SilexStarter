@@ -5,15 +5,7 @@ namespace SilexStarter\Contracts;
 interface ModuleProviderInterface extends ModuleInterface{
     /**
      * get the module resources to be registered to the application
-     * @return array
-     * [
-     *     'routes'     => 'the routes file',
-     *     'middlewares'=> 'the middleware files',
-     *     'controllers'=> 'the controllers directory',
-     *     'views'      => 'the template directory',
-     *     'services'   => 'the services file',
-     *     'config'     => 'the config directory'
-     * ]
+     * @return SilexStarter\Module\ModuleResource
      */
     public function getResources();
 

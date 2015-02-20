@@ -15,8 +15,8 @@ class ConfigurationContainer implements ArrayAccess{
 
     /**
      * ConfigurationContainer constructor
-     * @param Application $app          [instance of Silex Application]
-     * @param string      $configPath   [the base path where configuration file located]
+     * @param Application $app          instance of Silex Application
+     * @param string      $configPath   the base path where configuration file located
      */
     public function __construct(Application $app, $basePath){
         $this->basePath     = rtrim($basePath, '/');
@@ -27,8 +27,8 @@ class ConfigurationContainer implements ArrayAccess{
     /**
      * Load the configuration file and save the value into array container
      * @param  [string] $file       filename or namespace::filename
-     * @param  [string] $configKey  [description]
-     * @return [void]               [description]
+     * @param  [string] $configKey  override the config key, if not specified, the filename will be used
+     * @return [void]
      */
     public function load($file, $configKey = null){
         $fileChunk  = explode('::', $file, 2);
@@ -44,11 +44,11 @@ class ConfigurationContainer implements ArrayAccess{
         }
 
         /** try to load the configuration file from the basepath */
-        if(is_null($namespace) && file_exists($this->basePath.'/'.$filename)){
+        if(!$namespace && file_exists($this->basePath.'/'.$filename)){
             $filePath = $this->basePath.'/'.$filename;
 
         /** if no config file found, walk through available config dir */
-        }elseif(is_null($namespace)){
+        }elseif(!$namespace){
             foreach($this->configPath as $configPath){
                 if(file_exists($configPath.'/'.$filename)){
                     $filePath = $configPath.'/'.$filename;
@@ -57,7 +57,7 @@ class ConfigurationContainer implements ArrayAccess{
             }
 
         /** if namespace present, try to load published config */
-        }elseif(!is_null($namespace) && file_exists($this->basePath.'/'.$namespace.'/'.$filename)){
+        }elseif($namespace && file_exists($this->basePath.'/'.$namespace.'/'.$filename)){
             $filePath = $this->basePath.'/'.$namespace.'/'.$filename;
 
         /** finally, load the config from the module namespace */
@@ -102,7 +102,7 @@ class ConfigurationContainer implements ArrayAccess{
     public function addDirectory($directory, $namespace = null){
         $directory = rtrim($directory, '/');
 
-        if(is_null($namespace)){
+        if(!$namespace){
             $this->configPath[] = $directory;
         }else{
             $this->namespacedPath[$namespace] = $directory;
@@ -123,6 +123,7 @@ class ConfigurationContainer implements ArrayAccess{
 
     public function offsetGet ( $offset ){
         $offsetChunk = explode('.', $offset);
+        $configFile  = $offsetChunk[0];
 
         /**
          * if xxx.yyy.zzz offset is exist, return it immediately
@@ -137,14 +138,16 @@ class ConfigurationContainer implements ArrayAccess{
         */
 
         /** if not set, try to load the config file */
-        if(!isset($this->config[$offsetChunk[0]])){
-            $this->load($offsetChunk[0]);
+        if(!isset($this->config[$configFile])){
+            $this->load($configFile);
         }
 
+        /** if there is no dot notation, return the whole config */
         if(count($offsetChunk) == 1){
-            return $this->config[$offsetChunk[0]];
+            return $this->config[$configFile];
         }
 
+        /** else, dive through the dot notation until it found */
         $configVal = null;
 
         foreach ($offsetChunk as $count => $chunk) {

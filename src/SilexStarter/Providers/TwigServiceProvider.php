@@ -2,9 +2,12 @@
 
 namespace SilexStarter\Providers;
 
+use Twig_Extension_Debug;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Silex\Provider\TwigCoreExtension;
+use SilexStarter\TwigExtension\TwigAssetExtension;
+use SilexStarter\TwigExtension\TwigMenuExtension;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -39,8 +42,11 @@ class TwigServiceProvider implements ServiceProviderInterface{
                 $app['config']['twig.options']
             );
 
+            $twigEnv->addExtension(new TwigAssetExtension($app));
+            $twigEnv->addExtension(new TwigMenuExtension($app));
+
             if ($app['config']['twig.options.debug']) {
-                $twigEnv->addExtension(new \Twig_Extension_Debug());
+                $twigEnv->addExtension(new Twig_Extension_Debug());
             }
 
             if($app['enable_profiler']){

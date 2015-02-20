@@ -20,7 +20,8 @@ interface ModuleInterface{
 
 
     /**
-     * Get the name of the module that will be installed
+     * Get the name of the module that will be installed,
+     * this will be  used to register template and config namespace as well
      * the name should be [a-zA-Z-_]
      * @return string
      */

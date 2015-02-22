@@ -31,8 +31,28 @@ class RouteProxy extends StaticProxy{
         }
     }
 
+    public static function match($pattern, $to = null){
+        return static::getContext()->match($pattern, $to);
+    }
+
     public static function get($pattern, $to = null){
         return static::getContext()->get($pattern, $to);
+    }
+
+    public static function post($pattern, $to = null){
+        return static::getContext()->post($pattern, $to);
+    }
+
+    public static function put($pattern, $to = null){
+        return static::getContext()->put($pattern, $to);
+    }
+
+    public static function delete($pattern, $to = null){
+        return static::getContext()->delete($pattern, $to);
+    }
+
+    public static function patch($pattern, $to = null){
+        return static::getContext()->patch($pattern, $to);
     }
 
     /**
@@ -54,7 +74,7 @@ class RouteProxy extends StaticProxy{
 
         $currentContext->mount($prefix, $routeCollection);
 
-        return $currentContext;
+        return $routeCollection;
     }
 
     /**
@@ -68,55 +88,55 @@ class RouteProxy extends StaticProxy{
         $routeCollection    = static::$app['controllers_factory'];
         $routePrefixName    = Str::slug($prefix);
 
-        $resourceRoutes     = array(
-            'get'           => array(
+        $resourceRoutes     = [
+            'get'           => [
                 'pattern'       => '/',
                 'method'        => 'get',
                 'handler'       => "$controller:index"
-            ),
-            'get_paginate'  => array(
+            ],
+            'get_paginate'  => [
                 'pattern'       => "/page/{page}",
                 'method'        => 'get',
                 'handler'       => "$controller:index"
-            ),
-            'get_create'    => array(
+            ],
+            'get_create'    => [
                 'pattern'       => "/create",
                 'method'        => 'get',
                 'handler'       => "$controller:create"
-            ),
-            'get_edit'      => array(
+            ],
+            'get_edit'      => [
                 'pattern'       => "/{id}/edit",
                 'method'        => 'get',
                 'handler'       => "$controller:edit"
-            ),
-            'get_show'      => array(
+            ],
+            'get_show'      => [
                 'pattern'       => "/{id}",
                 'method'        => 'get',
                 'handler'       => "$controller:show"
-            ),
-            'post'          => array(
+            ],
+            'post'          => [
                 'pattern'       => '/',
                 'method'        => 'post',
                 'handler'       => "$controller:store"
-            ),
-            'put'           => array(
+            ],
+            'put'           => [
                 'pattern'       => "/{id}",
                 'method'        => 'put',
                 'handler'       => "$controller:update"
-            ),
-            'delete'        => array(
+            ],
+            'delete'        => [
                 'pattern'       => "/{id}",
                 'method'        => 'delete',
                 'handler'       => "$controller:destroy"
-            )
-        );
+            ]
+        ];
 
         foreach ($resourceRoutes as $routeName => $route) {
             $routeCollection->{$route['method']}($route['pattern'], $route['handler'])
                             ->bind($routePrefixName.'_'.$routeName);
         }
 
-        static::$app->mount($prefix, $routeCollection);
+        static::getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }
@@ -176,7 +196,7 @@ class RouteProxy extends StaticProxy{
             }
         }
 
-        static::$app->mount($prefix, $routeCollection);
+        static::getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }

@@ -4,6 +4,9 @@ namespace SilexStarter\Asset;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Simple asset manager for queueing and rendering asset link
+ */
 class AssetManager{
 
     protected $basepath;
@@ -17,10 +20,20 @@ class AssetManager{
         $this->basepath = $basepath;
     }
 
+    /**
+     * Queue the javascript file into the asset manager
+     * @param  string $jsfile    the javascript file need to be loaded,
+     * @return void
+     */
     public function js($jsfile){
         $this->js[] = $jsfile;
     }
 
+    /**
+     * Queue the css file into the asset manager
+     * @param  string $cssfile    the css file need to be loaded,
+     * @return void
+     */
     public function css($cssfile){
         $this->css[] = $cssfile;
     }
@@ -39,6 +52,11 @@ class AssetManager{
         $this->css($cssfile);
     }
 
+    /**
+     * Queue the asset file into the asset manager
+     * @param  string $assetfile    the asset file need to be loaded,
+     * @return void
+     */
     public function load($assetfile){
         if('.js' == substr($assetfile, -3, 3)){
             $this->js($assetfile);
@@ -49,6 +67,12 @@ class AssetManager{
         }
     }
 
+
+    /**
+     * Render js path into proper <script> tag
+     * @param  array|string|null $file      The file or array of file need to be rendered
+     * @return string                       Html link tag to specified js file
+     */
     public function renderJs($file = null){
         $tagFormat = "<script src=\"%s\"></script>\n";
 
@@ -56,6 +80,11 @@ class AssetManager{
         return $this->render($file, $tagFormat);
     }
 
+    /**
+     * Render css path into proper <link> tag
+     * @param  array|string|null $file      The file or array of file need to be rendered
+     * @return string                       Html link tag to specified css file
+     */
     public function renderCss($file = null){
         $tagFormat = "<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">\n";
 
@@ -63,6 +92,12 @@ class AssetManager{
         return $this->render($file, $tagFormat);
     }
 
+    /**
+     * Render the path, or array of path into given tag format
+     * @param  array|string $file           the asset path, or array of asset path
+     * @param  string       $tagFormat      the tag format used for rendering the asset tag
+     * @return string                       the formatted tag with proper asset path
+     */
     protected function render($file, $tagFormat){
         /** if file is array of file, render each file respectively */
         if(is_array($file)){
@@ -75,11 +110,15 @@ class AssetManager{
         }
 
         /** if file is single file, render immediately */
-        if(!is_null($file)){
-            return sprintf($tagFormat, $this->resolvePath($cssfile));
-        }
+        return sprintf($tagFormat, $this->resolvePath($cssfile));
     }
 
+    /**
+     * Resolve the public path of the asset, and determine if it link to external server or not
+     * @param  string  $file        The asset file need to be resolved
+     * @param  boolean $absolute    Flag to generate absolute path or relative path
+     * @return string               The proper path to the asset file
+     */
     protected function resolvePath($file, $absolute = false){
         $namespace = [];
         preg_match("/@(.*?)\//s", $file, $namespace);
@@ -90,7 +129,7 @@ class AssetManager{
         }
 
         /** if refer to external path, return immediately (begin with //, http://, https://) */
-        if('//' == substr($file, 0, 2) || 'http:' == substr($file, 0, 5) || 'https:' == substr($file, 0, 6)){
+        if('http:' == substr($file, 0, 5) || '//' == substr($file, 0, 2) || 'https:' == substr($file, 0, 6)){
             return $file;
         }
 

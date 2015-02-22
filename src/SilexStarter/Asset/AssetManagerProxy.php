@@ -1,11 +1,11 @@
 <?php
 
-namespace SilexStarter\StaticProxy;
+namespace SilexStarter\Asset;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 
-class DatabaseProxy extends StaticProxy{
+class AssetManagerProxy extends StaticProxy{
     protected static function getFacadeAccessor(){
-        return 'db';
+        return 'asset_manager';
     }
 }

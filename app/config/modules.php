@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'Admin\ModuleProvider'
+    'Admin\ModuleProvider',
+    'Patient\ModuleProvider',
 ];

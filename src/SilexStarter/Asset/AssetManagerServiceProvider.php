@@ -4,12 +4,16 @@ namespace SilexStarter\Asset;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class AssetManagerServiceProvider implements ServiceProviderInterface{
 
     public function register(Application $app){
-        $app['asset_manager'] = $app->share(function(){
-            return new AssetManager;
+        $app['asset_manager'] = $app->share(function(Application $app){
+            return new AssetManager(
+                $app['enable_profiler'] ? Request::createFromGlobals() : $app['request'],
+                'assets'
+            );
         });
     }
 

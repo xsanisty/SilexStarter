@@ -3,6 +3,7 @@
 namespace Admin;
 
 use Silex\Application;
+use SilexStarter\Module\ModuleResource;
 use SilexStarter\Contracts\ModuleProviderInterface;
 
 class ModuleProvider implements ModuleProviderInterface{
@@ -26,13 +27,13 @@ class ModuleProvider implements ModuleProviderInterface{
     }
 
     public function getResources(){
-        return [
+        return new ModuleResource([
             'routes'        => 'Resources/routes.php',
             'middlewares'   => 'Resources/middlewares.php',
             'views'         => 'Resources/views',
-            'controllers'   => 'Controllers',
+            'controllers'   => 'Controller',
             'config'        => 'Resources/config'
-        ];
+        ]);
     }
 
     public function register(){

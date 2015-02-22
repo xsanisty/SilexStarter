@@ -21,4 +21,8 @@ class AutoRouteController{
     public function putVars($params){
         return Response::json((array) $params);
     }
+
+    public function getSnakeCase(){
+        return 'I am snake case :)';
+    }
 }

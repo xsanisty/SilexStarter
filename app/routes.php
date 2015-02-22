@@ -28,3 +28,5 @@
  *                                                      //method getSomePath will be accessible via /auto/some_path
  *                                                      //method deleteResource will be accessible via DELETE /auto/resource
  */
+
+Route::controller('auto', 'AutoRouteController');

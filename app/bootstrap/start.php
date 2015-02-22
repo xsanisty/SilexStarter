@@ -46,22 +46,23 @@ if($app['enable_static_proxy']){
     $app->registerAliases($app['config']['aliases']);
 }
 
-/** Include the middlewares */
-require APP_PATH.'middlewares.php';
-
+/** Include the middlewares, load module middleware first to enable override */
 if($app['enable_module']){
     foreach($app['module']->getMiddlewareFiles() as $middleware){
         require($middleware);
     }
 }
 
-/** Include the routes definition */
-require APP_PATH.'routes.php';
+require APP_PATH.'middlewares.php';
 
+
+/** Include the routes definition, load module route first to enable override */
 if($app['enable_module']){
     foreach($app['module']->getRouteFiles() as $route){
         require($route);
     }
 }
+
+require APP_PATH.'routes.php';
 
 return $app;

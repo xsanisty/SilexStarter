@@ -45,5 +45,14 @@ return [
      * "require" : { "silex/web-profiler" : "1.*" }
      *
      */
-    'enable_profiler'       => false
+    'enable_profiler'       => true,
+
+    /**
+     * Path information
+     */
+    'path.root'             => ROOT_PATH,
+    'path.vendor'           => VENDOR_PATH,
+    'path.app'              => APP_PATH,
+    'path.public'           => PUBLIC_PATH,
+    'path.module'           => MODULE_PATH,
 ];

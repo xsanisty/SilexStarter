@@ -10,16 +10,13 @@ use SilexStarter\Contracts\ModuleProviderInterface;
 class ModuleManager{
 
     protected $app;
-    protected $modules;
-    protected $routes;
-    protected $middlewares;
+    protected $modules      = [];
+    protected $routes       = [];
+    protected $middlewares  = [];
     protected $config;
 
     public function __construct(Application $app){
         $this->app          = $app;
-        $this->routes       = [];
-        $this->middlewares  = [];
-        $this->modules      = [];
     }
 
     public function isRegistered($module){
@@ -43,12 +40,13 @@ class ModuleManager{
      * @return [type]                          [description]
      */
     public function register(ModuleProviderInterface $module){
-        $moduleManager = $this->app['module'];
+
+        $moduleAccessor = $module->getModuleAccessor();
 
         /** Check for required module, if not satisfied, throw exception immediately */
         foreach ($module->getRequiredModules() as $requiredModule) {
-            if(!$moduleManager->isRegistered($requiredModule)){
-                throw new ModuleRequiredException($module->getModuleAccessor().' module require '.$requiredModule.' as its dependency');
+            if(!$this->isRegistered($requiredModule)){
+                throw new ModuleRequiredException($moduleAccessor . ' module require ' . $requiredModule . ' as its dependency');
             }
         }
 
@@ -69,29 +67,29 @@ class ModuleManager{
         if($moduleResources->config){
             $this->app['config']->addDirectory(
                 $modulePath . DIRECTORY_SEPARATOR . $moduleResources->config,
-                $module->getModuleAccessor()
+                $moduleAccessor
             );
         }
 
         /** if route file exists, queue for later include */
         if($moduleResources->routes){
-            $moduleManager->addRouteFile($modulePath . '/' . $moduleResources->routes);
+            $this->addRouteFile($modulePath . '/' . $moduleResources->routes);
         }
 
         /** if middleware file exists, queue for later include */
         if($moduleResources->middlewares){
-            $moduleManager->addMiddlewareFile($modulePath . '/' . $moduleResources->middlewares);
+            $this->addMiddlewareFile($modulePath . '/' . $moduleResources->middlewares);
         }
 
         /** if template file exists, register new template path under new namespace */
         if($moduleResources->views){
             $this->app['twig.loader.filesystem']->addPath(
                 $modulePath . '/' . $moduleResources->views,
-                $module->getModuleAccessor()
+                $moduleAccessor
             );
         }
 
-        $this->modules[$module->getModuleAccessor()] = $module;
+        $this->modules[$moduleAccessor] = $module;
         $module->register();
     }
 

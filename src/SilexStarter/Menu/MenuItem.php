@@ -3,7 +3,12 @@
 namespace SilexStarter\Menu;
 
 class MenuItem{
-    public function __construct($name){
+
+    protected $attributes   = [];
+    protected $fields       = ['url', 'label', 'icon', 'active'];
+    protected $child        = null;
+
+    public function __construct(array $attributes){
 
     }
 }

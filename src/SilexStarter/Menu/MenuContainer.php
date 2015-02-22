@@ -3,27 +3,27 @@
 namespace SilexStarter\Menu;
 
 class MenuContainer{
-    protected $menus;
+    protected $menuCollection;
     protected $renderer;
 
     public function __construct(){
         $this->renderer = null;
-        $this->menus    = [];
+        $this->menuCollection    = [];
     }
 
     public function addItem(MenuItem $menu){
-        $this->menus[$menu->getName()] = $menu;
+        $this->menuCollection[$menu->getName()] = $menu;
     }
 
     public function getItem($name){
-        return $this->menus[$name];
+        return $this->menuCollection[$name];
     }
 
     public function render($option){
         if(!is_null($this->renderer)){
             $renderer = $this->renderer;
 
-            $renderer($this->menus, $option);
+            $renderer($this->menuCollection, $option);
         }
 
         return $this->builtInRenderer($option);

@@ -16,18 +16,6 @@ Route::get('/admin', 'Admin\Controller\AdminController:index')
      ->before(App::filter('admin.auth'));
 
 
-Route::group('/admin', function($route){
-    $route->get('/something', 'Admin\Controller\AdminController:index');
+Route::group('/admin', function(){
+    Route::get('/something', 'Admin\Controller\AdminController:index');
 })->before(App::filter('admin.auth'));
-
-Route::group('level1', function($route){
-    $route->get('level2', function(){
-        return 'level 1.2';
-    });
-    $route->mount('level2', Route::group('/', function($route){
-        $route->get('/level3', function(){
-            return 'level 1.2.3';
-        });
-    }));
-
-});

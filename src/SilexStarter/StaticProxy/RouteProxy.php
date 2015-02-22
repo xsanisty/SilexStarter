@@ -4,10 +4,35 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 use Illuminate\Support\Str;
+use Silex\ControllerCollection;
 
 class RouteProxy extends StaticProxy{
+
+    /** controllers context stack */
+    protected static $contextStack = [];
+
     protected static function getFacadeAccessor(){
         return 'controllers';
+    }
+
+    protected static function pushContext(ControllerCollection $context){
+        static::$contextStack[] = $context;
+    }
+
+    protected static function popContext(){
+        return array_pop(static::$contextStack);
+    }
+
+    protected static function getContext(){
+        if(static::$contextStack){
+            return end(static::$contextStack);
+        }else{
+            return static::$app['controllers'];
+        }
+    }
+
+    public static function get($pattern, $to = null){
+        return static::getContext()->get($pattern, $to);
     }
 
     /**
@@ -18,13 +43,18 @@ class RouteProxy extends StaticProxy{
      */
     public static function group($prefix, \Closure $callable){
         $prefix = '/'.ltrim($prefix, '/');
-        $controllerCollection = static::$app['controllers_factory'];
 
-        $callable($controllerCollection);
+        /** push the context to be accessed to callable route */
+        static::pushContext(static::$app['controllers_factory']);
 
-        static::$app->mount($prefix, $controllerCollection);
+        $callable();
 
-        return $controllerCollection;
+        $routeCollection = static::popContext();
+        $currentContext  = static::getContext();
+
+        $currentContext->mount($prefix, $routeCollection);
+
+        return $currentContext;
     }
 
     /**
@@ -34,6 +64,7 @@ class RouteProxy extends StaticProxy{
      * @return [type]             [description]
      */
     public static function resource($prefix, $controller){
+        $prefix             = '/'.ltrim($prefix, '/');
         $routeCollection    = static::$app['controllers_factory'];
         $routePrefixName    = Str::slug($prefix);
 

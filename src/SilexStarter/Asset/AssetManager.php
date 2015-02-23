@@ -119,7 +119,7 @@ class AssetManager{
      * @param  boolean $absolute    Flag to generate absolute path or relative path
      * @return string               The proper path to the asset file
      */
-    protected function resolvePath($file, $absolute = false){
+    public function resolvePath($file, $absolute = false){
         $namespace = [];
         preg_match("/@(.*?)\//s", $file, $namespace);
 

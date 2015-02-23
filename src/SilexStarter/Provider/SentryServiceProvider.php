@@ -240,18 +240,6 @@ class SentryServiceProvider implements ServiceProviderInterface{
         {
             $key = $app['config']['sentry.cookie.key'];
 
-            /**
-             * We'll default to using the 'request' strategy, but switch to
-             * 'jar' if the Laravel version in use is 4.0.*
-             */
-
-            $strategy = 'request';
-
-            if (preg_match('/^4\.0\.\d*$/D', $app::VERSION))
-            {
-                $strategy = 'jar';
-            }
-
             return new NativeCookie(['http_only' => true], $key);
         });
     }

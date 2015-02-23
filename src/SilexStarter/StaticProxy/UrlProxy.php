@@ -3,6 +3,7 @@
 namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class UrlProxy extends StaticProxy{
 
@@ -10,8 +11,12 @@ class UrlProxy extends StaticProxy{
         return 'url_generator';
     }
 
-    public static function to($name){
-        return static::$app['url_generator']->generate($name);
+    public static function to($route){
+        try{
+            return static::$app['url_generator']->generate($route);
+        }catch(RouteNotFoundException $e){
+            return static::path($route);
+        }
     }
 
     public static function path($path = '/'){

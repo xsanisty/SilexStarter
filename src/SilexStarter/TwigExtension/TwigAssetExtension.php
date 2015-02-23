@@ -24,6 +24,7 @@ class TwigAssetExtension extends Twig_Extension{
             new Twig_SimpleFunction('javascript', [$this, 'javascript'], ['is_safe' => ['html']]),
             new Twig_SimpleFunction('css', [$this, 'stylesheet'], ['is_safe' => ['html']]),
             new Twig_SimpleFunction('js', [$this, 'javascript'], ['is_safe' => ['html']]),
+            new Twig_SimpleFunction('asset', [$this, 'asset']),
         ];
     }
 
@@ -33,5 +34,9 @@ class TwigAssetExtension extends Twig_Extension{
 
     public function javascript($file = null){
         return $this->manager->renderJs($file);
+    }
+
+    public function asset($file){
+        return $this->manager->resolvePath($file);
     }
 }

@@ -136,7 +136,11 @@ class RouteProxy extends StaticProxy{
                             ->bind($routePrefixName.'_'.$routeName);
         }
 
-        static::getContext()->mount($prefix, $routeCollection);
+        $currentContext = static::getContext();
+
+        $currentContext->get($prefix, $resourceRoutes['get']['handler']);
+        $currentContext->post($prefix, $resourceRoutes['post']['handler']);
+        $currentContext->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }
@@ -148,11 +152,12 @@ class RouteProxy extends StaticProxy{
      * @return [type]             [description]
      */
     public static function controller($prefix, $controller){
-
+        $prefix             = '/'.ltrim($prefix, '/');
         $class              = new \ReflectionClass($controller);
         $controllerMethods  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
         $routeCollection    = static::$app['controllers_factory'];
         $uppercase          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $acceptedMethod     = ['get', 'post', 'put', 'delete', 'head', 'options'];
 
         foreach ($controllerMethods as $method) {
             $methodName = $method->name;
@@ -160,18 +165,25 @@ class RouteProxy extends StaticProxy{
             if(substr($methodName, 0, 2) != '__'){
                 $parameterCount = $method->getNumberOfParameters();
 
+                /** search first method segment until uppercase found */
                 $pos        = strcspn($methodName, $uppercase);
 
                 /** the http method get, put, post, etc */
                 $httpMethod = substr($methodName, 0, $pos);
 
                 /** the url path, index => getIndex */
-                $urlPath    = Str::snake(strpbrk($methodName, $uppercase));
+                if(in_array($httpMethod, $acceptedMethod)){
+                    $urlPath    = Str::snake(strpbrk($methodName, $uppercase));
+                }else{
+                    $urlPath    = Str::snake($methodName);
+                    $httpMethod = 'match';
+                }
 
                 /**
                  * Build the route
                  */
                 if($urlPath == 'index'){
+                    static::getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
                     $route = $routeCollection->{$httpMethod}('/', $controller.':'.$methodName);
                 }else if($parameterCount){
                     $urlPattern = $urlPath;

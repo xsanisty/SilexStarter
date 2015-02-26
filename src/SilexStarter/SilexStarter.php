@@ -145,6 +145,9 @@ class SilexStarter extends Application{
         $this['filter.'.$name] = $this->protect($callback);
     }
 
+    /**
+     * Alias for filter method
+     */
     public function middleware($name, \Closure $callback = null){
         return $this->filter($name, $callback);
     }

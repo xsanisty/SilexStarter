@@ -9,6 +9,7 @@ return [
         'SilexStarter\Provider\TwigServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
         'SilexStarter\Provider\SentryServiceProvider',
+        'SilexStarter\Provider\FilesystemServiceProvider',
         'SilexStarter\Asset\AssetManagerServiceProvider',
         'SilexStarter\Menu\MenuManagerServiceProvider',
     ],

@@ -18,7 +18,7 @@ return [
      * modules in config/modules.php
      *
      * You can place your module into app/modules directory, or even load it as composer package, as long as
-     * it provide the ModuleProvider.
+     * it provide the proper ModuleProvider.
      */
     'enable_module'         => true,
 
@@ -30,7 +30,7 @@ return [
      * This may affect performance when you have huge collection of controller, but it enable you to inject
      * dependency at the contructor level. Maybe we need some cache mechanism to improvie this?
      *
-     * When disabled, it will falback into default silex approach using the controller provider
+     * When disabled, it will falback into default silex approach using the controller provider/ closure callback
      */
     'controller_as_service' => true,
 

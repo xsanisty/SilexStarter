@@ -13,7 +13,8 @@ class ModuleManager{
     protected $modules      = [];
     protected $routes       = [];
     protected $middlewares  = [];
-    protected $config;
+    protected $assets       = [];
+    protected $config       = [];
 
     public function __construct(Application $app){
         $this->app          = $app;
@@ -66,9 +67,11 @@ class ModuleManager{
         /** if config dir exists, add namespace to the config reader */
         if($moduleResources->config){
             $this->app['config']->addDirectory(
-                $modulePath . DIRECTORY_SEPARATOR . $moduleResources->config,
+                $modulePath . '/' . $moduleResources->config,
                 $moduleAccessor
             );
+
+            $this->config[$moduleAccessor] = $modulePath . '/' . $moduleResources->config;
         }
 
         /** if route file exists, queue for later include */
@@ -87,6 +90,11 @@ class ModuleManager{
                 $modulePath . '/' . $moduleResources->views,
                 $moduleAccessor
             );
+        }
+
+        /** keep assets path of the module */
+        if($moduleResources->assets){
+            $this->assets[$moduleAccessor] = $modulePath . '/' . $moduleResources->assets;
         }
 
         $this->modules[$moduleAccessor] = $module;
@@ -129,23 +137,25 @@ class ModuleManager{
         return $this->middlewares;
     }
 
-    /*
+    /**
+     * Publish module assets into public asset directory
+     * @param  string $module       The module accessor
+     */
+    public function publishAsset($module){
+        $moduleAsset = $this->assets[$module];
+        $publicAsset = $this->app['path.public'].'assets/'.$module;
 
-    public function offsetGet($offset){
-
+        $this->app['filesystem']->mirror($moduleAsset, $publicAsset);
     }
 
-    public function offsetSet($offset, $value){
+    /**
+     * Publish config into application config directory
+     * @param  string $module       The module accessor
+     */
+    public function publishConfig($module){
+        $moduleConfig = $this->config[$module];
+        $publicConfig = $this->app['path.app'].'config/'.$module;
 
+        $this->app['filesystem']->mirror($moduleConfig, $publicConfig);
     }
-
-    public function offsetUnset($offset){
-
-    }
-
-    public function offsetExists($offset){
-
-    }
-    */
-
 }

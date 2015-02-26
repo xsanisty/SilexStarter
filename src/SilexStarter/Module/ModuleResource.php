@@ -12,6 +12,7 @@ class ModuleResource{
         'views',
         'services',
         'config',
+        'assets'
     ];
 
     public function __construct(array $resources){

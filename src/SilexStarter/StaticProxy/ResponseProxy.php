@@ -25,6 +25,11 @@ class ResponseProxy extends StaticProxy{
         return new Response($content, $status, $headers);
     }
 
+
+    public static function view($template, array $data = [], $status = 200, array $headers = []){
+        return new Response(static::$app['twig']->render($template.'.twig', $data), $status, $headers);
+    }
+
     /**
      * Return a new JSON response from the application.
      *

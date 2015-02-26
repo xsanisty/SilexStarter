@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d94001d457cbf0198f39f106609b14b0",
+    "hash": "8f1797a5e5da51d379043ce411e6e1f0",
     "packages": [
         {
             "name": "cartalyst/sentry",
@@ -926,6 +926,47 @@
                 "templating"
             ],
             "time": "2015-01-25 17:32:08"
+        },
+        {
+            "name": "xsanisty/silex-starter-admin",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xsanisty/SilexStarter-admin.git",
+                "reference": "bdc2f4c3b3195314cf08e0d71583f861c697c7ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-admin/zipball/bdc2f4c3b3195314cf08e0d71583f861c697c7ed",
+                "reference": "bdc2f4c3b3195314cf08e0d71583f861c697c7ed",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xsanisty\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ikhsan Agustian",
+                    "email": "ikhsan017@gmail.com"
+                }
+            ],
+            "description": "Base admin module for SilexStarter",
+            "support": {
+                "source": "https://github.com/xsanisty/SilexStarter-admin/tree/develop",
+                "issues": "https://github.com/xsanisty/SilexStarter-admin/issues"
+            },
+            "time": "2015-02-26 07:46:34"
         }
     ],
     "packages-dev": [
@@ -2225,7 +2266,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "xsanisty/silex-starter-admin": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

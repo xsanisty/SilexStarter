@@ -24,7 +24,7 @@ class TwigMenuExtension extends Twig_Extension{
         ];
     }
 
-    protected function renderMenu(){
-
+    public function renderMenu($menu, array $option = []){
+        return $this->menu->render($menu, $option);
     }
 }

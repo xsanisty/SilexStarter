@@ -4,12 +4,20 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 use Illuminate\Support\Str;
+use Silex\Controller;
 use Silex\ControllerCollection;
 
 class RouteProxy extends StaticProxy{
 
     /** controllers context stack */
     protected static $contextStack = [];
+
+    /** before handler stack */
+    protected static $beforeHandlerStack = [];
+
+    /** after handler stack */
+    protected static $afterHandlerStack = [];
+
 
     protected static function getFacadeAccessor(){
         return 'controllers';
@@ -31,28 +39,56 @@ class RouteProxy extends StaticProxy{
         }
     }
 
-    public static function match($pattern, $to = null){
-        return static::getContext()->match($pattern, $to);
+    protected static function applyRouteOptions(Controller $route, array $option){
+        if(isset($options['before'])){
+            $route->before($options['before']);
+        }
+
+        if(isset($options['after'])){
+            $route->after($options['after']);
+        }
+
+        if(isset($options['as'])){
+            $route->bind($options['as']);
+        }
+
+        return $route;
     }
 
-    public static function get($pattern, $to = null){
-        return static::getContext()->get($pattern, $to);
+    public static function match($pattern, $to = null, array $options = []){
+        $route = static::getContext()->match($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
     }
 
-    public static function post($pattern, $to = null){
-        return static::getContext()->post($pattern, $to);
+    public static function get($pattern, $to = null, array $options = []){
+        $route = static::getContext()->get($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
     }
 
-    public static function put($pattern, $to = null){
-        return static::getContext()->put($pattern, $to);
+    public static function post($pattern, $to = null, array $options = []){
+        $route = static::getContext()->post($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
     }
 
-    public static function delete($pattern, $to = null){
-        return static::getContext()->delete($pattern, $to);
+    public static function put($pattern, $to = null, array $options = []){
+        $route = static::getContext()->put($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
     }
 
-    public static function patch($pattern, $to = null){
-        return static::getContext()->patch($pattern, $to);
+    public static function delete($pattern, $to = null, array $options = []){
+        $route = static::getContext()->delete($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
+    }
+
+    public static function patch($pattern, $to = null, array $options = []){
+        $route = static::getContext()->patch($pattern, $to);
+        $route = static::applyRouteOptions($route, $options);
+        return $route;
     }
 
     /**
@@ -61,8 +97,8 @@ class RouteProxy extends StaticProxy{
      * @param  [Closure]    $callable           the route collection handler
      * @return [Silex\ControllerCollection]     controller collection that already mounted to $prefix
      */
-    public static function group($prefix, \Closure $callable){
-        $prefix = '/'.ltrim($prefix, '/');
+    public static function group(array $options, \Closure $callable){
+        $prefix = isset($options['prefix']) ? '/'.ltrim($options['prefix'], '/') : '/';
 
         /** push the context to be accessed to callable route */
         static::pushContext(static::$app['controllers_factory']);

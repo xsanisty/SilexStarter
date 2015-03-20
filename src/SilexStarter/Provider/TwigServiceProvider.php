@@ -44,6 +44,7 @@ class TwigServiceProvider implements ServiceProviderInterface{
 
             $twigEnv->addExtension(new TwigAssetExtension($app['asset_manager']));
             $twigEnv->addExtension(new TwigMenuExtension($app['menu_manager']));
+            $twigEnv->addGlobal('config', $app['config']);
 
             if ($app['config']['twig.options.debug']) {
                 $twigEnv->addExtension(new Twig_Extension_Debug());

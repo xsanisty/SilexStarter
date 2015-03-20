@@ -22,10 +22,7 @@ interface ModuleInstallerInterface extends ModuleInterface{
      */
     public function uninstall();
 
-    /**
-     * Get the assets directory, a directory relative to the ModuleInstaller class contain all asset
-     * files including js, css, images etc
-     * @return string
-     */
-    public function getAssetsDirectory();
+    public function upgrade();
+
+    public function downgrade();
 }

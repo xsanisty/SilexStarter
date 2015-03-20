@@ -13,10 +13,16 @@ interface ModuleInterface{
     public function __construct(\Silex\Application $app);
 
     /**
-     * Get the human readable module name
-     * @return string   The module name
+     * Get the module information
+     * @return ModuleInfo   The module information
      */
-    public function getModuleName();
+    public function getInfo();
+
+    /**
+     * Get module resources including route, config, views, etc
+     * @return [type] [description]
+     */
+    public function getResources();
 
 
     /**

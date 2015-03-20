@@ -151,4 +151,12 @@ class SilexStarter extends Application{
     public function middleware($name, \Closure $callback = null){
         return $this->filter($name, $callback);
     }
+
+    public function boot(){
+        if($this['enable_module']){
+            $this['module']->boot();
+        }
+
+        parent::boot();
+    }
 }

@@ -101,6 +101,11 @@ class ModuleManager{
         $module->register();
     }
 
+    public function boot(){
+        foreach ($this->modules as $module) {
+            $module->boot();
+        }
+    }
     /**
      * [addRouteFile description]
      * @param [type] $path [description]

@@ -4,11 +4,17 @@ namespace SilexStarter\Menu;
 
 class MenuManager{
 
-    public function render($collection_name, array $option = []){
-
-    }
+    protected $menuContainers = [];
 
     public function create($name){
+        $this->menuContainers[$name] = new MenuContainer($name);
+    }
 
+    public function get($name){
+        return $this->menuContainers[$name];
+    }
+
+    public function render($name){
+        return $this->menuContainers[$name]->render();
     }
 }

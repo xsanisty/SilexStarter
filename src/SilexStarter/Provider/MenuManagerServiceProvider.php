@@ -1,9 +1,10 @@
 <?php
 
-namespace SilexStarter\Menu;
+namespace SilexStarter\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SilexStarter\Menu\MenuManager;
 
 class MenuManagerServiceProvider implements ServiceProviderInterface{
 

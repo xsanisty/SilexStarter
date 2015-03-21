@@ -1,9 +1,10 @@
 <?php
 
-namespace SilexStarter\Config;
+namespace SilexStarter\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SilexStarter\Config\ConfigurationContainer;
 
 class ConfigurationServiceProvider implements ServiceProviderInterface{
 

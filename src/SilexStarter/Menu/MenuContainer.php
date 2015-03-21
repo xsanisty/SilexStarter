@@ -3,11 +3,12 @@
 namespace SilexStarter\Menu;
 
 class MenuContainer{
-    protected $menuCollection;
+    protected $menuCollection = [];
     protected $renderer;
+    protected $name;
 
-    public function __construct(){
-        $this->menuCollection    = [];
+    public function __construct($name){
+        $this->name = $name;
     }
 
     public function addItem(MenuItem $menu){
@@ -24,11 +25,8 @@ class MenuContainer{
 
     public function render($option){
         if(!is_null($this->renderer)){
-
             $this->renderer->render();
         }
-
-        return $this->builtInRenderer($option);
     }
 
     public function setRenderer(MenuRenderer $renderer){

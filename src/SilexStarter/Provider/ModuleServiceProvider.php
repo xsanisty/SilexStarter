@@ -1,9 +1,10 @@
 <?php
 
-namespace SilexStarter\Module;
+namespace SilexStarter\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SilexStarter\Module\ModuleManager;
 
 class ModuleServiceProvider implements ServiceProviderInterface{
 

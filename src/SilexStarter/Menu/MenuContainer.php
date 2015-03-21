@@ -7,7 +7,6 @@ class MenuContainer{
     protected $renderer;
 
     public function __construct(){
-        $this->renderer = null;
         $this->menuCollection    = [];
     }
 
@@ -19,21 +18,21 @@ class MenuContainer{
         return $this->menuCollection[$name];
     }
 
+    public function getItems(){
+        return $this->menuCollection;
+    }
+
     public function render($option){
         if(!is_null($this->renderer)){
-            $renderer = $this->renderer;
 
-            $renderer($this->menuCollection, $option);
+            $this->renderer->render();
         }
 
         return $this->builtInRenderer($option);
     }
 
-    public function setRenderer(\Closure $renderer){
+    public function setRenderer(MenuRenderer $renderer){
         $this->renderer = $renderer;
-    }
-
-    protected function builtInRenderer($option){
-
+        $this->renderer->setMenu($this);
     }
 }

@@ -7,4 +7,8 @@ class MenuManager{
     public function render($collection_name, array $option = []){
 
     }
+
+    public function create($name){
+
+    }
 }

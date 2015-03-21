@@ -7,10 +7,10 @@
  * Route::get('/', 'SomeNamespace\OtherController:index');
  *
  * Sample group route
- * Route::group('group', function($route){
- *     $route->get('/', 'GroupController:index');       //accessible via domain.tld/group/ (with the trailing slash)
- *     $route->get('/list', 'GroupController:lists');   //accessible via domain.tld/group/list
- *     $route->get('/test', 'GroupController:test');    //accessible via domain.tld/group/test
+ * Route::group('group', function(){
+ *     Route::get('/', 'GroupController:index');       //accessible via domain.tld/group/ (with the trailing slash)
+ *     Route::get('/list', 'GroupController:lists');   //accessible via domain.tld/group/list
+ *     Route::get('/test', 'GroupController:test');    //accessible via domain.tld/group/test
  * });
  *
  * Sample resource route

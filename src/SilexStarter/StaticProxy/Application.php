@@ -4,7 +4,7 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 
-class ApplicationProxy extends StaticProxy{
+class Application extends StaticProxy{
     protected static function getFacadeAccessor() {
         return self::$app;
     }

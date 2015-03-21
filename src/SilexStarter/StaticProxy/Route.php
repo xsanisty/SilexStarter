@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Silex\Controller;
 use Silex\ControllerCollection;
 
-class RouteProxy extends StaticProxy{
+class Route extends StaticProxy{
 
     /** controllers context stack */
     protected static $contextStack = [];

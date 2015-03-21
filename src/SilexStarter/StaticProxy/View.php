@@ -4,7 +4,7 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 
-class ViewProxy extends StaticProxy{
+class View extends StaticProxy{
     protected static function getFacadeAccessor(){
         return 'twig';
     }

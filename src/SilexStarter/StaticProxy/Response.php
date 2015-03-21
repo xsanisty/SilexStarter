@@ -4,13 +4,13 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Facades\Facade as StaticProxy;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ResponseProxy extends StaticProxy{
+class Response extends StaticProxy{
 
     /**
      * Return a new response from the application.
@@ -22,12 +22,12 @@ class ResponseProxy extends StaticProxy{
      */
     public static function make($content = '', $status = 200, array $headers = [])
     {
-        return new Response($content, $status, $headers);
+        return new SymfonyResponse($content, $status, $headers);
     }
 
 
     public static function view($template, array $data = [], $status = 200, array $headers = []){
-        return new Response(static::$app['twig']->render($template.'.twig', $data), $status, $headers);
+        return new SymfonyResponse(static::$app['twig']->render($template.'.twig', $data), $status, $headers);
     }
 
     /**

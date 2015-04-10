@@ -31,4 +31,4 @@
  *                                                      //method postComment willbe accessible via POST /auto/comment
  */
 
-Route::controller('test', 'MainController');
+Route::get('/', 'MainController:index');

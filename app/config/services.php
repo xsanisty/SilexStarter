@@ -5,13 +5,13 @@ return [
         'Silex\Provider\SessionServiceProvider',
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
-        'SilexStarter\Module\ModuleServiceProvider',
+        'SilexStarter\Provider\ModuleServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
         'SilexStarter\Provider\SentryServiceProvider',
         'SilexStarter\Provider\FilesystemServiceProvider',
-        'SilexStarter\Asset\AssetManagerServiceProvider',
-        'SilexStarter\Menu\MenuManagerServiceProvider',
+        'SilexStarter\Provider\AssetManagerServiceProvider',
+        'SilexStarter\Provider\MenuManagerServiceProvider',
     ],
 
     'development' => [

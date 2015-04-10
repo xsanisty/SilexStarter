@@ -6,6 +6,7 @@ return [
     'App'       => 'SilexStarter\StaticProxy\Application',
     'File'      => 'SilexStarter\StaticProxy\Filesystem',
     'View'      => 'SilexStarter\StaticProxy\View',
+    'Menu'      => 'SilexStarter\StaticProxy\Menu',
     'Route'     => 'SilexStarter\StaticProxy\Route',
     'Session'   => 'SilexStarter\StaticProxy\Session',
     'Request'   => 'SilexStarter\StaticProxy\Request',

@@ -14,7 +14,7 @@ define('PUBLIC_PATH', __DIR__.'/../../public/');
 require VENDOR_PATH.'autoload.php';
 
 use SilexStarter\SilexStarter;
-use SilexStarter\Config\ConfigurationServiceProvider;
+use SilexStarter\Provider\ConfigServiceProvider;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Debug\ExceptionHandler;
 $app = new SilexStarter;
 
 /** Load the configuration service provider and load base app configuration */
-$app->register(new ConfigurationServiceProvider, ['config.path' => APP_PATH.'config']);
+$app->register(new ConfigServiceProvider, ['config.path' => APP_PATH.'config']);
 $app['config']->load('app');
 
 /** register the error handler */
@@ -59,10 +59,6 @@ if($app['enable_module']){
         require($middleware);
     }
 }
-
-$app['module']->publishAsset('xsanisty-admin');
-$app['module']->publishConfig('xsanisty-admin');
-
 require APP_PATH.'middlewares.php';
 
 
@@ -72,7 +68,6 @@ if($app['enable_module']){
         require($route);
     }
 }
-
 require APP_PATH.'routes.php';
 
 return $app;

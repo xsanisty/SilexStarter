@@ -6,7 +6,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SilexStarter\Config\ConfigurationContainer;
 
-class ConfigurationServiceProvider implements ServiceProviderInterface{
+class ConfigServiceProvider implements ServiceProviderInterface{
 
     public function register(Application $app){
         $app['config'] = $app->share(function($app){

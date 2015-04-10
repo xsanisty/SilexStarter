@@ -20,7 +20,7 @@ class TwigMenuExtension extends Twig_Extension{
 
     public function getFunctions(){
         return [
-            new Twig_SimpleFunction('render_menu', [$this, 'renderMenu'])
+            new Twig_SimpleFunction('render_menu', [$this, 'renderMenu'], ['is_safe' => ['html']])
         ];
     }
 

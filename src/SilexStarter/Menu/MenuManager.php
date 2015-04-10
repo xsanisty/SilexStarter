@@ -8,6 +8,8 @@ class MenuManager{
 
     public function create($name){
         $this->menuContainers[$name] = new MenuContainer($name);
+
+        return $this->menuContainers[$name];
     }
 
     public function get($name){

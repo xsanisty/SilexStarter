@@ -1,18 +1,13 @@
 <?php
 
-namespace SileStarter\Menu;
+namespace SilexStarter\Menu;
 
 interface MenuRendererInterface
 {
     /**
-     * Set the menu collection set
-     * @param MenuContainer $menu
-     */
-    public function setMenu(MenuContainer $menu);
-
-    /**
      * Render the menu collection set
+     * @param  SilexStarter\Menu\MenuContainer $menu the menu collection set
      * @return string
      */
-    public function render();
+    public function render(MenuContainer $menu);
 }

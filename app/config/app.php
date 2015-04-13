@@ -24,13 +24,13 @@ return [
 
     /**
      * When controller as service is enabled, SilexStarter will try to find all avaiable controllers in
-     * all registered controller folders including module's controller if enabled and register it as a
+     * all registered controller folders including module's controller if enabled, and register it as a
      * service.
      *
      * This may affect performance when you have huge collection of controller, but it enable you to inject
-     * dependency at the contructor level. Maybe we need some cache mechanism to improvie this?
+     * dependency at the constructor level. Maybe we need some cache mechanism to improvie this?
      *
-     * When disabled, it will falback into default silex approach using the controller provider/ closure callback
+     * When disabled, it will fallback into default silex approach using the controller provider / closure callback
      */
     'controller_as_service' => true,
 
@@ -45,7 +45,12 @@ return [
      * "require" : { "silex/web-profiler" : "1.*" }
      *
      */
-    'enable_profiler'       => true,
+    'enable_profiler'       => false,
+
+    /**
+     * This will be used by translation service provider as default locale
+     */
+    'locale'                => 'en_US',
 
     /**
      * Path information

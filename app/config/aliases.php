@@ -7,7 +7,7 @@ return [
     'File'      => 'SilexStarter\StaticProxy\Filesystem',
     'View'      => 'SilexStarter\StaticProxy\View',
     'Menu'      => 'SilexStarter\StaticProxy\Menu',
-    'Route'     => 'SilexStarter\StaticProxy\Route',
+    'Route'     => 'SilexStarter\StaticProxy\Router',
     'Session'   => 'SilexStarter\StaticProxy\Session',
     'Request'   => 'SilexStarter\StaticProxy\Request',
     'Response'  => 'SilexStarter\StaticProxy\Response',

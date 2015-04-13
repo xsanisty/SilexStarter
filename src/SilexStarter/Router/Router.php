@@ -1,13 +1,13 @@
 <?php
 
-namespace SilexStarter\StaticProxy;
+namespace SilexStarter\Router;
 
-use Illuminate\Support\Facades\Facade as StaticProxy;
 use Illuminate\Support\Str;
+use Silex\Application;
 use Silex\Controller;
 use Silex\ControllerCollection;
 
-class Route extends StaticProxy{
+class Router{
 
     /** controllers context stack */
     protected static $contextStack = [];
@@ -18,20 +18,24 @@ class Route extends StaticProxy{
     /** after handler stack */
     protected static $afterHandlerStack = [];
 
+    protected static $app;
 
-    protected static function getFacadeAccessor(){
-        return 'controllers';
+    protected static $stringHelper;
+
+    public function __construct(Application $app, Str $str){
+        static::$app            = $app;
+        static::$stringHelper   = $str;
     }
 
-    protected static function pushContext(ControllerCollection $context){
+    protected function pushContext(ControllerCollection $context){
         static::$contextStack[] = $context;
     }
 
-    protected static function popContext(){
+    protected function popContext(){
         return array_pop(static::$contextStack);
     }
 
-    protected static function getContext(){
+    protected function getContext(){
         if(static::$contextStack){
             return end(static::$contextStack);
         }else{
@@ -39,31 +43,31 @@ class Route extends StaticProxy{
         }
     }
 
-    protected static function pushBeforeHandler(\Closure $beforeHandler){
+    protected function pushBeforeHandler(\Closure $beforeHandler){
         static::$beforeHandlerStack[] = $beforeHandler;
     }
 
-    protected static function popBeforeHandler(){
+    protected function popBeforeHandler(){
         return array_pop(static::$beforeHandlerStack);
     }
 
-    protected static function getBeforeHandler(){
+    protected function getBeforeHandler(){
         return static::$beforeHandlerStack;
     }
 
-    protected static function pushAfterHandler(\Closure $afterHandler){
+    protected function pushAfterHandler(\Closure $afterHandler){
         static::$afterHandlerStack[] = $afterHandler;
     }
 
-    protected static function popAfterHandler(){
+    protected function popAfterHandler(){
         return array_pop(static::$afterHandlerStack);
     }
 
-    protected static function getAfterHandler(){
+    protected function getAfterHandler(){
         return static::$afterHandlerStack;
     }
 
-    protected static function applyRouteOptions(Controller $route, array $option){
+    protected function applyRouteOptions(Controller $route, array $option){
         foreach (static::getBeforeHandler() as $before) {
             $route->before($before);
         }
@@ -87,39 +91,39 @@ class Route extends StaticProxy{
         return $route;
     }
 
-    public static function match($pattern, $to = null, array $options = []){
-        $route = static::getContext()->match($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function match($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->match($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
-    public static function get($pattern, $to = null, array $options = []){
-        $route = static::getContext()->get($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function get($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->get($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
-    public static function post($pattern, $to = null, array $options = []){
-        $route = static::getContext()->post($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function post($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->post($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
-    public static function put($pattern, $to = null, array $options = []){
-        $route = static::getContext()->put($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function put($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->put($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
-    public static function delete($pattern, $to = null, array $options = []){
-        $route = static::getContext()->delete($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function delete($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->delete($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
-    public static function patch($pattern, $to = null, array $options = []){
-        $route = static::getContext()->patch($pattern, $to);
-        $route = static::applyRouteOptions($route, $options);
+    public function patch($pattern, $to = null, array $options = []){
+        $route = $this->getContext()->patch($pattern, $to);
+        $route = $this->applyRouteOptions($route, $options);
         return $route;
     }
 
@@ -129,36 +133,36 @@ class Route extends StaticProxy{
      * @param  [Closure]    $callable           the route collection handler
      * @return [Silex\ControllerCollection]     controller collection that already mounted to $prefix
      */
-    public static function group($prefix, \Closure $callable, array $options = []){
+    public function group($prefix, \Closure $callable, array $options = []){
 
         if(isset($options['before'])){
-            static::pushBeforeHandler($options['before']);
+            $this->pushBeforeHandler($options['before']);
         }
 
         if(isset($options['after'])){
-            static::pushAfterHandler($options['after']);
+            $this->pushAfterHandler($options['after']);
         }
 
         /** push the context to be accessed to callable route */
-        static::pushContext(static::$app['controllers_factory']);
+        $this->pushContext(static::$app['controllers_factory']);
 
         $callable();
 
-        $routeCollection = static::popContext();
+        $routeCollection = $this->popContext();
 
         if(isset($options['before'])){
-            $before = static::popBeforeHandler();
+            $before = $this->popBeforeHandler();
 
             $routeCollection->before($before);
         }
 
         if(isset($options['after'])){
-            $after = static::popAfterHandler();
+            $after = $this->popAfterHandler();
 
             $routeCollection->after($after);
         }
 
-        static::getContext()->mount($prefix, $routeCollection);
+        $this->getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }
@@ -169,10 +173,10 @@ class Route extends StaticProxy{
      * @param  [type] $controller [description]
      * @return [type]             [description]
      */
-    public static function resource($prefix, $controller, array $options = []){
+    public function resource($prefix, $controller, array $options = []){
         $prefix             = '/'.ltrim($prefix, '/');
         $routeCollection    = static::$app['controllers_factory'];
-        $routePrefixName    = Str::slug($prefix);
+        $routePrefixName    = static::$stringHelper->slug($prefix);
 
         $resourceRoutes     = [
             'get'           => [
@@ -222,7 +226,7 @@ class Route extends StaticProxy{
                             ->bind($routePrefixName.'_'.$routeName);
         }
 
-        foreach (static::getBeforeHandler() as $before) {
+        foreach ($this->getBeforeHandler() as $before) {
             $routeCollection->before($before);
         }
 
@@ -230,7 +234,7 @@ class Route extends StaticProxy{
             $routeCollection->before($options['before']);
         }
 
-        foreach (static::getAfterHandler() as $after) {
+        foreach ($this->getAfterHandler() as $after) {
             $routeCollection->after($after);
         }
 
@@ -238,7 +242,7 @@ class Route extends StaticProxy{
             $routeCollection->after($options['after']);
         }
 
-        $currentContext = static::getContext();
+        $currentContext = $this->getContext();
 
         $currentContext->get($prefix, $resourceRoutes['get']['handler']);
         $currentContext->post($prefix, $resourceRoutes['post']['handler']);
@@ -253,7 +257,7 @@ class Route extends StaticProxy{
      * @param  [type] $controller [description]
      * @return [type]             [description]
      */
-    public static function controller($prefix, $controller, array $options = []){
+    public function controller($prefix, $controller, array $options = []){
         $prefix             = '/'.ltrim($prefix, '/');
         $class              = new \ReflectionClass($controller);
         $controllerMethods  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -275,9 +279,9 @@ class Route extends StaticProxy{
 
                 /** the url path, index => getIndex */
                 if(in_array($httpMethod, $acceptedMethod)){
-                    $urlPath    = Str::snake(strpbrk($methodName, $uppercase));
+                    $urlPath    = static::$stringHelper->snake(strpbrk($methodName, $uppercase));
                 }else{
-                    $urlPath    = Str::snake($methodName);
+                    $urlPath    = static::$stringHelper->snake($methodName);
                     $httpMethod = 'match';
                 }
 
@@ -285,7 +289,7 @@ class Route extends StaticProxy{
                  * Build the route
                  */
                 if($urlPath == 'index'){
-                    static::getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
+                    $this->getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
                     $route = $routeCollection->{$httpMethod}('/', $controller.':'.$methodName);
                 }else if($parameterCount){
                     $urlPattern = $urlPath;
@@ -311,7 +315,7 @@ class Route extends StaticProxy{
         }
 
 
-        foreach (static::getBeforeHandler() as $before) {
+        foreach ($this->getBeforeHandler() as $before) {
             $routeCollection->before($before);
         }
 
@@ -319,7 +323,7 @@ class Route extends StaticProxy{
             $routeCollection->before($options['before']);
         }
 
-        foreach (static::getAfterHandler() as $after) {
+        foreach ($this->getAfterHandler() as $after) {
             $routeCollection->after($after);
         }
 
@@ -327,7 +331,7 @@ class Route extends StaticProxy{
             $routeCollection->after($options['after']);
         }
 
-        static::getContext()->mount($prefix, $routeCollection);
+        $this->getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }

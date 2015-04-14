@@ -45,7 +45,7 @@ return [
      * "require" : { "silex/web-profiler" : "1.*" }
      *
      */
-    'enable_profiler'       => false,
+    'enable_profiler'       => true,
 
     /**
      * This will be used by translation service provider as default locale

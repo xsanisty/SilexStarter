@@ -7,7 +7,7 @@ use Silex\Application;
 use Silex\Controller;
 use Silex\ControllerCollection;
 
-class Router{
+class RouteBuilder{
 
     /** controllers context stack */
     protected static $contextStack = [];
@@ -56,11 +56,11 @@ class Router{
     }
 
     protected function pushAfterHandler(\Closure $afterHandler){
-        static::$afterHandlerStack[] = $afterHandler;
+        array_unshift(static::$afterHandlerStack, $afterHandler);
     }
 
     protected function popAfterHandler(){
-        return array_pop(static::$afterHandlerStack);
+        return array_shift(static::$afterHandlerStack);
     }
 
     protected function getAfterHandler(){
@@ -152,14 +152,10 @@ class Router{
 
         if(isset($options['before'])){
             $before = $this->popBeforeHandler();
-
-            $routeCollection->before($before);
         }
 
         if(isset($options['after'])){
             $after = $this->popAfterHandler();
-
-            $routeCollection->after($after);
         }
 
         $this->getContext()->mount($prefix, $routeCollection);
@@ -226,26 +222,36 @@ class Router{
                             ->bind($routePrefixName.'_'.$routeName);
         }
 
+        $currentContext     = $this->getContext();
+        $parentGetHandler   = $currentContext->get($prefix, $resourceRoutes['get']['handler']);
+        $parentPostHandler  = $currentContext->post($prefix, $resourceRoutes['post']['handler']);
+
+        /** apply the middleware stack */
         foreach ($this->getBeforeHandler() as $before) {
             $routeCollection->before($before);
+            $parentGetHandler->before($before);
+            $parentPostHandler->before($before);
         }
 
         if(isset($options['before'])){
             $routeCollection->before($options['before']);
+            $parentGetHandler->before($options['before']);
+            $parentPostHandler->before($options['before']);
+
         }
 
         foreach ($this->getAfterHandler() as $after) {
             $routeCollection->after($after);
+            $parentGetHandler->after($after);
+            $parentPostHandler->after($after);
         }
 
         if(isset($options['after'])){
             $routeCollection->after($options['after']);
+            $parentGetHandler->after($options['after']);
+            $parentPostHandler->after($options['after']);
         }
 
-        $currentContext = $this->getContext();
-
-        $currentContext->get($prefix, $resourceRoutes['get']['handler']);
-        $currentContext->post($prefix, $resourceRoutes['post']['handler']);
         $currentContext->mount($prefix, $routeCollection);
 
         return $routeCollection;
@@ -289,8 +295,24 @@ class Router{
                  * Build the route
                  */
                 if($urlPath == 'index'){
-                    $this->getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
+                    $indexRoute = $this->getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
                     $route = $routeCollection->{$httpMethod}('/', $controller.':'.$methodName);
+
+                    foreach ($this->getBeforeHandler() as $before) {
+                        $indexRoute->before($before);
+                    }
+
+                    if(isset($options['before'])){
+                        $indexRoute->before($options['before']);
+                    }
+
+                    foreach ($this->getAfterHandler() as $after) {
+                        $indexRoute->after($after);
+                    }
+
+                    if(isset($options['after'])){
+                        $indexRoute->after($options['after']);
+                    }
                 }else if($parameterCount){
                     $urlPattern = $urlPath;
                     $urlParams  = $method->getParameters();

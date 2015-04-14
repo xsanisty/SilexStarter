@@ -5,13 +5,13 @@ namespace SilexStarter\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Illuminate\Support\Str;
-use SilexStarter\Router\Router;
+use SilexStarter\Router\RouteBuilder;
 
 class RouterServiceProvider implements ServiceProviderInterface{
 
     public function register(Application $app){
         $app['router'] = $app->share(function(Application $app){
-            return new Router($app, new Str);
+            return new RouteBuilder($app, new Str);
         });
     }
 

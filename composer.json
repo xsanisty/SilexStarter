@@ -5,7 +5,7 @@
     "repositories" : [
         {
             "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-admin"
+            "url" : "https://github.com/xsanisty/SilexStarter-BaseAdmin"
         }
     ],
 
@@ -15,7 +15,9 @@
         "twig/twig": "~1.16",
         "cartalyst/sentry" : "2.*",
         "symfony/filesystem" : "~2.6",
-        "illuminate/database": "~4.2",
+        "illuminate/database": "5.*",
+        "illuminate/events" : "5.0.*",
+        "patchwork/utf8" : "*",
         "xsanisty/silex-starter-admin" : "dev-develop"
     },
     "require-dev":{

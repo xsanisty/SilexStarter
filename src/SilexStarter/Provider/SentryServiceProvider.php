@@ -94,8 +94,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $loginAttribute = $app['config']['sentry.users.login_attribute'];
 
                 forward_static_call_array(
-                    array($model, 'setLoginAttributeName'),
-                    array($loginAttribute)
+                    [$model, 'setLoginAttributeName'],
+                    [$loginAttribute]
                 );
             }
 
@@ -105,8 +105,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $groupModel = $app['config']['sentry.groups.model'];
 
                 forward_static_call_array(
-                    array($model, 'setGroupModel'),
-                    array($groupModel)
+                    [$model, 'setGroupModel'],
+                    [$groupModel]
                 );
             }
 
@@ -116,8 +116,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $pivotTable = $app['config']['sentry.user_groups_pivot_table'];
 
                 forward_static_call_array(
-                    array($model, 'setUserGroupsPivot'),
-                    array($pivotTable)
+                    [$model, 'setUserGroupsPivot'],
+                    [$pivotTable]
                 );
             }
 
@@ -142,8 +142,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $userModel = $app['config']['sentry.users.model'];
 
                 forward_static_call_array(
-                    array($model, 'setUserModel'),
-                    array($userModel)
+                    [$model, 'setUserModel'],
+                    [$userModel]
                 );
             }
 
@@ -153,8 +153,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $pivotTable = $app['config']['sentry.user_groups_pivot_table'];
 
                 forward_static_call_array(
-                    array($model, 'setUserGroupsPivot'),
-                    array($pivotTable)
+                    [$model, 'setUserGroupsPivot'],
+                    [$pivotTable]
                 );
             }
 
@@ -185,8 +185,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $attemptLimit = $app['config']['sentry.throttling.attempt_limit'];
 
                 forward_static_call_array(
-                    array($model, 'setAttemptLimit'),
-                    array($attemptLimit)
+                    [$model, 'setAttemptLimit'],
+                    [$attemptLimit]
                 );
             }
             if (method_exists($model, 'setSuspensionTime'))
@@ -194,8 +194,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $suspensionTime = $app['config']['sentry.throttling.suspension_time'];
 
                 forward_static_call_array(
-                    array($model, 'setSuspensionTime'),
-                    array($suspensionTime)
+                    [$model, 'setSuspensionTime'],
+                    [$suspensionTime]
                 );
             }
 
@@ -205,8 +205,8 @@ class SentryServiceProvider implements ServiceProviderInterface{
                 $userModel = $app['config']['sentry.users.model'];
 
                 forward_static_call_array(
-                    array($model, 'setUserModel'),
-                    array($userModel)
+                    [$model, 'setUserModel'],
+                    [$userModel]
                 );
             }
 

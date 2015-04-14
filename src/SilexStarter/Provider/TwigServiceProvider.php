@@ -18,23 +18,32 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 
 class TwigServiceProvider implements ServiceProviderInterface{
 
-    public function register(Application $app){
-
+    protected function registerFilesystemLoader(){
         $app['twig.loader.filesystem'] = $app->share(function(Application $app){
             return new \Twig_Loader_Filesystem($app['config']['twig.template_dir']);
         });
+    }
 
+    protected function registerLoader(){
         $app['twig.loader'] = $app->share(function(Application $app){
             return $app['twig.loader.filesystem'];
         });
+    }
+
+
+
+    public function register(Application $app){
+        $this->registerFilesystemLoader();
+        $this->registerLoader();
 
         $app['twig'] = $app->share(function(Application $app){
             $app['config']['twig.options'] = array_replace(
-                array(
+                [
                     'charset'          => $app['charset'],
                     'debug'            => $app['debug'],
                     'strict_variables' => $app['debug'],
-                ), $app['config']['twig.options']
+                ],
+                $app['config']['twig.options']
             );
 
             $twigEnv = new \Twig_Environment(

@@ -18,14 +18,16 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 
 class TwigServiceProvider implements ServiceProviderInterface{
 
+    protected $app;
+
     protected function registerFilesystemLoader(){
-        $app['twig.loader.filesystem'] = $app->share(function(Application $app){
+        $this->app['twig.loader.filesystem'] = $this->app->share(function(Application $app){
             return new \Twig_Loader_Filesystem($app['config']['twig.template_dir']);
         });
     }
 
     protected function registerLoader(){
-        $app['twig.loader'] = $app->share(function(Application $app){
+        $this->app['twig.loader'] = $this->app->share(function(Application $app){
             return $app['twig.loader.filesystem'];
         });
     }
@@ -33,6 +35,7 @@ class TwigServiceProvider implements ServiceProviderInterface{
 
 
     public function register(Application $app){
+        $this->app = $app;
         $this->registerFilesystemLoader();
         $this->registerLoader();
 

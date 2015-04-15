@@ -26,20 +26,14 @@ class TwigServiceProvider implements ServiceProviderInterface{
         });
     }
 
-    protected function registerLoader(){
+    protected function registerTwigLoader(){
         $this->app['twig.loader'] = $this->app->share(function(Application $app){
             return $app['twig.loader.filesystem'];
         });
     }
 
-
-
-    public function register(Application $app){
-        $this->app = $app;
-        $this->registerFilesystemLoader();
-        $this->registerLoader();
-
-        $app['twig'] = $app->share(function(Application $app){
+    protected function registerTwig(){
+        $this->app['twig'] = $this->app->share(function(Application $app){
             $app['config']['twig.options'] = array_replace(
                 [
                     'charset'          => $app['charset'],
@@ -92,6 +86,13 @@ class TwigServiceProvider implements ServiceProviderInterface{
             return $twigEnv;
 
         });
+    }
+
+    public function register(Application $app){
+        $this->app = $app;
+        $this->registerFilesystemLoader();
+        $this->registerTwigLoader();
+        $this->registerTwig();
     }
 
     public function boot(Application $app){

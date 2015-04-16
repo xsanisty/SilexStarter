@@ -7,10 +7,15 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
     protected $asset;
 
     public function setUp(){
-        $this->asset = new AssetManager(
-            $this->getMock('Symfony\Component\HttpFoundation\Request'),
-            'assets'
-        );
+        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
+
+        $request->method('getHost')
+                ->willReturn('www.somehost.com');
+
+        $request->method('getScheme')
+                ->willReturn('http');
+
+        $this->asset = new AssetManager($request, 'assets');
     }
 
     public function tearDown(){
@@ -18,6 +23,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
 
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::javascript
+     */
     public function test_load_js_file(){
         $this->asset->javascript('somefile.js');
         assertEquals(
@@ -27,6 +35,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
 
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::stylesheet
+     */
     public function test_load_css_file(){
         $this->asset->stylesheet('style.css');
         assertEquals(
@@ -35,6 +46,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::javascript
+     */
     public function test_load_multiple_js_file(){
 
         $this->asset->javascript(['somefile.js', 'anotherfile.js']);
@@ -45,6 +59,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::stylesheet
+     */
     public function test_load_multiple_css_file(){
         $this->asset->stylesheet(['bootstrap.css', 'style.css']);
         assertEquals(
@@ -54,6 +71,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::javascript
+     */
     public function test_load_namespaced_js_file(){
 
         $this->asset->javascript('@namespace/external.js');
@@ -63,6 +83,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::stylesheet
+     */
     public function test_load_namespaced_css_file(){
         $this->asset->stylesheet('@namespace/style.css');
         assertEquals(
@@ -71,6 +94,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::javascript
+     */
     public function test_load_external_js_file(){
 
         $this->asset->javascript([
@@ -84,6 +110,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::stylesheet
+     */
     public function test_load_external_css_file(){
 
         $this->asset->stylesheet([
@@ -97,6 +126,9 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::load
+     */
     public function test_load_wildcard_js_file(){
         $this->asset->load('@namespace/external.js');
         assertEquals(
@@ -105,11 +137,86 @@ class AssetManagerTest extends PHPUnit_Framework_TestCase{
         );
     }
 
+    /**
+     * @covers SilexStarter\Asset\AssetManager::stylesheet
+     */
     public function test_load_wildcard_css_file(){
         $this->asset->load('@namespace/style.css');
         assertEquals(
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"/assets/namespace/style.css\">\n",
             $this->asset->renderCss()
+        );
+    }
+
+    /**
+     * @covers SilexStarter\Asset\AssetManager::resolvePath
+     */
+    public function test_resolve_external_path(){
+        assertEquals(
+            'http://cdn.somehost.com/style.css',
+            $this->asset->resolvePath('http://cdn.somehost.com/style.css')
+        );
+    }
+
+    /**
+     * @covers SilexStarter\Asset\AssetManager::resolvePath
+     */
+    public function test_resolve_namespaced_path(){
+        assertEquals(
+            '/assets/namespace/style.css',
+            $this->asset->resolvePath('@namespace/style.css')
+        );
+
+        assertEquals(
+            '/assets/namespace/subdir/style.css',
+            $this->asset->resolvePath('@namespace/subdir/style.css')
+        );
+    }
+
+    /**
+     * @covers SilexStarter\Asset\AssetManager::resolvePath
+     */
+    public function test_resolve_path(){
+
+        assertEquals(
+            '/assets/style.css',
+            $this->asset->resolvePath('style.css')
+        );
+
+        assertEquals(
+            '/assets/subdir/style.css',
+            $this->asset->resolvePath('subdir/style.css')
+        );
+    }
+
+    /**
+     * @covers SilexStarter\Asset\AssetManager::resolvePath
+     */
+    public function test_resolve_absolute_path(){
+
+        assertEquals(
+            'http://www.somehost.com/assets/style.css',
+            $this->asset->resolvePath('style.css', true)
+        );
+
+        assertEquals(
+            'http://www.somehost.com/assets/subdir/style.css',
+            $this->asset->resolvePath('subdir/style.css', true)
+        );
+    }
+
+    /**
+     * @covers SilexStarter\Asset\AssetManager::resolvePath
+     */
+    public function test_resolve_namespaced_absolute_path(){
+        assertEquals(
+            'http://www.somehost.com/assets/namespace/style.css',
+            $this->asset->resolvePath('@namespace/style.css', true)
+        );
+
+        assertEquals(
+            'http://www.somehost.com/assets/namespace/subdir/style.css',
+            $this->asset->resolvePath('@namespace/subdir/style.css', true)
         );
     }
 }

@@ -9,15 +9,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssetManager{
 
-    protected $basepath;
+    protected $assetBasePath;
     protected $aliases;
     protected $request;
     protected $js   = [];
     protected $css  = [];
 
-    public function __construct(Request $request, $basepath = ''){
+    public function __construct(Request $request, $assetBasePath = ''){
         $this->request  = $request;
-        $this->basepath = $basepath;
+        $this->assetBasePath = $assetBasePath;
+    }
+
+    public function setBasePath($assetBasePath){
+        $this->assetBasePath = $assetBasePath;
+    }
+
+    public function getBasePath(){
+        return $this->assetBasePath;
     }
 
     /**
@@ -26,7 +34,13 @@ class AssetManager{
      * @return void
      */
     public function js($jsfile){
-        $this->js[] = $jsfile;
+        if(is_array($jsfile)){
+            foreach ($jsfile as $js) {
+                $this->js[] = $js;
+            }
+        }else{
+            $this->js[] = $jsfile;
+        }
     }
 
     /**
@@ -35,7 +49,13 @@ class AssetManager{
      * @return void
      */
     public function css($cssfile){
-        $this->css[] = $cssfile;
+        if(is_array($cssfile)){
+            foreach ($cssfile as $css) {
+                $this->css[] = $css;
+            }
+        }else{
+            $this->css[] = $cssfile;
+        }
     }
 
     /**
@@ -110,7 +130,7 @@ class AssetManager{
         }
 
         /** if file is single file, render immediately */
-        return sprintf($tagFormat, $this->resolvePath($cssfile));
+        return sprintf($tagFormat, $this->resolvePath($file));
     }
 
     /**
@@ -123,17 +143,21 @@ class AssetManager{
         $namespace = [];
         preg_match("/@(.*?)\//s", $file, $namespace);
 
-        /** if namespace exists, resolve the namespace */
-        if($namespace){
-            $file = str_replace($namespace[0], $this->basepath . '/' . $namespace[1] . '/', $file);
-        }
-
         /** if refer to external path, return immediately (begin with //, http://, https://) */
         if('http:' == substr($file, 0, 5) || '//' == substr($file, 0, 2) || 'https:' == substr($file, 0, 6)){
             return $file;
         }
 
-        return (($absolute) ? $this->request->getScheme() . '://' . $this->request->getHost() : '') . $this->request->getBasePath() . '/' . ltrim($file, '/');
+        /** if namespace exists, resolve the namespace */
+        if($namespace){
+            $file = str_replace($namespace[0], $this->assetBasePath . '/' . $namespace[1] . '/', $file);
+        }else{
+            $file = $this->assetBasePath . '/' . $file;
+        }
+
+        return  (($absolute) ? $this->request->getScheme() . '://' . $this->request->getHost() : '') .
+                $this->request->getBasePath() . '/' .
+                ltrim($file, '/');
     }
 
 }

@@ -32,3 +32,41 @@
  */
 
 Route::get('/', 'MainController:index');
+
+Route::group('/group1', function(){
+
+    Route::group('/group2', function(){
+
+        Route::group('/group3', function(){
+
+            Route::get('/', function(){
+                return 'test';
+            });
+
+            Route::controller('/controller', 'TestController' );
+            Route::get('anotherTest', 'TestController::getTest');
+            Route::resource('/resource', 'ResourceController');
+
+        }, [
+        'before' => function(){
+            echo 'group3 middleware <br>';
+        },
+        'after' => function(){
+            echo 'group3 after middleware <br>';
+        }]);
+
+    }, [
+    'before' => function(){
+        echo 'group2 middleware <br>';
+    },
+    'after' => function(){
+        echo 'group2 after middleware <br>';
+    }]);
+
+}, [
+'before' => function(){
+    echo 'group1 middleware <br>';
+},
+'after' => function(){
+    echo 'group1 after middleware <br>';
+}]);

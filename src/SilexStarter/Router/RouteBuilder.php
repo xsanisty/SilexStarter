@@ -10,65 +10,84 @@ use Silex\ControllerCollection;
 class RouteBuilder{
 
     /** controllers context stack */
-    protected static $contextStack = [];
+    protected $contextStack = [];
 
     /** before handler stack */
-    protected static $beforeHandlerStack = [];
+    protected $beforeHandlerStack = [];
 
     /** after handler stack */
-    protected static $afterHandlerStack = [];
+    protected $afterHandlerStack = [];
 
-    protected static $app;
+    /** Silex\Application instance */
+    protected $app;
 
-    protected static $stringHelper;
+    /** Illuminate\Support\Str instance */
+    protected $stringHelper;
 
+    /**
+     * Construct the RouteBuilder object
+     * @param Application $app
+     * @param Str         $str
+     */
     public function __construct(Application $app, Str $str){
-        static::$app            = $app;
-        static::$stringHelper   = $str;
+        $this->app            = $app;
+        $this->stringHelper   = $str;
     }
 
+    /**
+     * Push the ControllerCollection into context stack,
+     * the lastest instance in context will be used by get, match, etc for route grouping
+     * @param  ControllerCollection $context
+     */
     protected function pushContext(ControllerCollection $context){
-        static::$contextStack[] = $context;
+        $this->contextStack[] = $context;
     }
 
+    /**
+     * Retrieve the latest ControllerCollection and remove the instance from the context
+     */
     protected function popContext(){
-        return array_pop(static::$contextStack);
+        return array_pop($this->contextStack);
     }
 
+    /**
+     * Get the current context, the latest ControllerCollection in context stack
+     * or root ControllerCollection instance if context stack is empty
+     */
     protected function getContext(){
-        if(static::$contextStack){
-            return end(static::$contextStack);
+        if($this->contextStack){
+            return end($this->contextStack);
         }else{
-            return static::$app['controllers'];
+            return $this->app['controllers'];
         }
     }
 
     protected function pushBeforeHandler(\Closure $beforeHandler){
-        static::$beforeHandlerStack[] = $beforeHandler;
+        $this->beforeHandlerStack[] = $beforeHandler;
     }
 
     protected function popBeforeHandler(){
-        return array_pop(static::$beforeHandlerStack);
+        return array_pop($this->beforeHandlerStack);
     }
 
     protected function getBeforeHandler(){
-        return static::$beforeHandlerStack;
+        return $this->beforeHandlerStack;
     }
 
     protected function pushAfterHandler(\Closure $afterHandler){
-        array_unshift(static::$afterHandlerStack, $afterHandler);
+        array_unshift($this->afterHandlerStack, $afterHandler);
     }
 
     protected function popAfterHandler(){
-        return array_shift(static::$afterHandlerStack);
+        return array_shift($this->afterHandlerStack);
     }
 
     protected function getAfterHandler(){
-        return static::$afterHandlerStack;
+        return $this->afterHandlerStack;
     }
 
-    protected function applyRouteOptions(Controller $route, array $option){
-        foreach (static::getBeforeHandler() as $before) {
+    protected function applyControllerOption(Controller $route, array $options){
+        foreach ($this->getBeforeHandler() as $before) {
             $route->before($before);
         }
 
@@ -76,12 +95,37 @@ class RouteBuilder{
             $route->before($options['before']);
         }
 
-        foreach (static::getAfterHandler() as $after) {
+        if(isset($options['after'])){
+            $route->after($options['after']);
+        }
+
+        foreach ($this->getAfterHandler() as $after) {
             $route->after($after);
+        }
+
+        if(isset($options['as'])){
+            $route->bind($options['as']);
+        }
+
+        return $route;
+    }
+
+
+    protected function applyControllerCollectionOption(ControllerCollection $route, array $options){
+        foreach ($this->getBeforeHandler() as $before) {
+            $route->before($before);
+        }
+
+        if(isset($options['before'])){
+            $route->before($options['before']);
         }
 
         if(isset($options['after'])){
             $route->after($options['after']);
+        }
+
+        foreach ($this->getAfterHandler() as $after) {
+            $route->after($after);
         }
 
         if(isset($options['as'])){
@@ -93,37 +137,37 @@ class RouteBuilder{
 
     public function match($pattern, $to = null, array $options = []){
         $route = $this->getContext()->match($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
     public function get($pattern, $to = null, array $options = []){
         $route = $this->getContext()->get($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
     public function post($pattern, $to = null, array $options = []){
         $route = $this->getContext()->post($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
     public function put($pattern, $to = null, array $options = []){
         $route = $this->getContext()->put($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
     public function delete($pattern, $to = null, array $options = []){
         $route = $this->getContext()->delete($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
     public function patch($pattern, $to = null, array $options = []){
         $route = $this->getContext()->patch($pattern, $to);
-        $route = $this->applyRouteOptions($route, $options);
+        $route = $this->applyControllerOption($route, $options);
         return $route;
     }
 
@@ -144,18 +188,18 @@ class RouteBuilder{
         }
 
         /** push the context to be accessed to callable route */
-        $this->pushContext(static::$app['controllers_factory']);
+        $this->pushContext($this->app['controllers_factory']);
 
         $callable();
 
         $routeCollection = $this->popContext();
 
         if(isset($options['before'])){
-            $before = $this->popBeforeHandler();
+            $this->popBeforeHandler();
         }
 
         if(isset($options['after'])){
-            $after = $this->popAfterHandler();
+            $this->popAfterHandler();
         }
 
         $this->getContext()->mount($prefix, $routeCollection);
@@ -171,8 +215,8 @@ class RouteBuilder{
      */
     public function resource($prefix, $controller, array $options = []){
         $prefix             = '/'.ltrim($prefix, '/');
-        $routeCollection    = static::$app['controllers_factory'];
-        $routePrefixName    = static::$stringHelper->slug($prefix);
+        $routeCollection    = $this->app['controllers_factory'];
+        $routePrefixName    = $this->stringHelper->slug($prefix);
 
         $resourceRoutes     = [
             'get'           => [
@@ -240,16 +284,16 @@ class RouteBuilder{
 
         }
 
-        foreach ($this->getAfterHandler() as $after) {
-            $routeCollection->after($after);
-            $parentGetHandler->after($after);
-            $parentPostHandler->after($after);
-        }
-
         if(isset($options['after'])){
             $routeCollection->after($options['after']);
             $parentGetHandler->after($options['after']);
             $parentPostHandler->after($options['after']);
+        }
+
+        foreach ($this->getAfterHandler() as $after) {
+            $routeCollection->after($after);
+            $parentGetHandler->after($after);
+            $parentPostHandler->after($after);
         }
 
         $currentContext->mount($prefix, $routeCollection);
@@ -267,7 +311,7 @@ class RouteBuilder{
         $prefix             = '/'.ltrim($prefix, '/');
         $class              = new \ReflectionClass($controller);
         $controllerMethods  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
-        $routeCollection    = static::$app['controllers_factory'];
+        $routeCollection    = $this->app['controllers_factory'];
         $uppercase          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $acceptedMethod     = ['get', 'post', 'put', 'delete', 'head', 'options'];
 
@@ -285,9 +329,9 @@ class RouteBuilder{
 
                 /** the url path, index => getIndex */
                 if(in_array($httpMethod, $acceptedMethod)){
-                    $urlPath    = static::$stringHelper->snake(strpbrk($methodName, $uppercase));
+                    $urlPath    = $this->stringHelper->snake(strpbrk($methodName, $uppercase));
                 }else{
-                    $urlPath    = static::$stringHelper->snake($methodName);
+                    $urlPath    = $this->stringHelper->snake($methodName);
                     $httpMethod = 'match';
                 }
 
@@ -298,21 +342,7 @@ class RouteBuilder{
                     $indexRoute = $this->getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
                     $route = $routeCollection->{$httpMethod}('/', $controller.':'.$methodName);
 
-                    foreach ($this->getBeforeHandler() as $before) {
-                        $indexRoute->before($before);
-                    }
-
-                    if(isset($options['before'])){
-                        $indexRoute->before($options['before']);
-                    }
-
-                    foreach ($this->getAfterHandler() as $after) {
-                        $indexRoute->after($after);
-                    }
-
-                    if(isset($options['after'])){
-                        $indexRoute->after($options['after']);
-                    }
+                    $this->applyControllerOption($indexRoute, $options);
                 }else if($parameterCount){
                     $urlPattern = $urlPath;
                     $urlParams  = $method->getParameters();
@@ -336,7 +366,6 @@ class RouteBuilder{
             }
         }
 
-
         foreach ($this->getBeforeHandler() as $before) {
             $routeCollection->before($before);
         }
@@ -345,12 +374,12 @@ class RouteBuilder{
             $routeCollection->before($options['before']);
         }
 
-        foreach ($this->getAfterHandler() as $after) {
-            $routeCollection->after($after);
-        }
-
         if(isset($options['after'])){
             $routeCollection->after($options['after']);
+        }
+
+        foreach ($this->getAfterHandler() as $after) {
+            $routeCollection->after($after);
         }
 
         $this->getContext()->mount($prefix, $routeCollection);

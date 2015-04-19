@@ -2,18 +2,18 @@
 
 return [
 
-    /**
+    /*
      * just an environment variable, this can be 'development' or 'production'
      */
     'environment'           => 'development',
 
-    /**
+    /*
      * When enabled, this will make use the laravel's facade/static proxy as the shortcut to the registered
      * services, to people who hate this :D, better to set this false and access the service directly.
      */
     'enable_static_proxy'   => true,
 
-    /**
+    /*
      * When enabled, this will make SilexStarter to be modular app, it will seek and activate the registered
      * modules in config/modules.php
      *
@@ -22,7 +22,7 @@ return [
      */
     'enable_module'         => true,
 
-    /**
+    /*
      * When controller as service is enabled, SilexStarter will try to find all avaiable controllers in
      * all registered controller folders including module's controller if enabled, and register it as a
      * service.
@@ -34,12 +34,12 @@ return [
      */
     'controller_as_service' => true,
 
-    /**
+    /*
      * Just debug flag
      */
     'debug'                 => true,
 
-    /**
+    /*
      * This require the silex webprofiler to be installed, and the service provider registered
      *
      * "require" : { "silex/web-profiler" : "1.*" }
@@ -47,12 +47,12 @@ return [
      */
     'enable_profiler'       => false,
 
-    /**
+    /*
      * This will be used by translation service provider as default locale
      */
     'locale'                => 'en_US',
 
-    /**
+    /*
      * Path information
      */
     'path.root'             => ROOT_PATH,

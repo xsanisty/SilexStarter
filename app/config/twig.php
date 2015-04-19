@@ -5,5 +5,5 @@ return [
     'options'       => [
         'charset'   => 'UTF-8',
         'cache'     => APP_PATH.'/storage/view',
-    ]
+    ],
 ];

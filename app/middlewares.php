@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * You can place the application middleware
  *
  * App::before(function(Request $req, Application $app){

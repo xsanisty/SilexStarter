@@ -1,7 +1,9 @@
 <?php
 
-class MainController{
-    public function index(){
-        return View::make('index');
+class MainController
+{
+    public function index()
+    {
+        return Response::make('index');
     }
 }

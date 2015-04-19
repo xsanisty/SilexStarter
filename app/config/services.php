@@ -21,6 +21,6 @@ return [
     ],
 
     'console'   => [
-        'SilexStarter\Provider\ConsoleServiceProvider'
-    ]
+        'SilexStarter\Provider\ConsoleServiceProvider',
+    ],
 ];

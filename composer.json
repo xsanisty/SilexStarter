@@ -35,8 +35,10 @@
                 "app/repositories/",
                 "app/services",
                 "app/tests/app",
-                "app/tests/src",
                 "app/tests"
+            ],
+            "SilexStarter\\" : [
+                "app/tests/src"
             ]
         }
     },

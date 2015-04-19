@@ -12,6 +12,10 @@
         <testsuite name="SilexStarter core tests">
             <directory>tests/src</directory>
         </testsuite>
+
+        <testsuite name="SilexStarter application tests">
+            <directory>tests/app</directory>
+        </testsuite>
     </testsuites>
 
 </phpunit>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade as StaticProxy;
 class Router extends StaticProxy{
 
     protected static function getFacadeAccessor(){
-        return 'router';
+        return 'route_builder';
     }
 
 }

@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/xsanisty/SilexStarter.svg?branch=develop)](https://travis-ci.org/xsanisty/SilexStarter)
+
+
 # SilexStarter
 
 SilexStarter is a starter application built on the top of Silex framework, Laravel's Eloquent, Cartalyst Sentry, and some other third party and built in components.

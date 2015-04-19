@@ -7,6 +7,7 @@ return [
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
+        'SilexStarter\Provider\ResponseBuilderServiceProvider',
         'SilexStarter\Provider\RouterServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
         'SilexStarter\Provider\SentryServiceProvider',

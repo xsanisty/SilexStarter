@@ -34,7 +34,7 @@ class ConfigurationContainer implements ArrayAccess
      *
      * @return [void]
      */
-    public function load($file, $configKey = null)
+    public function load($file, $configKey = '')
     {
         $fileChunk  = explode('::', $file, 2);
         $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
@@ -107,7 +107,7 @@ class ConfigurationContainer implements ArrayAccess
      * @param string $dir       the config directory
      * @param string $namespace config namespace
      */
-    public function addDirectory($directory, $namespace = null)
+    public function addDirectory($directory, $namespace = '')
     {
         $directory = rtrim($directory, '/');
 

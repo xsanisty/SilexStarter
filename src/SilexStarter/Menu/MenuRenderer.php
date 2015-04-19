@@ -6,11 +6,13 @@ class MenuRenderer implements MenuRendererInterface
 {
     protected $menu;
 
-    public function render(MenuContainer $menu){
+    public function render(MenuContainer $menu)
+    {
         return $this->createHtml($menu);
     }
 
-    protected function createHtml(MenuContainer $menu){
+    protected function createHtml(MenuContainer $menu)
+    {
         $format = '<li class="%s" id="%s"><a href="%s">%s  %s</a> %s </li>';
         $html   = ($menu->getLevel() == 0) ? '<ul class="sidebar">' : '<ul>';
         foreach ($menu->getItems() as $item) {

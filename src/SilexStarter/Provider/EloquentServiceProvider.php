@@ -7,13 +7,13 @@ use Illuminate\Events\Dispatcher;
 use Silex\ServiceProviderInterface;
 use Illuminate\Database\Capsule\Manager as DatabaseManager;
 
-class EloquentServiceProvider implements ServiceProviderInterface{
-
-    public function register(Application $app){
-
-        $app['db'] = $app->share(function($app){
-            $databaseManager = new DatabaseManager;
-            $eventDispatcher = new Dispatcher;
+class EloquentServiceProvider implements ServiceProviderInterface
+{
+    public function register(Application $app)
+    {
+        $app['db'] = $app->share(function ($app) {
+            $databaseManager = new DatabaseManager();
+            $eventDispatcher = new Dispatcher();
 
             $defaultConnection  = $app['config']['database']['default'];
             $connectionConfig   = $app['config']['database']['connections'];
@@ -26,7 +26,8 @@ class EloquentServiceProvider implements ServiceProviderInterface{
         });
     }
 
-    public function boot(Application $app){
+    public function boot(Application $app)
+    {
         $app['db']->bootEloquent();
     }
 }

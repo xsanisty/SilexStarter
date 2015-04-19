@@ -4,8 +4,10 @@ namespace SilexStarter\StaticProxy;
 
 use Illuminate\Support\Facades\Facade as StaticProxy;
 
-class Config extends StaticProxy{
-    protected static function getFacadeAccessor(){
+class Config extends StaticProxy
+{
+    protected static function getFacadeAccessor()
+    {
         return 'config';
     }
 }

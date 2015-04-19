@@ -2,13 +2,14 @@
 
 namespace SilexStarter\Contracts;
 
-interface ModuleInstallerInterface extends ModuleInterface{
-
+interface ModuleInstallerInterface extends ModuleInterface
+{
     /**
      * Installing the module, covering:
      *     - publishing assets file
      *     - creating the database table
-     *     - etc
+     *     - etc.
+     *
      * @return [type] [description]
      */
     public function install();
@@ -17,7 +18,8 @@ interface ModuleInstallerInterface extends ModuleInterface{
      * Uninstalling the module, covering:
      *     - dropping table
      *     - removing asset file
-     *     - etc
+     *     - etc.
+     *
      * @return [type] [description]
      */
     public function uninstall();

@@ -2,21 +2,45 @@
 
 namespace SilexStarter\Menu;
 
-class MenuManager{
-
+class MenuManager
+{
     protected $menuContainers = [];
 
-    public function create($name){
+    /**
+     * [create description].
+     *
+     * @param [type] $name [description]
+     *
+     * @return [type] [description]
+     */
+    public function create($name)
+    {
         $this->menuContainers[$name] = new MenuContainer($name);
 
         return $this->menuContainers[$name];
     }
 
-    public function get($name){
+    /**
+     * [get description].
+     *
+     * @param [type] $name [description]
+     *
+     * @return [type] [description]
+     */
+    public function get($name)
+    {
         return $this->menuContainers[$name];
     }
 
-    public function render($name){
+    /**
+     * [render description].
+     *
+     * @param [type] $name [description]
+     *
+     * @return [type] [description]
+     */
+    public function render($name)
+    {
         return $this->menuContainers[$name]->render();
     }
 }

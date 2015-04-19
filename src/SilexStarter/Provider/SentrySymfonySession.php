@@ -10,18 +10,18 @@ class SentrySymfonySession implements SessionInterface
     private $session;
     private $key;
 
-    function __construct(SymfonySessionInterface $session, $key = null)
+    public function __construct(SymfonySessionInterface $session, $key = null)
     {
         $this->session = $session;
         $this->key = $key ? $key : 'cartalyst_sentry';
     }
 
-    function getKey()
+    public function getKey()
     {
         return $this->key;
     }
 
-    function put($value)
+    public function put($value)
     {
         $this->session->set($this->key, $value);
     }

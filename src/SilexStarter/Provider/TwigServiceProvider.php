@@ -10,30 +10,30 @@ use SilexStarter\TwigExtension\TwigAssetExtension;
 use SilexStarter\TwigExtension\TwigMenuExtension;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Extension\SecurityExtension;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 
-class TwigServiceProvider implements ServiceProviderInterface{
-
+class TwigServiceProvider implements ServiceProviderInterface
+{
     protected $app;
 
-    protected function registerFilesystemLoader(){
-        $this->app['twig.loader.filesystem'] = $this->app->share(function(Application $app){
+    protected function registerFilesystemLoader()
+    {
+        $this->app['twig.loader.filesystem'] = $this->app->share(function (Application $app) {
             return new \Twig_Loader_Filesystem($app['config']['twig.template_dir']);
         });
     }
 
-    protected function registerTwigLoader(){
-        $this->app['twig.loader'] = $this->app->share(function(Application $app){
+    protected function registerTwigLoader()
+    {
+        $this->app['twig.loader'] = $this->app->share(function (Application $app) {
             return $app['twig.loader.filesystem'];
         });
     }
 
-    protected function registerTwig(){
-        $this->app['twig'] = $this->app->share(function(Application $app){
+    protected function registerTwig()
+    {
+        $this->app['twig'] = $this->app->share(function (Application $app) {
             $app['config']['twig.options'] = array_replace(
                 [
                     'charset'          => $app['charset'],
@@ -56,7 +56,7 @@ class TwigServiceProvider implements ServiceProviderInterface{
                 $twigEnv->addExtension(new Twig_Extension_Debug());
             }
 
-            if($app['enable_profiler']){
+            if ($app['enable_profiler']) {
                 $twigEnv->addGlobal('app', $app);
             }
 
@@ -88,14 +88,15 @@ class TwigServiceProvider implements ServiceProviderInterface{
         });
     }
 
-    public function register(Application $app){
+    public function register(Application $app)
+    {
         $this->app = $app;
         $this->registerFilesystemLoader();
         $this->registerTwigLoader();
         $this->registerTwig();
     }
 
-    public function boot(Application $app){
-
+    public function boot(Application $app)
+    {
     }
 }

@@ -2,70 +2,116 @@
 
 namespace SilexStarter\Menu;
 
-use InvalidArgumentException;
-
-class MenuContainer{
+class MenuContainer
+{
     /**
-     * List of menu item
+     * List of menu item.
+     *
      * @var SilexStarter\Menu\MenuItem
      */
     protected $items = [];
 
     /**
-     * The menu renderer for rendering the collection
-     * @var SilexStarter\Menu\MenuRenderer
+     * The menu renderer for rendering the collection.
+     *
+     * @var SilexStarter\Menu\MenuRendererInterface
      */
     protected $renderer;
 
     /**
-     * The collection name
+     * The collection name.
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * Nested menu level
-     * @var integer
+     * Nested menu level.
+     *
+     * @var int
      */
     protected $level = 0;
 
-    public function __construct($name){
+    /**
+     * [__construct description].
+     *
+     * @param [type] $name [description]
+     */
+    public function __construct($name)
+    {
         $this->name = $name;
     }
 
-    public function getLevel(){
+    /**
+     * [getLevel description].
+     *
+     * @return [type] [description]
+     */
+    public function getLevel()
+    {
         return $this->level;
     }
 
-    public function setLevel($level){
+    /**
+     * [setLevel description].
+     *
+     * @param [type] $level [description]
+     */
+    public function setLevel($level)
+    {
         $this->level = $level;
         foreach ($this->items as $item) {
             $item->setLevel($level);
         }
     }
 
-    public function createItem($name, array $attributes){
+    /**
+     * [createItem description].
+     *
+     * @param [type] $name       [description]
+     * @param array  $attributes [description]
+     *
+     * @return [type] [description]
+     */
+    public function createItem($name, array $attributes)
+    {
         $attributes['name'] = $name;
         $this->items[$name] = new MenuItem($attributes);
 
         return $this->items[$name];
     }
 
-    public function addItem(MenuItem $menu){
+    /**
+     * [addItem description].
+     *
+     * @param MenuItem $menu [description]
+     */
+    public function addItem(MenuItem $menu)
+    {
         $this->items[$menu->getName()] = $menu;
     }
 
-    public function removeItem($name){
-        if(isset($this->items[$name])){
+    /**
+     * [removeItem description].
+     *
+     * @param [type] $name [description]
+     *
+     * @return [type] [description]
+     */
+    public function removeItem($name)
+    {
+        if (isset($this->items[$name])) {
             unset($this->items[$name]);
         }
     }
 
-    public function hasItem(){
-        return count($this->items) !== 0;
-    }
-
-    public function setActive($name){
+    /**
+     * [setActive description].
+     *
+     * @param [type] $name [description]
+     */
+    public function setActive($name)
+    {
         $names = explode('.', $name);
         $menu  = $this;
         $item  = null;
@@ -78,26 +124,51 @@ class MenuContainer{
         return $item->setActive(true);
     }
 
-    public function getItem($name){
-        if(isset($this->items[$name])){
+    /**
+     * [getItem description].
+     *
+     * @param [type] $name [description]
+     *
+     * @return [type] [description]
+     */
+    public function getItem($name)
+    {
+        if (isset($this->items[$name])) {
             return $this->items[$name];
         }
 
         throw new Exception("Can not find menu with name $name", 1);
-
     }
 
-    public function getItems(){
+    /**
+     * [getItems description].
+     *
+     * @return [type] [description]
+     */
+    public function getItems()
+    {
         return $this->items;
     }
 
-    public function render(){
-        if(!is_null($this->renderer)){
+    /**
+     * [render description].
+     *
+     * @return [type] [description]
+     */
+    public function render()
+    {
+        if (!is_null($this->renderer)) {
             return $this->renderer->render($this);
         }
     }
 
-    public function setRenderer(MenuRendererInterface $renderer){
+    /**
+     * [setRenderer description].
+     *
+     * @param MenuRendererInterface $renderer [description]
+     */
+    public function setRenderer(MenuRendererInterface $renderer)
+    {
         $this->renderer = $renderer;
     }
 }

@@ -10,20 +10,22 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ResponseBuilder{
-
+class ResponseBuilder
+{
     protected $twig;
 
-    public function __construct(Twig_Environment $twig){
+    public function __construct(Twig_Environment $twig)
+    {
         $this->twig = $twig;
     }
 
     /**
      * Return a new response from the application.
      *
-     * @param  string  $content
-     * @param  int     $status
-     * @param  array   $headers
+     * @param string $content
+     * @param int    $status
+     * @param array  $headers
+     *
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function make($content = '', $status = 200, array $headers = [])
@@ -33,25 +35,25 @@ class ResponseBuilder{
 
     /**
      *
-     *
      */
-    public function view($template, array $data = [], $status = 200, array $headers = []){
+    public function view($template, array $data = [], $status = 200, array $headers = [])
+    {
         return new Response($this->twig->render($template.'.twig', $data), $status, $headers);
     }
 
     /**
      * Return a new JSON response from the application.
      *
-     * @param  string|array  $data
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
+     * @param string|array $data
+     * @param int          $status
+     * @param array        $headers
+     * @param int          $options
+     *
      * @return Symfony\Component\HttpFoundation\JsonResponse
      */
     public function json($data = [], $status = 200, array $headers = [], array $options = [])
     {
-        if ($data instanceof ArrayableInterface)
-        {
+        if ($data instanceof ArrayableInterface) {
             $data = $data->toArray();
         }
 
@@ -61,11 +63,12 @@ class ResponseBuilder{
     /**
      * Return a new JSONP response from the application.
      *
-     * @param  string  $callback
-     * @param  string|array  $data
-     * @param  int    $status
-     * @param  array  $headers
-     * @param  int    $options
+     * @param string       $callback
+     * @param string|array $data
+     * @param int          $status
+     * @param array        $headers
+     * @param int          $options
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function jsonp($callback, $data = [], $status = 200, array $headers = [], array $options = [])
@@ -76,9 +79,10 @@ class ResponseBuilder{
     /**
      * Return a new streamed response from the application.
      *
-     * @param  \Closure  $callback
-     * @param  int      $status
-     * @param  array    $headers
+     * @param \Closure $callback
+     * @param int      $status
+     * @param array    $headers
+     *
      * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function stream($callback, $status = 200, array $headers = [])
@@ -89,18 +93,18 @@ class ResponseBuilder{
     /**
      * Create a new file download response.
      *
-     * @param  \SplFileInfo|string  $file
-     * @param  string  $name
-     * @param  array   $headers
-     * @param  null|string  $disposition
+     * @param \SplFileInfo|string $file
+     * @param string              $name
+     * @param array               $headers
+     * @param null|string         $disposition
+     *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function file($file, $name = null, array $headers = [], $disposition = 'attachment')
     {
         $response = new BinaryFileResponse($file, 200, $headers, true, $disposition);
 
-        if ( ! is_null($name))
-        {
+        if (!is_null($name)) {
             return $response->setContentDisposition($disposition, $name, str_replace('%', '', Str::ascii($name)));
         }
 
@@ -108,12 +112,15 @@ class ResponseBuilder{
     }
 
     /**
-     * [redirect description]
-     * @param  [type] $url    [description]
-     * @param  [type] $status [description]
-     * @return [type]         [description]
+     * [redirect description].
+     *
+     * @param [type] $url    [description]
+     * @param [type] $status [description]
+     *
+     * @return [type] [description]
      */
-    public function redirect($url, $status = 302){
+    public function redirect($url, $status = 302)
+    {
         return new RedirectResponse($url, $status);
     }
 }

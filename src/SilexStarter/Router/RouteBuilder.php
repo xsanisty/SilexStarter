@@ -110,31 +110,6 @@ class RouteBuilder{
         return $route;
     }
 
-
-    protected function applyControllerCollectionOption(ControllerCollection $route, array $options){
-        foreach ($this->getBeforeHandler() as $before) {
-            $route->before($before);
-        }
-
-        if(isset($options['before'])){
-            $route->before($options['before']);
-        }
-
-        if(isset($options['after'])){
-            $route->after($options['after']);
-        }
-
-        foreach ($this->getAfterHandler() as $after) {
-            $route->after($after);
-        }
-
-        if(isset($options['as'])){
-            $route->bind($options['as']);
-        }
-
-        return $route;
-    }
-
     public function match($pattern, $to = null, array $options = []){
         $route = $this->getContext()->match($pattern, $to);
         $route = $this->applyControllerOption($route, $options);

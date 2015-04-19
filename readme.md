@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/xsanisty/SilexStarter.svg?branch=develop)](https://travis-ci.org/xsanisty/SilexStarter)
-
+[![Build Status](https://scrutinizer-ci.com/g/xsanisty/SilexStarter/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/xsanisty/SilexStarter/build-status/develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xsanisty/SilexStarter/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/xsanisty/SilexStarter/?branch=develop)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/a30a66f9-8110-40c5-8a35-f3c1697dde55/mini.png)](https://insight.sensiolabs.com/projects/a30a66f9-8110-40c5-8a35-f3c1697dde55)
 
 # SilexStarter
 

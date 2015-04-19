@@ -8,7 +8,7 @@ return [
         'SilexStarter\Provider\ModuleServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
-        'SilexStarter\Provider\RouterServiceProvider',
+        'SilexStarter\Provider\RouteBuilderServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
         'SilexStarter\Provider\SentryServiceProvider',
         'SilexStarter\Provider\FilesystemServiceProvider',

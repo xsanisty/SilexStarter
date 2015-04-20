@@ -2,7 +2,7 @@
 
 namespace SilexStarter\Asset;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Simple asset manager for queueing and rendering asset link.
@@ -15,7 +15,7 @@ class AssetManager
     protected $js   = [];
     protected $css  = [];
 
-    public function __construct(Request $request, $assetBasePath = '')
+    public function __construct(RequestStack $request, $assetBasePath = '')
     {
         $this->request  = $request;
         $this->assetBasePath = $assetBasePath;
@@ -176,8 +176,8 @@ class AssetManager
             $file = $this->assetBasePath.'/'.$file;
         }
 
-        return  (($absolute) ? $this->request->getScheme().'://'.$this->request->getHost() : '').
-                $this->request->getBasePath().'/'.
+        return  (($absolute) ? $this->request->getCurrentRequest()->getScheme().'://'.$this->request->getCurrentRequest()->getHost() : '').
+                $this->request->getCurrentRequest()->getBasePath().'/'.
                 ltrim($file, '/');
     }
 }

@@ -58,6 +58,8 @@ class RouteBuilder
     /**
      * Get the current context, the latest ControllerCollection in context stack
      * or root ControllerCollection instance if context stack is empty.
+     *
+     * @return Silex\ControllerCollection
      */
     protected function getContext()
     {
@@ -174,10 +176,10 @@ class RouteBuilder
     /**
      * Grouping route into controller collection and mount to specific prefix.
      *
-     * @param [string]  $prefix   the route prefix
-     * @param [Closure] $callable the route collection handler
+     * @param string  $prefix   the route prefix
+     * @param Closure $callable the route collection handler
      *
-     * @return [Silex\ControllerCollection] controller collection that already mounted to $prefix
+     * @return Silex\ControllerCollection controller collection that already mounted to $prefix
      */
     public function group($prefix, \Closure $callable, array $options = [])
     {
@@ -210,12 +212,13 @@ class RouteBuilder
     }
 
     /**
-     * [resource description].
+     * Build route into resourceful controller.
      *
-     * @param [type] $prefix     [description]
-     * @param [type] $controller [description]
+     * @param string $prefix     the route prefix
+     * @param string $controller the controller class
+     * @param  array $options    the route options
      *
-     * @return [type] [description]
+     * @return Silex\ControllerCollection
      */
     public function resource($prefix, $controller, array $options = [])
     {
@@ -306,12 +309,13 @@ class RouteBuilder
     }
 
     /**
-     * [controller description].
+     * Build route to all available public method in controller class.
      *
-     * @param [type] $prefix     [description]
-     * @param [type] $controller [description]
+     * @param string $prefix     the route prefix
+     * @param string $controller the controller class name
+     * @param array  $options    the route options
      *
-     * @return [type] [description]
+     * @return Silex\ControllerCollection
      */
     public function controller($prefix, $controller, array $options = [])
     {

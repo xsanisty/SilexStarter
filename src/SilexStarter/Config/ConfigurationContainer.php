@@ -4,6 +4,7 @@ namespace SilexStarter\Config;
 
 use Silex\Application;
 use ArrayAccess;
+use Exception;
 
 class ConfigurationContainer implements ArrayAccess
 {
@@ -16,8 +17,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * ConfigurationContainer constructor.
      *
-     * @param Application $app        instance of Silex Application
-     * @param string      $configPath the base path where configuration file located
+     * @param Silex\Application $app        instance of Silex Application
+     * @param string            $basePath   the base path where configuration file located
      */
     public function __construct(Application $app, $basePath)
     {
@@ -29,10 +30,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Load the configuration file and save the value into array container.
      *
-     * @param [string] $file      filename or namespace::filename
-     * @param [string] $configKey override the config key, if not specified, the filename will be used
-     *
-     * @return [void]
+     * @param string $file      filename or namespace::filename
+     * @param string $configKey override the config key, if not specified, the filename will be used
      */
     public function load($file, $configKey = '')
     {
@@ -71,7 +70,7 @@ class ConfigurationContainer implements ArrayAccess
         }
 
         if (is_null($filePath)) {
-            throw new \Exception("Configuration file [$file] can not be found", 1);
+            throw new Exception("Configuration file [$file] can not be found", 1);
         }
 
         if ($configKey == 'app') {
@@ -92,9 +91,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * remove configuration key from the configuration container.
      *
-     * @param [type] $offset [description]
-     *
-     * @return [type] [description]
+     * @param string $offset the configuration key
      */
     public function unload($offset)
     {
@@ -146,10 +143,6 @@ class ConfigurationContainer implements ArrayAccess
             return $this->config[$offset];
         }
 
-        /* support module:file.key.subkey
-        $offsetChunk[0] = str_replace('::', '/', $offsetChunk[0]);
-        */
-
         /* if not set, try to load the config file */
         if (!isset($this->config[$configFile])) {
             $this->load($configFile);
@@ -169,7 +162,7 @@ class ConfigurationContainer implements ArrayAccess
             } elseif (is_array($configVal) && isset($configVal[$chunk])) {
                 $configVal = $configVal[$chunk];
             } else {
-                throw new \Exception("'{$offsetChunk[$count - 1]}' doesn't have '$chunk' sub configuration", 1);
+                throw new Exception("'{$offsetChunk[$count - 1]}' doesn't have '$chunk' sub configuration", 1);
             }
         }
 
@@ -190,7 +183,7 @@ class ConfigurationContainer implements ArrayAccess
         if (!isset($this->config[$offsetChunk[0]])) {
             try {
                 $this->load($offsetChunk[0]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->config[$offsetChunk[0]] = [];
             }
         }

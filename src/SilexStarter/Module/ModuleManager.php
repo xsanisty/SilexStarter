@@ -57,7 +57,7 @@ class ModuleManager
         /* Check for required module, if not satisfied, throw exception immediately */
         foreach ($module->getRequiredModules() as $requiredModule) {
             if (!$this->isRegistered($requiredModule)) {
-                throw new ModuleRequiredException($moduleAccessor.' module require '.$requiredModule.' as its dependency');
+                throw new ModuleRequiredException($moduleAccessor . ' module require ' . $requiredModule . ' as its dependency');
             }
         }
 
@@ -69,42 +69,42 @@ class ModuleManager
         /* If controller_as_service enabled, register the controllers as service */
         if ($this->app['controller_as_service'] && $moduleResources->controllers) {
             $this->app->registerControllerDirectory(
-                $modulePath.DIRECTORY_SEPARATOR.$moduleResources->controllers,
-                $moduleReflection->getNamespaceName().'\\'.$moduleResources->controllers
+                $modulePath . DIRECTORY_SEPARATOR . $moduleResources->controllers,
+                $moduleReflection->getNamespaceName() . '\\' . $moduleResources->controllers
             );
         }
 
         /* if config dir exists, add namespace to the config reader */
         if ($moduleResources->config) {
             $this->app['config']->addDirectory(
-                $modulePath.'/'.$moduleResources->config,
+                $modulePath . '/' . $moduleResources->config,
                 $moduleAccessor
             );
 
-            $this->config[$moduleAccessor] = $modulePath.'/'.$moduleResources->config;
+            $this->config[$moduleAccessor] = $modulePath . '/' . $moduleResources->config;
         }
 
         /* if route file exists, queue for later include */
         if ($moduleResources->routes) {
-            $this->addRouteFile($modulePath.'/'.$moduleResources->routes);
+            $this->addRouteFile($modulePath . '/' . $moduleResources->routes);
         }
 
         /* if middleware file exists, queue for later include */
         if ($moduleResources->middlewares) {
-            $this->addMiddlewareFile($modulePath.'/'.$moduleResources->middlewares);
+            $this->addMiddlewareFile($modulePath . '/' . $moduleResources->middlewares);
         }
 
         /* if template file exists, register new template path under new namespace */
         if ($moduleResources->views) {
             $this->app['twig.loader.filesystem']->addPath(
-                $modulePath.'/'.$moduleResources->views,
+                $modulePath . '/' . $moduleResources->views,
                 $moduleAccessor
             );
         }
 
         /* keep assets path of the module */
         if ($moduleResources->assets) {
-            $this->assets[$moduleAccessor] = $modulePath.'/'.$moduleResources->assets;
+            $this->assets[$moduleAccessor] = $modulePath . '/' . $moduleResources->assets;
         }
 
         $this->modules[$moduleAccessor] = $module;
@@ -173,20 +173,20 @@ class ModuleManager
     public function publishAsset($module)
     {
         $moduleAsset = $this->assets[$module];
-        $publicAsset = $this->app['path.public'].'assets/'.$module;
+        $publicAsset = $this->app['path.public'] . 'assets/' . $module;
 
         $this->app['filesystem']->mirror($moduleAsset, $publicAsset);
     }
 
     /**
-     * Publish config into application config directory.
+     * Publish config into application config directory .
      *
      * @param string $module The module accessor
      */
     public function publishConfig($module)
     {
         $moduleConfig = $this->config[$module];
-        $publicConfig = $this->app['path.app'].'config/'.$module;
+        $publicConfig = $this->app['path.app'] . 'config/' . $module;
 
         $this->app['filesystem']->mirror($moduleConfig, $publicConfig);
     }

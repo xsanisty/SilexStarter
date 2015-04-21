@@ -5,6 +5,7 @@ namespace SilexStarter\Config;
 use Silex\Application;
 use ArrayAccess;
 use Exception;
+use InvalidArgumentException;
 
 class ConfigurationContainer implements ArrayAccess
 {
@@ -28,24 +29,81 @@ class ConfigurationContainer implements ArrayAccess
     }
 
     /**
-     * Load the configuration file and save the value into array container.
+     * Load the configuration file or array and save the value into array container.
      *
      * @param string $file      filename or namespace::filename
      * @param string $configKey override the config key, if not specified, the filename will be used
      */
-    public function load($file, $configKey = '')
+    public function load($config, $configKey = '')
     {
-        $fileChunk  = explode('::', $file, 2);
-        $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
-        $filename   = (is_null($namespace))   ? $fileChunk[0] : $fileChunk[1];
-        $filename   = ('.php' == substr($filename, -4, 4)) ? $filename : $filename.'.php';
-        $configKey  = (!$configKey) ? explode('.', $file)[0] : $configKey;
-        $filePath   = null;
-
         /* return immediately when config already loaded */
         if (isset($this->config[$configKey])) {
             return;
         }
+
+        if (is_string($config)) {
+            try {
+                $this->loadConfigFile($config, $configKey);
+            } catch (Exception $e) {
+                $this->loadConfig($config, $configKey);
+            }
+        } else {
+            $this->loadConfig($config, $configKey);
+        }
+    }
+
+    /**
+     * Load the configuration from an array, object, etc.
+     *
+     * @param  mixed  $config    the array containing object
+     * @param  string $configKey the configuration key for access it outside container
+     */
+    public function loadConfig($config, $configKey)
+    {
+        if (!$configKey) {
+            throw new InvalidArgumentException('Config key can not be empty');
+        }
+    }
+
+    /**
+     * Load the configuration from a file.
+     *
+     * @param  string $file      the config file path
+     * @param  string $configKey the configuration key for access it outside container
+     */
+    public function loadConfigFile($file, $configKey = '')
+    {
+        $configKey  = (!$configKey) ? explode('.', $file)[0] : $configKey;
+
+        $filePath = $this->resolvePath($file);
+        if ($configKey == 'app') {
+            $configuration = require $filePath;
+
+            foreach ($configuration as $param => $value) {
+                $this->app[$param] = $value;
+            }
+
+            return;
+        }
+
+        if (!isset($this->config[$configKey])) {
+            $this->config[$configKey] = require $filePath;
+        }
+    }
+
+    /**
+     * Resolve the configuration file path.
+     *
+     * @param string $path The file path or namespaced file path
+     *
+     * @return string The proper file path
+     */
+    protected function resolvePath($file){
+        $fileChunk  = explode('::', $file, 2);
+        $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
+        $filename   = ($namespace)  ? $fileChunk[1] : $fileChunk[0];
+        $filename   = ('.php' == substr($filename, -4, 4)) ? $filename : $filename.'.php';
+        $filePath   = null;
 
         /* try to load the configuration file from the basepath */
         if (!$namespace && file_exists($this->basePath.'/'.$filename)) {
@@ -73,19 +131,7 @@ class ConfigurationContainer implements ArrayAccess
             throw new Exception("Configuration file [$file] can not be found", 1);
         }
 
-        if ($configKey == 'app') {
-            $configuration = require $filePath;
-
-            foreach ($configuration as $param => $value) {
-                $this->app[$param] = $value;
-            }
-
-            return;
-        }
-
-        if (!isset($this->config[$configKey])) {
-            $this->config[$configKey] = require $filePath;
-        }
+        return $filePath;
     }
 
     /**

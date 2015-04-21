@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
-use Illuminate\Support\Contracts\ArrayableInterface;
+use Illuminate\Support\Contracts\Arrayable;
 
 class ResponseBuilder
 {
@@ -53,7 +53,7 @@ class ResponseBuilder
      */
     public function json($data = [], $status = 200, array $headers = [])
     {
-        if ($data instanceof ArrayableInterface) {
+        if ($data instanceof Arrayable) {
             $data = $data->toArray();
         }
 

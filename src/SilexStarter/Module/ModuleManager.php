@@ -2,7 +2,7 @@
 
 namespace SilexStarter\Module;
 
-use Silex\Application;
+use SilexStarter\SilexStarter;
 use SilexStarter\Exception\ModuleRequiredException;
 use SilexStarter\Contracts\ModuleProviderInterface;
 
@@ -15,7 +15,7 @@ class ModuleManager
     protected $assets       = [];
     protected $config       = [];
 
-    public function __construct(Application $app)
+    public function __construct(SilexStarter $app)
     {
         $this->app          = $app;
     }

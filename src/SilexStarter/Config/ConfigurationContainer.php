@@ -150,7 +150,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * add config directory into config  directory lists.
      *
-     * @param string $dir       the config directory
+     * @param string $directory the config directory
      * @param string $namespace config namespace
      */
     public function addDirectory($directory, $namespace = '')

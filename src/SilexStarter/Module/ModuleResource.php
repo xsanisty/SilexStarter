@@ -25,9 +25,9 @@ class ModuleResource
     /**
      * Resource getter, so it possible to access $object->resources.
      *
-     * @param string $resources [description]
+     * @param string $resource The resource name
      *
-     * @return mixed [description]
+     * @return mixed
      */
     public function __get($resource)
     {
@@ -41,8 +41,8 @@ class ModuleResource
     /**
      * Resource setter, so it possible to assign value to resources using $object->resources = value.
      *
-     * @param string $resources [description]
-     * @param mixeed $value     [description]
+     * @param string $resource  the resource name
+     * @param mixeed $value     the resource value
      */
     public function __set($resource, $value)
     {

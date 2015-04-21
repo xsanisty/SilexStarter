@@ -31,7 +31,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Load the configuration file or array and save the value into array container.
      *
-     * @param string $file      filename or namespace::filename
+     * @param mixed  $config    filename or namespace::filename, or any data type
      * @param string $configKey override the config key, if not specified, the filename will be used
      */
     public function load($config, $configKey = '')
@@ -55,7 +55,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Load the configuration from an array, object, etc.
      *
-     * @param mixed  $config    the array containing object
+     * @param mixed  $config    the array, object or any type of data
      * @param string $configKey the configuration key for access it outside container
      */
     public function loadConfig($config, $configKey)
@@ -63,6 +63,8 @@ class ConfigurationContainer implements ArrayAccess
         if (!$configKey) {
             throw new InvalidArgumentException('Config key can not be empty');
         }
+
+        $this->config[$configKey] = $config;
     }
 
     /**
@@ -87,14 +89,14 @@ class ConfigurationContainer implements ArrayAccess
         }
 
         if (!isset($this->config[$configKey])) {
-            $this->config[$configKey] = require $filePath;
+            $this->config[$configKey] = require($filePath);
         }
     }
 
     /**
      * Resolve the configuration file path.
      *
-     * @param string $path The file path or namespaced file path
+     * @param string $file The file path or namespaced file path
      *
      * @return string The proper file path
      */

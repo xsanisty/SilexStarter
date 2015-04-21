@@ -3,13 +3,13 @@
 namespace SilexStarter\Response;
 
 use Twig_Environment;
-use Illuminate\Support\Contracts\ArrayableInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
+use Illuminate\Support\Contracts\ArrayableInterface;
 
 class ResponseBuilder
 {
@@ -48,17 +48,16 @@ class ResponseBuilder
      * @param string|array $data
      * @param int          $status
      * @param array        $headers
-     * @param int          $options
      *
      * @return Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function json($data = [], $status = 200, array $headers = [], array $options = [])
+    public function json($data = [], $status = 200, array $headers = [])
     {
         if ($data instanceof ArrayableInterface) {
             $data = $data->toArray();
         }
 
-        return new JsonResponse($data, $status, $headers, $options);
+        return new JsonResponse($data, $status, $headers);
     }
 
     /**
@@ -68,13 +67,12 @@ class ResponseBuilder
      * @param string|array $data
      * @param int          $status
      * @param array        $headers
-     * @param int          $options
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function jsonp($callback, $data = [], $status = 200, array $headers = [], array $options = [])
+    public function jsonp($callback, $data = [], $status = 200, array $headers = [])
     {
-        return $this->json($data, $status, $headers, $options)->setCallback($callback);
+        return $this->json($data, $status, $headers)->setCallback($callback);
     }
 
     /**
@@ -113,12 +111,12 @@ class ResponseBuilder
     }
 
     /**
-     * [redirect description].
+     * Return redirect response.
      *
-     * @param [type] $url    [description]
-     * @param [type] $status [description]
+     * @param string $url    New url where user will be redirected
+     * @param int    $status HTTP redirect status
      *
-     * @return [type] [description]
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirect($url, $status = 302)
     {

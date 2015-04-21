@@ -48,19 +48,15 @@ class SentryServiceProvider implements ServiceProviderInterface
             switch ($hasher) {
                 case 'native':
                     return new NativeHasher();
-                    break;
 
                 case 'bcrypt':
                     return new BcryptHasher();
-                    break;
 
                 case 'sha256':
                     return new Sha256Hasher();
-                    break;
 
                 case 'whirlpool':
                     return new WhirlpoolHasher();
-                    break;
             }
 
             throw new \InvalidArgumentException("Invalid hasher [$hasher] chosen for Sentry.");

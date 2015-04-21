@@ -10,7 +10,6 @@ interface ModuleInstallerInterface extends ModuleInterface
      *     - creating the database table
      *     - etc.
      *
-     * @return [type] [description]
      */
     public function install();
 
@@ -20,7 +19,6 @@ interface ModuleInstallerInterface extends ModuleInterface
      *     - removing asset file
      *     - etc.
      *
-     * @return [type] [description]
      */
     public function uninstall();
 

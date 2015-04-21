@@ -10,21 +10,21 @@ interface ModuleInterface
     /**
      * Module provider constructor.
      *
-     * @param \Silex\Application $app [description]
+     * @param Silex\Application $app The Silex application instance
      */
     public function __construct(\Silex\Application $app);
 
     /**
      * Get the module information.
      *
-     * @return ModuleInfo The module information
+     * @return SilexStarter\Module\ModuleInfo The module information
      */
     public function getInfo();
 
     /**
      * Get module resources including route, config, views, etc.
      *
-     * @return [type] [description]
+     * @return  SilexStarter\Module\ModuleResource
      */
     public function getResources();
 

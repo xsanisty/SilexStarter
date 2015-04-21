@@ -2,7 +2,7 @@
 
 namespace SilexStarter\Menu;
 
-use \Exception;
+use Exception;
 
 class MenuContainer
 {

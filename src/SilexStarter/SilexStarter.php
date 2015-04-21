@@ -163,21 +163,22 @@ class SilexStarter extends Application
     }
 
     /**
-     * Bind an interface into specific service
+     * Bind an interface into specific service.
      *
-     * @param  string $interface the fully qualified interface/class name
-     * @param  string $service   the service key registered in container
-     * @return mixed             the service object
+     * @param string $interface the fully qualified interface/class name
+     * @param string $service   the service key registered in container
+     *
+     * @return mixed the service object
      */
     public function bind($interface, $service)
     {
-        $this[$interface] = $this->share(function() use ($service) {
+        $this[$interface] = $this->share(function () use ($service) {
             return $this[$service];
         });
     }
 
     /**
-     * Group route into specific pattern and apply same middleware
+     * Group route into specific pattern and apply same middleware.
      *
      * @param string  $pattern  Matched route pattern
      * @param Closure $callback The route callback
@@ -191,11 +192,11 @@ class SilexStarter extends Application
     }
 
     /**
-     * Group route into predefined resource pattern
+     * Group route into predefined resource pattern.
      *
-     * @param string  $pattern  Matched route pattern
-     * @param Closure $callback The route callback
-     * @param array   $options  The route options, including before and after middleware
+     * @param string $pattern    Matched route pattern
+     * @param string $controller The fully qualified controller class name
+     * @param array  $options    The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -205,11 +206,11 @@ class SilexStarter extends Application
     }
 
     /**
-     * Build route based on available public method on the controller
+     * Build route based on available public method on the controller.
      *
-     * @param string  $pattern  Matched route pattern
-     * @param Closure $callback The route callback
-     * @param array   $options  The route options, including before and after middleware
+     * @param string $pattern    Matched route pattern
+     * @param string $controller The fully qualified controller class name
+     * @param array  $options    The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -218,7 +219,6 @@ class SilexStarter extends Application
         return $this['route_builder']->controller($pattern, $controller, $options);
     }
 
-
     /**
      * Maps a pattern to a callable.
      *
@@ -226,7 +226,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -240,7 +240,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -254,7 +254,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -268,7 +268,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -282,7 +282,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -296,7 +296,7 @@ class SilexStarter extends Application
      *
      * @param string $pattern Matched route pattern
      * @param mixed  $to      Callback that returns the response when matched
-     * @param array   $options  The route options, including before and after middleware
+     * @param array  $options The route options, including before and after middleware
      *
      * @return Controller
      */
@@ -325,5 +325,4 @@ class SilexStarter extends Application
             $this->booted = true;
         }
     }
-
 }

@@ -18,8 +18,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * ConfigurationContainer constructor.
      *
-     * @param Silex\Application $app        instance of Silex Application
-     * @param string            $basePath   the base path where configuration file located
+     * @param Silex\Application $app      instance of Silex Application
+     * @param string            $basePath the base path where configuration file located
      */
     public function __construct(Application $app, $basePath)
     {
@@ -55,8 +55,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Load the configuration from an array, object, etc.
      *
-     * @param  mixed  $config    the array containing object
-     * @param  string $configKey the configuration key for access it outside container
+     * @param mixed  $config    the array containing object
+     * @param string $configKey the configuration key for access it outside container
      */
     public function loadConfig($config, $configKey)
     {
@@ -68,8 +68,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Load the configuration from a file.
      *
-     * @param  string $file      the config file path
-     * @param  string $configKey the configuration key for access it outside container
+     * @param string $file      the config file path
+     * @param string $configKey the configuration key for access it outside container
      */
     public function loadConfigFile($file, $configKey = '')
     {
@@ -98,7 +98,8 @@ class ConfigurationContainer implements ArrayAccess
      *
      * @return string The proper file path
      */
-    protected function resolvePath($file){
+    protected function resolvePath($file)
+    {
         $fileChunk  = explode('::', $file, 2);
         $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
         $filename   = ($namespace)  ? $fileChunk[1] : $fileChunk[0];

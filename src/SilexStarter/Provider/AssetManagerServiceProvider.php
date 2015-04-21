@@ -4,7 +4,6 @@ namespace SilexStarter\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use SilexStarter\Asset\AssetManager;
 
 class AssetManagerServiceProvider implements ServiceProviderInterface

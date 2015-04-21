@@ -216,7 +216,7 @@ class RouteBuilder
      *
      * @param string $prefix     the route prefix
      * @param string $controller the controller class
-     * @param  array $options    the route options
+     * @param array  $options    the route options
      *
      * @return Silex\ControllerCollection
      */

@@ -63,7 +63,7 @@ class RouteBuilder
      */
     protected function getContext()
     {
-        if ($this->contextStack) {
+        if (! empty($this->contextStack)) {
             return end($this->contextStack);
         } else {
             return $this->app['controllers'];

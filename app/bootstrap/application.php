@@ -4,13 +4,13 @@
  * Bootstrapping Silex application, load the configuration, registering controllers,
  * including the routes and middlewares.
  */
-define('ROOT_PATH', __DIR__.'/../../');
-define('VENDOR_PATH', __DIR__.'/../../vendor/');
-define('APP_PATH', __DIR__.'/../../app/');
-define('MODULE_PATH', __DIR__.'/../../app/modules/');
-define('PUBLIC_PATH', __DIR__.'/../../public/');
+define('ROOT_PATH', __DIR__ . '/../../');
+define('VENDOR_PATH', __DIR__ . '/../../vendor/');
+define('APP_PATH', __DIR__ . '/../../app/');
+define('MODULE_PATH', __DIR__ . '/../../app/modules/');
+define('PUBLIC_PATH', __DIR__ . '/../../public/');
 
-require VENDOR_PATH.'autoload.php';
+require VENDOR_PATH . 'autoload.php';
 
 use SilexStarter\SilexStarter;
 use SilexStarter\Provider\ConfigServiceProvider;
@@ -21,7 +21,7 @@ use Symfony\Component\Debug\ExceptionHandler;
 $app = new SilexStarter();
 
 /* Load the configuration service provider and load base app configuration */
-$app->register(new ConfigServiceProvider(), ['config.path' => APP_PATH.'config']);
+$app->register(new ConfigServiceProvider(), ['config.path' => APP_PATH . 'config']);
 $app['config']->load('app');
 
 /* register the error handler */
@@ -42,7 +42,7 @@ if ($app['enable_module']) {
 
 /* Register all controller as service if enabled */
 if ($app['controller_as_service']) {
-    $app->registerControllerDirectory(APP_PATH.'controllers');
+    $app->registerControllerDirectory(APP_PATH . 'controllers');
 }
 
 /* Register Facade / Static Proxy if enabled */
@@ -57,7 +57,7 @@ if ($app['enable_module']) {
         require $middleware;
     }
 }
-require APP_PATH.'middlewares.php';
+require APP_PATH . 'middlewares.php';
 
 /* Include the routes definition, load module route first to enable override */
 if ($app['enable_module']) {
@@ -65,6 +65,6 @@ if ($app['enable_module']) {
         require $route;
     }
 }
-require APP_PATH.'routes.php';
+require APP_PATH . 'routes.php';
 
 return $app;

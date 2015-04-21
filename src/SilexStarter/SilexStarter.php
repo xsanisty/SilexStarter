@@ -23,9 +23,7 @@ class SilexStarter extends Application
     /**
      * Register all services provider to the application container.
      *
-     * @param array $providerList [List of service providers]
-     *
-     * @return [void]
+     * @param array $providerList List of service providers
      */
     public function registerServices(array $providerList)
     {
@@ -41,9 +39,7 @@ class SilexStarter extends Application
     /**
      * Search for controllers in the controllers dir and register it as a service.
      *
-     * @param [string] $controllerDir [The directory where controllers is located]
-     *
-     * @return [void]
+     * @param string $controllerDir The directory where controllers is located
      */
     public function registerControllerDirectory($controllerDir, $namespace = '')
     {
@@ -67,8 +63,6 @@ class SilexStarter extends Application
 
     /**
      * Registering the application to Facade for StaticProxy access.
-     *
-     * @return [type] [description]
      */
     public function registerStaticProxy()
     {
@@ -76,11 +70,9 @@ class SilexStarter extends Application
     }
 
     /**
-     * [registerAliases description].
+     * Register class aliases.
      *
-     * @param array $classes [description]
-     *
-     * @return [type] [description]
+     * @param array $classes the list of alias => fully qualified class name
      */
     public function registerAliases(array $classes)
     {
@@ -92,9 +84,9 @@ class SilexStarter extends Application
     /**
      * Provide controller service factory.
      *
-     * @param [string] $controller [the controller class name]
+     * @param string $controller Fully qualified controller class name
      *
-     * @return [Closure] [description]
+     * @return Closure
      */
     protected function controllerServiceClosureFactory($controller)
     {
@@ -170,12 +162,168 @@ class SilexStarter extends Application
         return $this->filter($name, $callback);
     }
 
+    /**
+     * Bind an interface into specific service
+     *
+     * @param  string $interface the fully qualified interface/class name
+     * @param  string $service   the service key registered in container
+     * @return mixed             the service object
+     */
+    public function bind($interface, $service)
+    {
+        $this[$interface] = $this->share(function() use ($service) {
+            return $this[$service];
+        });
+    }
+
+    /**
+     * Group route into specific pattern and apply same middleware
+     *
+     * @param string  $pattern  Matched route pattern
+     * @param Closure $callback The route callback
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function group($pattern, \Closure $callback, array $options = [])
+    {
+        return $this['route_builder']->group($pattern, $callback, $options);
+    }
+
+    /**
+     * Group route into predefined resource pattern
+     *
+     * @param string  $pattern  Matched route pattern
+     * @param Closure $callback The route callback
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function resource($pattern, $controller, array $options = [])
+    {
+        return $this['route_builder']->resource($pattern, $controller, $options);
+    }
+
+    /**
+     * Build route based on available public method on the controller
+     *
+     * @param string  $pattern  Matched route pattern
+     * @param Closure $callback The route callback
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function controller($pattern, $controller, array $options = [])
+    {
+        return $this['route_builder']->controller($pattern, $controller, $options);
+    }
+
+
+    /**
+     * Maps a pattern to a callable.
+     *
+     * You can optionally specify HTTP methods that should be matched.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function match($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->match($pattern, $to, $options);
+    }
+
+    /**
+     * Maps a GET request to a callable.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function get($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->get($pattern, $to, $options);
+    }
+
+    /**
+     * Maps a POST request to a callable.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function post($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->post($pattern, $to, $options);
+    }
+
+    /**
+     * Maps a PUT request to a callable.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function put($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->put($pattern, $to, $options);
+    }
+
+    /**
+     * Maps a DELETE request to a callable.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function delete($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->delete($pattern, $to, $options);
+    }
+
+    /**
+     * Maps a PATCH request to a callable.
+     *
+     * @param string $pattern Matched route pattern
+     * @param mixed  $to      Callback that returns the response when matched
+     * @param array   $options  The route options, including before and after middleware
+     *
+     * @return Controller
+     */
+    public function patch($pattern, $to = null, array $options = [])
+    {
+        return $this['route_builder']->patch($pattern, $to, $options);
+    }
+
+    /**
+     * Boots all service providers.
+     *
+     * This method is automatically called by handle(), but you can use it
+     * to boot all service providers and module when not handling a request.
+     */
     public function boot()
     {
-        if ($this['enable_module']) {
-            $this['module']->boot();
-        }
+        if (!$this->booted) {
+            foreach ($this->providers as $provider) {
+                $provider->boot($this);
+            }
 
-        parent::boot();
+            if ($this['enable_module']) {
+                $this['module']->boot();
+            }
+
+            $this->booted = true;
+        }
     }
+
 }

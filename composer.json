@@ -16,7 +16,7 @@
         "cartalyst/sentry" : "2.*",
         "symfony/filesystem" : "~2.6",
         "illuminate/database": "5.*",
-        "illuminate/events" : "5.0.*",
+        "illuminate/events" : "5.*",
         "patchwork/utf8" : "*",
         "xsanisty/silex-starter-admin" : "dev-develop"
     },

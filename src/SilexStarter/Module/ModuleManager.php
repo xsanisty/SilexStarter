@@ -20,17 +20,23 @@ class ModuleManager
         $this->app          = $app;
     }
 
+
+    /**
+     * Check if specified module is registered.
+     *
+     * @param  string  $module The module accessor string
+     *
+     * @return boolean
+     */
     public function isRegistered($module)
     {
         return isset($this->modules[$module]);
     }
 
     /**
-     * [registerModules description].
+     * Register multiple module provider at once.
      *
-     * @param array $modules [description]
-     *
-     * @return [type] [description]
+     * @param array $modules array of SilexStarter\Module\ModuleProvider
      */
     public function registerModules(array $modules)
     {
@@ -40,11 +46,9 @@ class ModuleManager
     }
 
     /**
-     * [registerModule description].
+     * Register ModuleProvider into application.
      *
-     * @param ModuleProviderInterface $module [description]
-     *
-     * @return [type] [description]
+     * @param ModuleProviderInterface $module the module provider
      */
     public function register(ModuleProviderInterface $module)
     {
@@ -107,16 +111,20 @@ class ModuleManager
         $module->register();
     }
 
+    /**
+     * Boot up all available module
+     */
     public function boot()
     {
         foreach ($this->modules as $module) {
             $module->boot();
         }
     }
+
     /**
-     * [addRouteFile description].
+     * Register module routes file.
      *
-     * @param [type] $path [description]
+     * @param string $path full apath to the module route file
      */
     public function addRouteFile($path)
     {
@@ -126,9 +134,9 @@ class ModuleManager
     }
 
     /**
-     * [getRouteFiles description].
+     * Get all available route files.
      *
-     * @return [type] [description]
+     * @return array list of route files
      */
     public function getRouteFiles()
     {
@@ -136,9 +144,9 @@ class ModuleManager
     }
 
     /**
-     * [addMiddlewareFile description].
+     * Register module middleware file.
      *
-     * @param [type] $path [description]
+     * @param string $path full apath to the module middleware file
      */
     public function addMiddlewareFile($path)
     {
@@ -148,9 +156,9 @@ class ModuleManager
     }
 
     /**
-     * [getMiddlewareFiles description].
+     * Get all available middleware files.
      *
-     * @return [type] [description]
+     * @return array list of middleware files
      */
     public function getMiddlewareFiles()
     {

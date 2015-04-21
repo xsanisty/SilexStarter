@@ -13,7 +13,7 @@ class AssetManagerServiceProvider implements ServiceProviderInterface
     {
         $app['asset_manager'] = $app->share(function (Application $app) {
             return new AssetManager(
-                $app['enable_profiler'] ? Request::createFromGlobals() : $app['request'],
+                $app['request_stack'],
                 'assets'
             );
         });

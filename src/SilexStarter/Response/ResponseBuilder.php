@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Illuminate\Support\Str;
-use Illuminate\Support\Contracts\Arrayable;
+use Illuminate\Contracts\Support\Arrayable;
 
 class ResponseBuilder
 {

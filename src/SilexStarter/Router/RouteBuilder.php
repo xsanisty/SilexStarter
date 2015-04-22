@@ -222,87 +222,24 @@ class RouteBuilder
     public function resource($prefix, $controller, array $options = [])
     {
         $prefix             = '/' . ltrim($prefix, '/');
-        $routeCollection    = $this->app['controllers_factory'];
         $routePrefixName    = $this->stringHelper->slug($prefix);
 
-        $resourceRoutes     = [
-            'get'           => [
-                'pattern'       => '/',
-                'method'        => 'get',
-                'handler'       => "$controller:index",
-            ],
-            'get_paginate'  => [
-                'pattern'       => '/page/{page}',
-                'method'        => 'get',
-                'handler'       => "$controller:index",
-            ],
-            'get_create'    => [
-                'pattern'       => '/create',
-                'method'        => 'get',
-                'handler'       => "$controller:create",
-            ],
-            'get_edit'      => [
-                'pattern'       => '/{id}/edit',
-                'method'        => 'get',
-                'handler'       => "$controller:edit",
-            ],
-            'get_show'      => [
-                'pattern'       => '/{id}',
-                'method'        => 'get',
-                'handler'       => "$controller:show",
-            ],
-            'post'          => [
-                'pattern'       => '/',
-                'method'        => 'post',
-                'handler'       => "$controller:store",
-            ],
-            'put'           => [
-                'pattern'       => '/{id}',
-                'method'        => 'put',
-                'handler'       => "$controller:update",
-            ],
-            'delete'        => [
-                'pattern'       => '/{id}',
-                'method'        => 'delete',
-                'handler'       => "$controller:destroy",
-            ],
+        $routeMaps     = [
+            'get'           => new RouteMap('get', '/', "$controller:index"),
+            'get_paginate'  => new RouteMap('get', '/page/{page}', "$controller:index"),
+            'get_create'    => new RouteMap('get', '/create', "$controller:create"),
+            'get_edit'      => new RouteMap('get', '/{id}/edit', "$controller:edit"),
+            'get_show'      => new RouteMap('get', '/{id}', "$controller:show"),
+            'post'          => new RouteMap('post', '/', "$controller:store"),
+            'put'           => new RouteMap('put', '/{id}', "$controller:update"),
+            'delete'        => new RouteMap('delete', '/{id}', "$controller:destroy"),
         ];
 
-        foreach ($resourceRoutes as $routeName => $route) {
-            $routeCollection->{$route['method']}($route['pattern'], $route['handler'])
-                            ->bind($routePrefixName.'_'.$routeName);
-        }
+        $routeCollection    = $this->buildControllerRoute($this->app['controllers_factory'], $routeMaps);
 
-        $currentContext     = $this->getContext();
-        $parentGetHandler   = $currentContext->get($prefix, $resourceRoutes['get']['handler']);
-        $parentPostHandler  = $currentContext->post($prefix, $resourceRoutes['post']['handler']);
+        $this->applyControllerOption($routeCollection, $options);
 
-        /* apply the middleware stack */
-        foreach ($this->getBeforeHandler() as $before) {
-            $routeCollection->before($before);
-            $parentGetHandler->before($before);
-            $parentPostHandler->before($before);
-        }
-
-        if (isset($options['before'])) {
-            $routeCollection->before($options['before']);
-            $parentGetHandler->before($options['before']);
-            $parentPostHandler->before($options['before']);
-        }
-
-        if (isset($options['after'])) {
-            $routeCollection->after($options['after']);
-            $parentGetHandler->after($options['after']);
-            $parentPostHandler->after($options['after']);
-        }
-
-        foreach ($this->getAfterHandler() as $after) {
-            $routeCollection->after($after);
-            $parentGetHandler->after($after);
-            $parentPostHandler->after($after);
-        }
-
-        $currentContext->mount($prefix, $routeCollection);
+        $this->getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
     }

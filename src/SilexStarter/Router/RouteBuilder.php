@@ -361,29 +361,26 @@ class RouteBuilder
             $httpMethod     = substr( $action->name, 0, strcspn( $action->name, $uppercase));
 
             /* the url path, index => getIndex */
-            $routePattern   = (in_array($httpMethod, $acceptedMethod))
+            $routeName      = (in_array($httpMethod, $acceptedMethod))
                             ? $this->stringHelper->snake(strpbrk( $action->name, $uppercase))
                             : $this->stringHelper->snake($action->name);
 
-            if ($action->getNumberOfParameters()) {
-                $urlParams      = $action->getParameters();
-                $defaultParams  = [];
-                $routePattern   = ($routePattern === 'index') ? '' : $routePattern;
+            var_dump($action->getParameters());
 
-                foreach ($urlParams as $param) {
-                    $routePattern .= '/{'.$param->getName().'}';
+            $defaultParams  = [];
+            $routePattern   = ($routeName === 'index') ? '/' : $routeName;
 
-                    if ($param->isDefaultValueAvailable()) {
-                        $defaultParams[$param->getName()] = $param->getDefaultValue();
-                    }
+            foreach ($action->getParameters() as $param) {
+                $routePattern .= '/{'.$param->getName().'}';
+
+                if ($param->isDefaultValueAvailable()) {
+                    $defaultParams[$param->getName()] = $param->getDefaultValue();
                 }
-
-                $routeOptions['default'] = $defaultParams;
-            } else {
-                $routePattern   = ($routePattern === 'index') ? '/' : $routePattern;
             }
 
-            $routeMaps[] = new RouteMap($httpMethod, $routePattern, $routeAction, $routeOptions);
+            $routeOptions['default']= $defaultParams;
+
+            $routeMaps[$routeName]  = new RouteMap($httpMethod, $routePattern, $routeAction, $routeOptions);
         }
 
         return $routeMaps;

@@ -39,7 +39,7 @@ class RouteMap
 
     public function setPattern($pattern)
     {
-        $this->pattern = $pattern;
+        $this->pattern = '/' . ltrim($pattern, '/');
     }
 
     public function setHttpMethod($httpMethod)

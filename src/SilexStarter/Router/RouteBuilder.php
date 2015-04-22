@@ -222,8 +222,6 @@ class RouteBuilder
     public function resource($prefix, $controller, array $options = [])
     {
         $prefix             = '/' . ltrim($prefix, '/');
-        $routePrefixName    = $this->stringHelper->slug($prefix);
-
         $routeMaps     = [
             'get'           => new RouteMap('get', '/', "$controller:index"),
             'get_paginate'  => new RouteMap('get', '/page/{page}', "$controller:index"),

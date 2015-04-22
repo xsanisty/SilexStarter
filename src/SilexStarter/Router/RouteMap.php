@@ -62,6 +62,4 @@ class RouteMap
     protected function isValidHttpMethod($method){
         return in_array(strtolower($method), ['get', 'post', 'put', 'delete', 'head', 'options', 'patch']);
     }
-
-
 }

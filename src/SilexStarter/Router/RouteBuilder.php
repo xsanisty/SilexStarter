@@ -100,7 +100,7 @@ class RouteBuilder
         return $this->afterHandlerStack;
     }
 
-    protected function applyControllerOption(Controller $route, array $options)
+    protected function applyControllerOption($route, array $options)
     {
         foreach ($this->getBeforeHandler() as $before) {
             $route->before($before);
@@ -312,7 +312,7 @@ class RouteBuilder
      * Build route to all available public method in controller class.
      *
      * @param string $prefix     the route prefix
-     * @param string $controller the controller class name
+     * @param string $controller the controller class name or object
      * @param array  $options    the route options
      *
      * @return Silex\ControllerCollection
@@ -320,81 +320,99 @@ class RouteBuilder
     public function controller($prefix, $controller, array $options = [])
     {
         $prefix             = '/'.ltrim($prefix, '/');
-        $class              = new \ReflectionClass($controller);
-        $controllerMethods  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
-        $routeCollection    = $this->app['controllers_factory'];
-        $uppercase          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $acceptedMethod     = ['get', 'post', 'put', 'delete', 'head', 'options'];
+        $routeMaps          = $this->createControllerRouteMap($controller);
 
-        foreach ($controllerMethods as $method) {
-            $methodName = $method->name;
+        $routeCollection    = $this->buildControllerRoute($this->app['controllers_factory'] , $routeMaps);
 
-            if (substr($methodName, 0, 2) != '__') {
-                $parameterCount = $method->getNumberOfParameters();
-
-                /* search first method segment until uppercase found */
-                $pos        = strcspn($methodName, $uppercase);
-
-                /* the http method get, put, post, etc */
-                $httpMethod = substr($methodName, 0, $pos);
-
-                /* the url path, index => getIndex */
-                if (in_array($httpMethod, $acceptedMethod)) {
-                    $urlPath    = $this->stringHelper->snake(strpbrk($methodName, $uppercase));
-                } else {
-                    $urlPath    = $this->stringHelper->snake($methodName);
-                    $httpMethod = 'match';
-                }
-
-                /*
-                 * Build the route
-                 */
-                if ($urlPath == 'index') {
-                    $indexRoute = $this->getContext()->{$httpMethod}($prefix, $controller.':'.$methodName);
-                    $route = $routeCollection->{$httpMethod}('/', $controller.':'.$methodName);
-
-                    $this->applyControllerOption($indexRoute, $options);
-                } elseif ($parameterCount) {
-                    $urlPattern = $urlPath;
-                    $urlParams  = $method->getParameters();
-
-                    foreach ($urlParams as $param) {
-                        $urlPattern .= '/{'.$param->getName().'}';
-                    }
-
-                    $route = $routeCollection->{$httpMethod}($urlPattern, $controller.':'.$methodName);
-
-                    foreach ($urlParams as $param) {
-                        if ($param->isDefaultValueAvailable()) {
-                            $route->value($param->getName(), $param->getDefaultValue());
-                        }
-                    }
-                } else {
-                    $route = $routeCollection->{$httpMethod}($urlPath, $controller.':'.$methodName);
-                }
-
-                $route->bind($prefix.'_'.$httpMethod.'_'.strtolower($urlPath));
-            }
-        }
-
-        foreach ($this->getBeforeHandler() as $before) {
-            $routeCollection->before($before);
-        }
-
-        if (isset($options['before'])) {
-            $routeCollection->before($options['before']);
-        }
-
-        if (isset($options['after'])) {
-            $routeCollection->after($options['after']);
-        }
-
-        foreach ($this->getAfterHandler() as $after) {
-            $routeCollection->after($after);
-        }
-
+        $this->applyControllerOption($routeCollection, $options);
         $this->getContext()->mount($prefix, $routeCollection);
 
         return $routeCollection;
+    }
+
+    /**
+     * Create list of route map based on controller's public method.
+     *
+     * @param  object|string $controller Fully qualified controller class name or class instance
+     *
+     * @return array array of SilexStarter\Router\RouteMap
+     */
+    protected function createControllerRouteMap($controller){
+
+        $class              = new \ReflectionClass($controller);
+        $controllerActions  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+        $uppercase          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $acceptedMethod     = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch'];
+
+        $routeMaps          = [];
+
+        foreach ($controllerActions as $action) {
+
+            /* skip if method is considered magic method */
+            if (strpos($action->name, '__') === 0) {
+                continue;
+            }
+
+            $routeOptions   = [];
+            $routeAction    = $class->getName() . ':' . $action->name;
+
+            /* the http method get, put, post, etc */
+            $httpMethod     = substr( $action->name, 0, strcspn( $action->name, $uppercase));
+
+            /* the url path, index => getIndex */
+            $routePattern   = (in_array($httpMethod, $acceptedMethod))
+                            ? $this->stringHelper->snake(strpbrk( $action->name, $uppercase))
+                            : $this->stringHelper->snake($action->name);
+
+            if ($action->getNumberOfParameters()) {
+                $urlParams      = $action->getParameters();
+                $defaultParams  = [];
+                $routePattern   = ($routePattern === 'index') ? '' : $routePattern;
+
+                foreach ($urlParams as $param) {
+                    $routePattern .= '/{'.$param->getName().'}';
+
+                    if ($param->isDefaultValueAvailable()) {
+                        $defaultParams[$param->getName()] = $param->getDefaultValue();
+                    }
+                }
+
+                $routeOptions['default'] = $defaultParams;
+            } else {
+                $routePattern   = ($routePattern === 'index') ? '/' : $routePattern;
+            }
+
+            $routeMaps[] = new RouteMap($httpMethod, $routePattern, $routeAction, $routeOptions);
+        }
+
+        return $routeMaps;
+
+    }
+
+    /**
+     * Apply route maps into route collection.
+     *
+     * @param  ControllerCollection $router    The VontrollerCollection instance
+     * @param  array                $routeMaps List of RouteMap object
+     *
+     * @return ControllerCollection
+     */
+    protected function buildControllerRoute(ControllerCollection $router, array $routeMaps){
+
+        foreach ($routeMaps as $map) {
+            $options = $map->getOptions();
+            $pattern = $map->getPattern();
+            $method  = $map->getHttpMethod() ? $map->getHttpMethod() : 'match';
+            $route   = $router->$method($pattern, $map->getAction());
+
+            if(isset($options['default'])){
+                foreach ($options['default'] as $field => $value) {
+                    $route->value($field, $value);
+                }
+            }
+        }
+
+        return $router;
     }
 }

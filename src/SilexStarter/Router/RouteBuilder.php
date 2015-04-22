@@ -4,7 +4,6 @@ namespace SilexStarter\Router;
 
 use Illuminate\Support\Str;
 use Silex\Application;
-use Silex\Controller;
 use Silex\ControllerCollection;
 
 class RouteBuilder
@@ -59,11 +58,11 @@ class RouteBuilder
      * Get the current context, the latest ControllerCollection in context stack
      * or root ControllerCollection instance if context stack is empty.
      *
-     * @return Silex\ControllerCollection
+     * @return ControllerCollection
      */
     protected function getContext()
     {
-        if (! empty($this->contextStack)) {
+        if (!empty($this->contextStack)) {
             return end($this->contextStack);
         } else {
             return $this->app['controllers'];
@@ -177,7 +176,7 @@ class RouteBuilder
      * Grouping route into controller collection and mount to specific prefix.
      *
      * @param string  $prefix   the route prefix
-     * @param Closure $callable the route collection handler
+     * @param \Closure $callable the route collection handler
      *
      * @return Silex\ControllerCollection controller collection that already mounted to $prefix
      */
@@ -222,7 +221,7 @@ class RouteBuilder
      */
     public function resource($prefix, $controller, array $options = [])
     {
-        $prefix             = '/'.ltrim($prefix, '/');
+        $prefix             = '/' . ltrim($prefix, '/');
         $routeCollection    = $this->app['controllers_factory'];
         $routePrefixName    = $this->stringHelper->slug($prefix);
 
@@ -322,7 +321,7 @@ class RouteBuilder
         $prefix             = '/'.ltrim($prefix, '/');
         $routeMaps          = $this->createControllerRouteMap($controller);
 
-        $routeCollection    = $this->buildControllerRoute($this->app['controllers_factory'] , $routeMaps);
+        $routeCollection    = $this->buildControllerRoute($this->app['controllers_factory'], $routeMaps);
 
         $this->applyControllerOption($routeCollection, $options);
         $this->getContext()->mount($prefix, $routeCollection);
@@ -337,7 +336,8 @@ class RouteBuilder
      *
      * @return array array of SilexStarter\Router\RouteMap
      */
-    protected function createControllerRouteMap($controller){
+    protected function createControllerRouteMap($controller)
+    {
 
         $class              = new \ReflectionClass($controller);
         $controllerActions  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -358,14 +358,12 @@ class RouteBuilder
             $routeAction    = $class->getName() . ':' . $action->name;
 
             /* the http method get, put, post, etc */
-            $httpMethod     = substr( $action->name, 0, strcspn( $action->name, $uppercase));
+            $httpMethod     = substr($action->name, 0, strcspn($action->name, $uppercase));
 
             /* the url path, index => getIndex */
             $routeName      = (in_array($httpMethod, $acceptedMethod))
-                            ? $this->stringHelper->snake(strpbrk( $action->name, $uppercase))
+                            ? $this->stringHelper->snake(strpbrk($action->name, $uppercase))
                             : $this->stringHelper->snake($action->name);
-
-            var_dump($action->getParameters());
 
             $defaultParams  = [];
             $routePattern   = ($routeName === 'index') ? '/' : $routeName;
@@ -395,7 +393,8 @@ class RouteBuilder
      *
      * @return ControllerCollection
      */
-    protected function buildControllerRoute(ControllerCollection $router, array $routeMaps){
+    protected function buildControllerRoute(ControllerCollection $router, array $routeMaps)
+    {
 
         foreach ($routeMaps as $map) {
             $options = $map->getOptions();
@@ -403,7 +402,7 @@ class RouteBuilder
             $method  = $map->getHttpMethod() ? $map->getHttpMethod() : 'match';
             $route   = $router->$method($pattern, $map->getAction());
 
-            if(isset($options['default'])){
+            if (isset($options['default'])) {
                 foreach ($options['default'] as $field => $value) {
                     $route->value($field, $value);
                 }

@@ -81,7 +81,78 @@ Route::controller('prefix', 'SomeController');
 
 ## Controller
 ```file: app/controllers/*```
-Controller
+
+Controller basically can be any classes that reside in controllers folder, it will be registered as service
+when enabled, and will be properly instantiated when needed, with all dependency injected.
+
+Assume we have ```PostRepository``` and ```CommentRepository```, we should register it first before it can be
+properly injected into controller.
+
+```file: app/services/RepositoryServiceProvider.php```
+
+```php
+<?php
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+class RepositoryServiceProvider implements ServiceProviderInterface
+{
+    public function register(Application $app)
+    {
+        $app['PostRepository'] = $app->share(function (Application $app) {
+            return new PostRepository
+        });
+
+        $app['CommentRepository'] = $app->share(function (Application $app) {
+            return new PostRepository
+        });
+    }
+
+    public function boot(Application $app)
+    {
+
+    }
+}
+```
+
+```file: app/config/services.php```
+```php
+<?php
+
+return [
+    'common' => [
+        'RepositoryServiceProvider',
+    ]
+]
+```
+
+```file: app/controllers/PostController.php```
+```php
+<?php
+
+class PostController{
+
+    protected $postRepo;
+    protected $commentRepo;
+
+    public function __construct(PostRepository $postRepo, CommentRepository $commentRepo)
+    {
+        $this->postRepo = $postRepo;
+        $this->commentRepo = $commentRepo;
+    }
+
+    public function index(){
+        return Response::view('post/index', $this->postRepo->all());
+    }
+}
+```
+
+and now, we should able to create route map to this controller
+
+```php
+Route::get('/post', 'PostController:index');
+```
 
 ## Model
 ```file: app/models/*```

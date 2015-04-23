@@ -2,5 +2,4 @@ tools:
     external_code_coverage: true
 
 filter:
-    filter:
-        paths: [src/*]
+    paths: [src/*]

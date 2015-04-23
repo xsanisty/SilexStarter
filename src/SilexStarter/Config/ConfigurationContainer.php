@@ -42,11 +42,7 @@ class ConfigurationContainer implements ArrayAccess
         }
 
         if (is_string($config)) {
-            try {
-                $this->loadConfigFile($config, $configKey);
-            } catch (Exception $e) {
-                $this->loadConfig($config, $configKey);
-            }
+            $this->loadFile($config, $configKey);
         } else {
             $this->loadConfig($config, $configKey);
         }
@@ -73,7 +69,7 @@ class ConfigurationContainer implements ArrayAccess
      * @param string $file      the config file path
      * @param string $configKey the configuration key for access it outside container
      */
-    public function loadConfigFile($file, $configKey = '')
+    public function loadFile($file, $configKey = '')
     {
         $configKey  = (!$configKey) ? explode('.', $file)[0] : $configKey;
 
@@ -102,39 +98,50 @@ class ConfigurationContainer implements ArrayAccess
      */
     protected function resolvePath($file)
     {
-        $fileChunk  = explode('::', $file, 2);
-        $namespace  = (count($fileChunk) > 1) ? $fileChunk[0] : null;
-        $filename   = ($namespace)  ? $fileChunk[1] : $fileChunk[0];
-        $filename   = ('.php' == substr($filename, -4, 4)) ? $filename : $filename.'.php';
-        $filePath   = null;
+        $filename   = ('.php' === substr($file, -4, 4)) ? $file : $file.'.php';
+
+        if(strpos($file, '::') > -1){
+            return $this->resolveNamespacedPath($filename);
+        }
 
         /* try to load the configuration file from the basepath */
-        if (!$namespace && file_exists($this->basePath.'/'.$filename)) {
-            $filePath = $this->basePath.'/'.$filename;
+        if (file_exists($this->basePath.'/'.$filename)) {
+            return $this->basePath.'/'.$filename;
+        }
 
-        /* if no config file found, walk through available config dir */
-        } elseif (!$namespace) {
-            foreach ($this->configPath as $configPath) {
-                if (file_exists($configPath.'/'.$filename)) {
-                    $filePath = $configPath.'/'.$filename;
-                    break;
-                }
+        foreach ($this->configPath as $configPath) {
+            if (file_exists($configPath.'/'.$filename)) {
+                return $configPath.'/'.$filename;
             }
-
-        /* if namespace present, try to load published config */
-        } elseif ($namespace && file_exists($this->basePath.'/'.$namespace.'/'.$filename)) {
-            $filePath = $this->basePath.'/'.$namespace.'/'.$filename;
-
-        /* finally, load the config from the module namespace */
-        } elseif (file_exists($this->namespacedPath[$namespace].'/'.$filename)) {
-            $filePath = $this->namespacedPath[$namespace].'/'.$filename;
         }
 
-        if (is_null($filePath)) {
-            throw new Exception("Configuration file [$file] can not be found", 1);
+        throw new Exception("Configuration file [$file] can not be found");
+
+    }
+
+    /**
+     * Resolve file path within namespace.
+     *
+     * @param  string $file namespaced config file location
+     *
+     * @return string       the real path of the config file
+     */
+    protected function resolveNamespacedPath($file)
+    {
+        list($namespace, $filename) = explode('::', $file, 2);
+
+        /* try to load published config */
+        if (file_exists($this->basePath.'/'.$namespace.'/'.$filename)) {
+            return $this->basePath.'/'.$namespace.'/'.$filename;
         }
 
-        return $filePath;
+        /* load the config from the module namespace */
+        if (file_exists($this->namespacedPath[$namespace].'/'.$filename)) {
+            return $this->namespacedPath[$namespace].'/'.$filename;
+        }
+
+        throw new Exception("Can not resolve the path of $filename in $namespace namespace");
+
     }
 
     /**

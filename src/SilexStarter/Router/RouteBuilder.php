@@ -221,8 +221,8 @@ class RouteBuilder
      */
     public function resource($prefix, $controller, array $options = [])
     {
-        $prefix             = '/' . ltrim($prefix, '/');
-        $routeMaps     = [
+        $prefix     = '/' . ltrim($prefix, '/');
+        $routeMaps  = [
             'get'           => new RouteMap('get', '/', "$controller:index"),
             'get_paginate'  => new RouteMap('get', '/page/{page}', "$controller:index"),
             'get_create'    => new RouteMap('get', '/create', "$controller:create"),

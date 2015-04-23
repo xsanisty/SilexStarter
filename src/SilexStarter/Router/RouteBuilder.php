@@ -69,36 +69,74 @@ class RouteBuilder
         }
     }
 
-    protected function pushBeforeHandler(\Closure $beforeHandler)
+    /**
+     * Add new before handler to the end of middleware stack.
+     *
+     * @param  array|string|Closure  $beforeHandler The before middleware handler
+     */
+    protected function pushBeforeHandler($beforeHandler)
     {
         $this->beforeHandlerStack[] = $beforeHandler;
     }
 
+    /**
+     * Retreive latest middleware from the middleware stack.
+     *
+     * @return array|Closure Closure or array of closure
+     */
     protected function popBeforeHandler()
     {
         return array_pop($this->beforeHandlerStack);
     }
 
+    /**
+     * Get the full middleware stack.
+     *
+     * @return array
+     */
     protected function getBeforeHandler()
     {
         return $this->beforeHandlerStack;
     }
 
-    protected function pushAfterHandler(\Closure $afterHandler)
+    /**
+     * Add new after handler to the top of middleware stack.
+     *
+     * @param  array|string|Closure  $afterHandler The after middleware handler
+     */
+    protected function pushAfterHandler($afterHandler)
     {
         array_unshift($this->afterHandlerStack, $afterHandler);
     }
 
+    /**
+     * Retreive first middleware from the middleware stack.
+     *
+     * @return array|Closure Closure or array of closure
+     */
     protected function popAfterHandler()
     {
         return array_shift($this->afterHandlerStack);
     }
 
+    /**
+     * Get the full middleware stack.
+     *
+     * @return array
+     */
     protected function getAfterHandler()
     {
         return $this->afterHandlerStack;
     }
 
+    /**
+     * Apply the middleware and binding to the controller.
+     *
+     * @param  Controller|ControllerCollection $route   The controller or controller collection
+     * @param  array  $options the route options
+     *
+     * @return Controller|ControllerCollection
+     */
     protected function applyControllerOption($route, array $options)
     {
         foreach ($this->getBeforeHandler() as $before) {

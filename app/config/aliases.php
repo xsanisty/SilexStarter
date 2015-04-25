@@ -16,4 +16,5 @@ return [
     'Asset'     => 'SilexStarter\StaticProxy\Asset',
     'Sentry'    => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
     'Str'       => 'Illuminate\Support\Str',
+    'Model'     => 'Illuminate\Database\Eloquent\Model',
 ];

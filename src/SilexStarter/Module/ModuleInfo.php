@@ -12,6 +12,7 @@ class ModuleInfo
         'website',
         'name',
         'description',
+        'version'
     ];
 
     public function __construct(array $info)

@@ -13,6 +13,7 @@ class ModuleResource
         'services',
         'config',
         'assets',
+        'migration'
     ];
 
     public function __construct(array $resources)

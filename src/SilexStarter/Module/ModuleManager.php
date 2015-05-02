@@ -34,6 +34,16 @@ class ModuleManager
     }
 
     /**
+     * Get all registered modules
+     *
+     * @return array
+     */
+    public function getRegisteredModules()
+    {
+        return $this->modules;
+    }
+
+    /**
      * Register multiple module provider at once.
      *
      * @param array $modules array of SilexStarter\Module\ModuleProvider

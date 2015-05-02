@@ -9,11 +9,12 @@ use InvalidArgumentException;
 
 class ConfigurationContainer implements ArrayAccess
 {
-    protected $config;
     protected $app;
     protected $basePath;
+    protected $config = [];
     protected $configPath = [];
     protected $namespacedPath = [];
+    protected $namespacedConfig = [];
 
     /**
      * ConfigurationContainer constructor.
@@ -23,19 +24,19 @@ class ConfigurationContainer implements ArrayAccess
      */
     public function __construct(Application $app, $basePath)
     {
-        $this->basePath     = rtrim($basePath, '/');
-        $this->config       = [];
-        $this->app          = $app;
+        $this->basePath = rtrim($basePath, '/');
+        $this->app = $app;
     }
 
     /**
      * Load the configuration file or array and save the value into array container.
      *
-     * @param mixed  $config    filename or namespace::filename, or any data type
+     * @param mixed  $config    filename or @namespace.filename, or any data type
      * @param string $configKey override the config key, if not specified, the filename will be used
      */
     public function load($config, $configKey = '')
     {
+
         /* return immediately when config already loaded */
         if (isset($this->config[$configKey])) {
             return;
@@ -60,7 +61,20 @@ class ConfigurationContainer implements ArrayAccess
             throw new InvalidArgumentException('Config key can not be empty');
         }
 
+        if ($configKey == 'app') {
+            foreach ($config as $param => $value) {
+                $this->app[$param] = $value;
+            }
+
+            return;
+        }
+
         $this->config[$configKey] = $config;
+    }
+
+    public function loadNamespacedFile($config, $configKey, $namespace)
+    {
+        $this->namespacedConfig[$namespace][$configKey] = $config;
     }
 
     /**
@@ -71,47 +85,44 @@ class ConfigurationContainer implements ArrayAccess
      */
     public function loadFile($file, $configKey = '')
     {
-        $configKey  = (!$configKey) ? explode('.', $file)[0] : $configKey;
 
-        $filePath = $this->resolvePath($file);
-        if ($configKey == 'app') {
-            $configuration = require $filePath;
-
-            foreach ($configuration as $param => $value) {
-                $this->app[$param] = $value;
-            }
-
-            return;
+        if (!$configKey) {
+            $fragment = explode('.', $file);
+            $configKey = ($this->isNamespaced($file)) ? $fragment[1] : $fragment[0] ;
         }
 
+        $filePath = $this->resolvePath($file);
+
         if (!isset($this->config[$configKey])) {
-            $this->config[$configKey] = require($filePath);
+            $configuration = require($filePath);
+
+            $this->loadConfig($configuration, $configKey);
         }
     }
 
     /**
      * Resolve the configuration file path.
      *
-     * @param string $file The file path or namespaced file path
+     * @param string $file  the file path or namespaced file path
      *
-     * @return string The proper file path
+     * @return string       the proper file path
      */
     protected function resolvePath($file)
     {
-        $filename   = ('.php' === substr($file, -4, 4)) ? $file : $file.'.php';
+        $filename = ('.php' === substr($file, -4, 4)) ? $file : $file.'.php';
 
-        if(strpos($file, '::') > -1){
+        if ($this->isNamespaced($file)) {
             return $this->resolveNamespacedPath($filename);
         }
 
         /* try to load the configuration file from the basepath */
-        if (file_exists($this->basePath.'/'.$filename)) {
-            return $this->basePath.'/'.$filename;
+        if (file_exists($this->basePath . '/' . $filename)) {
+            return $this->basePath . '/' . $filename;
         }
 
         foreach ($this->configPath as $configPath) {
-            if (file_exists($configPath.'/'.$filename)) {
-                return $configPath.'/'.$filename;
+            if (file_exists($configPath . '/' . $filename)) {
+                return $configPath . '/' . $filename;
             }
         }
 
@@ -128,30 +139,24 @@ class ConfigurationContainer implements ArrayAccess
      */
     protected function resolveNamespacedPath($file)
     {
-        list($namespace, $filename) = explode('::', $file, 2);
+        $namespace = $this->getNamespace($file);
+        $file = $this->getKey($file);
+
+        $publishedPath = $this->basePath . '/' . $namespace . '/' . $file;
+        $originalPath = $this->namespacedPath[$namespace] . '/' . $file;
 
         /* try to load published config */
-        if (file_exists($this->basePath.'/'.$namespace.'/'.$filename)) {
-            return $this->basePath.'/'.$namespace.'/'.$filename;
+        if (file_exists($publishedPath)) {
+            return $publishedPath;
         }
 
         /* load the config from the module namespace */
-        if (file_exists($this->namespacedPath[$namespace].'/'.$filename)) {
-            return $this->namespacedPath[$namespace].'/'.$filename;
+        if (file_exists($originalPath)) {
+            return $originalPath;
         }
 
-        throw new Exception("Can not resolve the path of $filename in $namespace namespace");
+        throw new Exception("Can not resolve the path of $file in $namespace namespace");
 
-    }
-
-    /**
-     * remove configuration key from the configuration container.
-     *
-     * @param string $offset the configuration key
-     */
-    public function unload($offset)
-    {
-        $this->offsetUnset($offset);
     }
 
     /**
@@ -171,83 +176,142 @@ class ConfigurationContainer implements ArrayAccess
         }
     }
 
-    public function set($offset, $value)
+    /**
+     * Check if key is contain namespace.
+     * @param  string  $key The configuration key
+     *
+     * @return boolean
+     */
+    protected function isNamespaced($key)
     {
-        $this->offsetSet($offset, $value);
+        return (bool) $this->getNamespace($key);
     }
 
-    public function get($offset)
+    /**
+     * Get namespace out of the config key.
+     *
+     * @param  string $key The full config key
+     *
+     * @return string      The namespace
+     */
+    protected function getNamespace($key)
     {
-        return $this->offsetGet($offset);
+        $namespace = [];
+        preg_match("/@(.*?)\./s", $key, $namespace);
+
+        return (empty($namespace)) ? false : $namespace[1];
     }
 
-    public function offsetExists($offset)
+    protected function getKey($key)
     {
-        return isset($this->config[$offset]);
+        return preg_replace("/@(.*?)\./s", '', $key);
     }
 
-    public function offsetGet($offset)
+    /**
+     * Convert dot notation into array access (key.subkey => [key][subkey]).
+     *
+     * @param  string $key   The dit delimited string
+     * @param  array  $array The array
+     *
+     * @return mixed
+     */
+    protected function parseDotNotation($key, array $array)
     {
-        $offsetChunk = explode('.', $offset);
-        $configFile  = $offsetChunk[0];
+        $keys       = explode('.', $key);
+        $configVal  = null;
 
-        /*
-         * if xxx.yyy.zzz offset is exist, return it immediately
-         * else, try to search deeply into configuration array as xxx[yyy][zzz]
-         */
-        if (isset($this->config[$offset])) {
-            return $this->config[$offset];
-        }
-
-        /* if not set, try to load the config file */
-        if (!isset($this->config[$configFile])) {
-            $this->load($configFile);
-        }
-
-        /* if there is no dot notation, return the whole config */
-        if (count($offsetChunk) == 1) {
-            return $this->config[$configFile];
-        }
-
-        /* else, dive through the dot notation until it found */
-        $configVal = null;
-
-        foreach ($offsetChunk as $count => $chunk) {
+        foreach ($keys as $count => $key) {
             if (0 == $count) {
-                $configVal = $this->config[$chunk];
-            } elseif (is_array($configVal) && isset($configVal[$chunk])) {
-                $configVal = $configVal[$chunk];
+                $configVal = $array[$key];
+            } elseif (is_array($configVal) && isset($configVal[$key])) {
+                $configVal = $configVal[$key];
             } else {
-                throw new Exception("'{$offsetChunk[$count - 1]}' doesn't have '$chunk' sub configuration", 1);
+                throw new Exception("'{$keys[$count - 1]}' doesn't have '$key' sub configuration", 1);
             }
         }
 
         return $configVal;
     }
 
-    public function offsetSet($offset, $value)
+    /**
+     * Get the configuration value on the specific key.
+     *
+     * @param  string $key The configuration key
+     *
+     * @return mixed
+     */
+    public function get($key)
     {
-        $offsetChunk = explode('.', $offset);
-        $offsetLength = count($offsetChunk) - 1;
+        if ($this->isNamespaced($key)) {
+            $namespace  = $this->getNamespace($key);
+            $key        = $this->getKey($key);
 
-        if (!count($offsetChunk) > 1) {
-            $this->config[$offset] = $value;
+            return $this->getNamespacedValue($namespace, $key);
+        } else {
+            return $this->getValue($key);
+        }
+    }
 
-            return;
+    /**
+     * Get config value of the specific key.
+     *
+     * @param  string $key The configuration key
+     *
+     * @return mixed
+     */
+    protected function getValue($key)
+    {
+        return $this->parseDotNotation($key, $this->config);
+    }
+
+    /**
+     * Get config value from specific namespace.
+     *
+     * @param  string $namespace The config namespace
+     * @param  string $key       The config key.
+     *
+     * @return mixed
+     */
+    protected function getNamespacedValue($namespace, $key)
+    {
+        return $this->parseDotNotation($key, $this->namespacedConfig[$namespace]);
+    }
+
+    /**
+     * Set the value of specific key in the configuration.
+     *
+     * @param string $key   The configuration key
+     * @param mixed  $value The configuration value
+     */
+    public function set($key, $value)
+    {
+        if ($this->isNamespaced($key)) {
+            $namespace  = $this->getNamespace($key);
+            $key        = $this->getKey($key);
+
+            $this->setNamespacedValue($namespace, $key, $value);
+        } else {
+            $this->setValue($key, $value);
+        }
+    }
+
+    /**
+     * Set the value of specified config key.
+     *
+     * @param string $key   The configuration key
+     * @param mixed  $value The configuration value
+     */
+    protected function setValue($key, $value, array &$config = null)
+    {
+        $key  = explode('.', $key); //[test]
+        $keyLength = count($key) - 1;
+
+        if (is_null($config)) {
+            $config = &$this->config;
         }
 
-        if (!isset($this->config[$offsetChunk[0]])) {
-            try {
-                $this->load($offsetChunk[0]);
-            } catch (Exception $e) {
-                $this->config[$offsetChunk[0]] = [];
-            }
-        }
-
-        $config = &$this->config;
-
-        foreach ($offsetChunk as $counter => $offsetKey) {
-            if (!isset($config[$offsetKey]) && $counter != $offsetLength) {
+        foreach ($key as $counter => $offsetKey) {
+            if (!isset($config[$offsetKey]) && $counter != $keyLength) {
                 $config[$offsetKey] = [];
             }
 
@@ -257,8 +321,62 @@ class ConfigurationContainer implements ArrayAccess
         $config = $value;
     }
 
-    public function offsetUnset($offset)
+    /**
+     * Set the value of specified config key inside namespace.
+     *
+     * @param string $namespace The configuration namespace
+     * @param string $key       The configuration key
+     * @param mixed  $value     The configuration value
+     */
+    protected function setNamespacedValue($namespace, $key, $value)
     {
-        unset($this->config[$offset]);
+        if (!isset($this->namespacedConfig[$namespace])) {
+            $this->namespacedConfig[$namespace] = [];
+        }
+
+        $this->setValue($key, $value, $this->namespacedConfig[$namespace]);
+    }
+
+    /**
+     * remove configuration key from the configuration container.
+     *
+     * @param string $offset the configuration key
+     */
+    public function remove($key)
+    {
+        $this->offsetUnset($key);
+    }
+
+
+    /**
+     * Array access interface, to check existing config key.
+     *
+     * @param  string $key the configuration key
+     *
+     * @return boolean
+     */
+    public function offsetExists($key)
+    {
+        try {
+            $this->get($key);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function offsetGet($key)
+    {
+        return $this->get($key);
+    }
+
+    public function offsetSet($key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    public function offsetUnset($key)
+    {
+        $this->remove($key);
     }
 }

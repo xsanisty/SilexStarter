@@ -12,6 +12,7 @@ class ModuleInfoTest extends \PHPUnit_Framework_TestCase
         'website'       => 'http://www.xsanisty.com',
         'name'          => 'SilexStarter',
         'description'   => 'Silex Starter App',
+        'version'       => '1.0.0@beta'
     ];
 
     protected $moduleInfo;
@@ -60,5 +61,11 @@ class ModuleInfoTest extends \PHPUnit_Framework_TestCase
     {
         assertSame($this->info['description'], $this->moduleInfo->__get('description'));
         assertSame($this->info['description'], $this->moduleInfo->description);
+    }
+
+    public function test_get_version()
+    {
+        assertSame($this->info['version'], $this->moduleInfo->__get('version'));
+        assertSame($this->info['version'], $this->moduleInfo->version);
     }
 }

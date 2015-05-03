@@ -36,6 +36,9 @@ class ConfigurationContainerTest extends PHPUnit_Framework_TestCase
         $this->config = null;
     }
 
+    /**
+     * @covers SilexStarter\Config\ConfigurationContainer::parseDotNotation
+     */
     public function test_parse_dot_notation(){
         $testConfig = [
             'somekey' => [
@@ -156,6 +159,9 @@ class ConfigurationContainerTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers SilexStarter\Config\ConfigurationContainer::resolvePath
+     */
     public function test_resolve_unpublished_namespace_path()
     {
         $this->config->addDirectory(__DIR__ . '/../stubs/unpublished_namespace', 'some-ns');
@@ -165,6 +171,9 @@ class ConfigurationContainerTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers SilexStarter\Config\ConfigurationContainer::resolveNamespacedPath
+     */
     public function test_resolve_namespaced_path()
     {
         /* this expected to locate basedir/namespace because basedir/namespace is exists */

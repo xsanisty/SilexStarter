@@ -28,45 +28,32 @@ class ModuleResourceTest extends \PHPUnit_Framework_TestCase
         $this->moduleResource = null;
     }
 
-    public function test_get_route_file()
+    public function test_get_info()
     {
-        assertSame($this->resources['routes'], $this->moduleResource->__get('routes'));
-        assertSame($this->resources['routes'], $this->moduleResource->routes);
+        foreach ($this->resources as $key => $value) {
+            assertSame($value, $this->moduleResource->__get($key));
+            assertSame($value, $this->moduleResource->{$key});
+        }
     }
 
-    public function test_get_middleware_file()
+    public function test_get_non_existence_resource()
     {
-        assertSame($this->resources['middlewares'], $this->moduleResource->__get('middlewares'));
-        assertSame($this->resources['middlewares'], $this->moduleResource->middlewares);
+        assertNull($this->moduleResource->__get('oil'));
+        assertNull($this->moduleResource->oil);
     }
 
-    public function test_get_config_dir()
+    public function test_set_resources()
     {
-        assertSame($this->resources['config'], $this->moduleResource->__get('config'));
-        assertSame($this->resources['config'], $this->moduleResource->config);
-    }
+        foreach ($this->resources as $key => $value) {
+            $this->moduleResource->__set($key, 'another value');
 
-    public function test_get_views_dir()
-    {
-        assertSame($this->resources['views'], $this->moduleResource->__get('views'));
-        assertSame($this->resources['views'], $this->moduleResource->views);
-    }
+            assertSame('another value', $this->moduleResource->__get($key));
+        }
 
-    public function test_get_controllers_dir()
-    {
-        assertSame($this->resources['controllers'], $this->moduleResource->__get('controllers'));
-        assertSame($this->resources['controllers'], $this->moduleResource->controllers);
-    }
+        foreach ($this->resources as $key => $value) {
+            $this->moduleResource->{$key} = 'another value';
 
-    public function test_get_service_list()
-    {
-        assertSame($this->resources['services'], $this->moduleResource->__get('services'));
-        assertSame($this->resources['services'], $this->moduleResource->services);
-    }
-
-    public function test_get_migration_dir()
-    {
-        assertSame($this->resources['migration'], $this->moduleResource->__get('migration'));
-        assertSame($this->resources['migration'], $this->moduleResource->migration);
+            assertSame('another value', $this->moduleResource->{$key});
+        }
     }
 }

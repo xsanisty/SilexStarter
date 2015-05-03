@@ -27,45 +27,32 @@ class ModuleInfoTest extends \PHPUnit_Framework_TestCase
         $this->moduleInfo = null;
     }
 
-    public function test_get_author_name()
+    public function test_get_info()
     {
-        assertSame($this->info['author_name'], $this->moduleInfo->__get('author_name'));
-        assertSame($this->info['author_name'], $this->moduleInfo->author_name);
+        foreach ($this->info as $key => $value) {
+            assertSame($value, $this->moduleInfo->__get($key));
+            assertSame($value, $this->moduleInfo->{$key});
+        }
     }
 
-    public function test_get_author_email()
+    public function test_get_non_existence_info()
     {
-        assertSame($this->info['author_email'], $this->moduleInfo->__get('author_email'));
-        assertSame($this->info['author_email'], $this->moduleInfo->author_email);
+        assertNull($this->moduleInfo->__get('girlfriend'));
+        assertNull($this->moduleInfo->girlfriend);
     }
 
-    public function test_get_repository()
+    public function test_set_info()
     {
-        assertSame($this->info['repository'], $this->moduleInfo->__get('repository'));
-        assertSame($this->info['repository'], $this->moduleInfo->repository);
-    }
+        foreach ($this->info as $key => $value) {
+            $this->moduleInfo->__set($key, 'another value');
 
-    public function test_get_website()
-    {
-        assertSame($this->info['website'], $this->moduleInfo->__get('website'));
-        assertSame($this->info['website'], $this->moduleInfo->website);
-    }
+            assertSame('another value', $this->moduleInfo->__get($key));
+        }
 
-    public function test_get_name()
-    {
-        assertSame($this->info['name'], $this->moduleInfo->__get('name'));
-        assertSame($this->info['name'], $this->moduleInfo->name);
-    }
+        foreach ($this->info as $key => $value) {
+            $this->moduleInfo->{$key} = 'another value';
 
-    public function test_get_description()
-    {
-        assertSame($this->info['description'], $this->moduleInfo->__get('description'));
-        assertSame($this->info['description'], $this->moduleInfo->description);
-    }
-
-    public function test_get_version()
-    {
-        assertSame($this->info['version'], $this->moduleInfo->__get('version'));
-        assertSame($this->info['version'], $this->moduleInfo->version);
+            assertSame('another value', $this->moduleInfo->{$key});
+        }
     }
 }

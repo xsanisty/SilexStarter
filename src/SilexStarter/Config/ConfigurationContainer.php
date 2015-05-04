@@ -5,7 +5,6 @@ namespace SilexStarter\Config;
 use Silex\Application;
 use ArrayAccess;
 use Exception;
-use InvalidArgumentException;
 
 class ConfigurationContainer implements ArrayAccess
 {
@@ -38,11 +37,10 @@ class ConfigurationContainer implements ArrayAccess
     {
         $configFile = str_replace('.php', '', $configFile);
 
-        /* return immediately when config already loaded */
         if ($this->isNamespaced($configFile)) {
             $namespace = $this->getNamespace($configFile);
             $configKey = $this->getKey($configFile);
-            $configPath= $this->resolveNamespacedPath($configFile);
+            $configPath = $this->resolveNamespacedPath($configFile);
 
             $this->namespacedConfig[$namespace][$configKey] = require $configPath;
         } else {
@@ -62,9 +60,9 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Resolve the configuration file path.
      *
-     * @param string $file  the file path or namespaced file path
+     * @param string $file the file path or namespaced file path
      *
-     * @return string       the proper file path
+     * @return string the proper file path
      */
     protected function resolvePath($file)
     {
@@ -75,26 +73,25 @@ class ConfigurationContainer implements ArrayAccess
         }
 
         /* try to load the configuration file from the basepath */
-        if (file_exists($this->basePath . '/' . $filename)) {
-            return $this->basePath . '/' . $filename;
+        if (file_exists($this->basePath.'/'.$filename)) {
+            return $this->basePath.'/'.$filename;
         }
 
         foreach ($this->configPath as $configPath) {
-            if (file_exists($configPath . '/' . $filename)) {
-                return $configPath . '/' . $filename;
+            if (file_exists($configPath.'/'.$filename)) {
+                return $configPath.'/'.$filename;
             }
         }
 
         throw new Exception("Can not resolve the path of $file");
-
     }
 
     /**
      * Resolve file path within namespace.
      *
-     * @param  string $file namespaced config file location
+     * @param string $file namespaced config file location
      *
-     * @return string       the real path of the config file
+     * @return string the real path of the config file
      */
     protected function resolveNamespacedPath($file)
     {
@@ -102,8 +99,8 @@ class ConfigurationContainer implements ArrayAccess
         $file       = $this->getKey($file);
         $filename   = ('.php' === substr($file, -4, 4)) ? $file : $file.'.php';
 
-        $publishedPath = $this->basePath . '/' . $namespace . '/' . $filename;
-        $originalPath = $this->namespacedPath[$namespace] . '/' . $filename;
+        $publishedPath = $this->basePath.'/'.$namespace.'/'.$filename;
+        $originalPath = $this->namespacedPath[$namespace].'/'.$filename;
 
         /* try to load published config */
         if (file_exists($publishedPath)) {
@@ -116,7 +113,6 @@ class ConfigurationContainer implements ArrayAccess
         }
 
         throw new Exception("Can not resolve the path of $file in $namespace namespace");
-
     }
 
     /**
@@ -139,9 +135,10 @@ class ConfigurationContainer implements ArrayAccess
 
     /**
      * Check if key is contain namespace.
-     * @param  string  $key The configuration key
      *
-     * @return boolean
+     * @param string $key The configuration key
+     *
+     * @return bool
      */
     protected function isNamespaced($key)
     {
@@ -151,9 +148,9 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Get namespace out of the config key.
      *
-     * @param  string $key The full config key
+     * @param string $key The full config key
      *
-     * @return string      The namespace
+     * @return string The namespace
      */
     protected function getNamespace($key)
     {
@@ -164,8 +161,10 @@ class ConfigurationContainer implements ArrayAccess
     }
 
     /**
-     * Get key part of the namespaced key string
-     * @param  string $key namespaced key
+     * Get key part of the namespaced key string.
+     *
+     * @param string $key namespaced key
+     *
      * @return string
      */
     protected function getKey($key)
@@ -176,8 +175,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Convert dot notation into array access (key.subkey => [key][subkey]).
      *
-     * @param  string $key   The dit delimited string
-     * @param  array  $array The array
+     * @param string $key   The dit delimited string
+     * @param array  $array The array
      *
      * @return mixed
      */
@@ -202,7 +201,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Get the configuration value on the specific key.
      *
-     * @param  string $key The configuration key
+     * @param string $key The configuration key
      *
      * @return mixed
      */
@@ -221,7 +220,7 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Get config value of the specific key.
      *
-     * @param  string $key The configuration key
+     * @param string $key The configuration key
      *
      * @return mixed
      */
@@ -239,8 +238,8 @@ class ConfigurationContainer implements ArrayAccess
     /**
      * Get config value from specific namespace.
      *
-     * @param  string $namespace The config namespace
-     * @param  string $key       The config key.
+     * @param string $namespace The config namespace
+     * @param string $key       The config key.
      *
      * @return mixed
      */
@@ -330,18 +329,18 @@ class ConfigurationContainer implements ArrayAccess
         //
     }
 
-
     /**
      * Array access interface, to check existing config key.
      *
-     * @param  string $key the configuration key
+     * @param string $key the configuration key
      *
-     * @return boolean
+     * @return bool
      */
     public function offsetExists($key)
     {
         try {
             $this->get($key);
+
             return true;
         } catch (Exception $e) {
             return false;

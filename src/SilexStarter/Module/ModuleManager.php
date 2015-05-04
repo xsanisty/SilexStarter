@@ -20,13 +20,12 @@ class ModuleManager
         $this->app          = $app;
     }
 
-
     /**
      * Check if specified module is registered.
      *
-     * @param  string  $module The module accessor string
+     * @param string $module The module accessor string
      *
-     * @return boolean
+     * @return bool
      */
     public function isRegistered($module)
     {
@@ -34,7 +33,7 @@ class ModuleManager
     }
 
     /**
-     * Get all registered modules
+     * Get all registered modules.
      *
      * @return array
      */
@@ -56,73 +55,84 @@ class ModuleManager
     }
 
     /**
+     * Check wether required modules is registered.
+     *
+     * @param array $modules list of module identifiers
+     *
+     * @throws ModuleRequiredException
+     */
+    protected function checkRequiredModules(array $modules)
+    {
+        foreach ($modules as $requiredModule) {
+            if (!$this->isRegistered($requiredModule)) {
+                throw new ModuleRequiredException($moduleAccessor.' module require '.$requiredModule.' as its dependency');
+            }
+        }
+    }
+
+    /**
      * Register ModuleProvider into application.
      *
      * @param ModuleProviderInterface $module the module provider
      */
     public function register(ModuleProviderInterface $module)
     {
-        $moduleAccessor = $module->getModuleIdentifier();
+        $moduleIdentifier = $module->getModuleIdentifier();
 
-        /* Check for required module, if not satisfied, throw exception immediately */
-        foreach ($module->getRequiredModules() as $requiredModule) {
-            if (!$this->isRegistered($requiredModule)) {
-                throw new ModuleRequiredException($moduleAccessor . ' module require ' . $requiredModule . ' as its dependency');
-            }
-        }
+        $this->checkRequiredModules($module->getRequiredModules());
 
         /* Get the module path via the class reflection */
         $moduleReflection = new \ReflectionClass($module);
         $modulePath       = dirname($moduleReflection->getFileName());
         $moduleResources  = $module->getResources();
 
-        /* If controller_as_service enabled, register the controllers as service */
-        if ($this->app['controller_as_service'] && $moduleResources->controllers) {
-            $this->app->registerControllerDirectory(
-                $modulePath . DIRECTORY_SEPARATOR . $moduleResources->controllers,
-                $moduleReflection->getNamespaceName() . '\\' . $moduleResources->controllers
-            );
-        }
-
         /* if config dir exists, add namespace to the config reader */
         if ($moduleResources->config) {
             $this->app['config']->addDirectory(
-                $modulePath . '/' . $moduleResources->config,
-                $moduleAccessor
+                $modulePath.'/'.$moduleResources->config,
+                $moduleIdentifier
             );
 
-            $this->config[$moduleAccessor] = $modulePath . '/' . $moduleResources->config;
+            $this->config[$moduleIdentifier] = $modulePath.'/'.$moduleResources->config;
+        }
+
+        /* If controller_as_service enabled, register the controllers as service */
+        if ($this->app['controller_as_service'] && $moduleResources->controllers) {
+            $this->app->registerControllerDirectory(
+                $modulePath.DIRECTORY_SEPARATOR.$moduleResources->controllers,
+                $moduleReflection->getNamespaceName().'\\'.$moduleResources->controllers
+            );
         }
 
         /* if route file exists, queue for later include */
         if ($moduleResources->routes) {
-            $this->addRouteFile($modulePath . '/' . $moduleResources->routes);
+            $this->addRouteFile($modulePath.'/'.$moduleResources->routes);
         }
 
         /* if middleware file exists, queue for later include */
         if ($moduleResources->middlewares) {
-            $this->addMiddlewareFile($modulePath . '/' . $moduleResources->middlewares);
+            $this->addMiddlewareFile($modulePath.'/'.$moduleResources->middlewares);
         }
 
         /* if template file exists, register new template path under new namespace */
         if ($moduleResources->views) {
             $this->app['twig.loader.filesystem']->addPath(
-                $modulePath . '/' . $moduleResources->views,
-                $moduleAccessor
+                $modulePath.'/'.$moduleResources->views,
+                $moduleIdentifier
             );
         }
 
         /* keep assets path of the module */
         if ($moduleResources->assets) {
-            $this->assets[$moduleAccessor] = $modulePath . '/' . $moduleResources->assets;
+            $this->assets[$moduleIdentifier] = $modulePath.'/'.$moduleResources->assets;
         }
 
-        $this->modules[$moduleAccessor] = $module;
+        $this->modules[$moduleIdentifier] = $module;
         $module->register();
     }
 
     /**
-     * Boot up all available module
+     * Boot up all available module.
      */
     public function boot()
     {
@@ -183,7 +193,7 @@ class ModuleManager
     public function publishAsset($module)
     {
         $moduleAsset = $this->assets[$module];
-        $publicAsset = $this->app['path.public'] . 'assets/' . $module;
+        $publicAsset = $this->app['path.public'].'assets/'.$module;
 
         $this->app['filesystem']->mirror($moduleAsset, $publicAsset);
     }
@@ -196,7 +206,7 @@ class ModuleManager
     public function publishConfig($module)
     {
         $moduleConfig = $this->config[$module];
-        $publicConfig = $this->app['path.app'] . 'config/' . $module;
+        $publicConfig = $this->app['path.app'].'config/'.$module;
 
         $this->app['filesystem']->mirror($moduleConfig, $publicConfig);
     }

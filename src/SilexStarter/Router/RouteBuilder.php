@@ -72,7 +72,7 @@ class RouteBuilder
     /**
      * Add new before handler to the end of middleware stack.
      *
-     * @param  array|string|Closure  $beforeHandler The before middleware handler
+     * @param array|string|Closure $beforeHandler The before middleware handler
      */
     protected function pushBeforeHandler($beforeHandler)
     {
@@ -102,7 +102,7 @@ class RouteBuilder
     /**
      * Add new after handler to the top of middleware stack.
      *
-     * @param  array|string|Closure  $afterHandler The after middleware handler
+     * @param array|string|Closure $afterHandler The after middleware handler
      */
     protected function pushAfterHandler($afterHandler)
     {
@@ -132,8 +132,8 @@ class RouteBuilder
     /**
      * Apply the middleware and binding to the controller.
      *
-     * @param  Controller|ControllerCollection $route   The controller or controller collection
-     * @param  array  $options the route options
+     * @param Controller|ControllerCollection $route   The controller or controller collection
+     * @param array                           $options the route options
      *
      * @return Controller|ControllerCollection
      */
@@ -213,7 +213,7 @@ class RouteBuilder
     /**
      * Grouping route into controller collection and mount to specific prefix.
      *
-     * @param string  $prefix   the route prefix
+     * @param string   $prefix   the route prefix
      * @param \Closure $callable the route collection handler
      *
      * @return Silex\ControllerCollection controller collection that already mounted to $prefix
@@ -259,7 +259,7 @@ class RouteBuilder
      */
     public function resource($prefix, $controller, array $options = [])
     {
-        $prefix     = '/' . ltrim($prefix, '/');
+        $prefix     = '/'.ltrim($prefix, '/');
         $routeMaps  = [
             'get'           => new RouteMap('get', '/', "$controller:index"),
             'get_paginate'  => new RouteMap('get', '/page/{page}', "$controller:index"),
@@ -305,13 +305,12 @@ class RouteBuilder
     /**
      * Create list of route map based on controller's public method.
      *
-     * @param  object|string $controller Fully qualified controller class name or class instance
+     * @param object|string $controller Fully qualified controller class name or class instance
      *
      * @return array array of SilexStarter\Router\RouteMap
      */
     protected function createControllerRouteMap($controller)
     {
-
         $class              = new \ReflectionClass($controller);
         $controllerActions  = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
 
@@ -328,7 +327,7 @@ class RouteBuilder
             }
 
             $routeOptions   = [];
-            $routeAction    = $class->getName() . ':' . $action->name;
+            $routeAction    = $class->getName().':'.$action->name;
 
             /* the http method get, put, post, etc */
             $httpMethod     = substr($action->name, 0, strcspn($action->name, $uppercase));
@@ -349,26 +348,24 @@ class RouteBuilder
                 }
             }
 
-            $routeOptions['default']= $defaultParams;
+            $routeOptions['default'] = $defaultParams;
 
             $routeMaps[$routeName]  = new RouteMap($httpMethod, $routePattern, $routeAction, $routeOptions);
         }
 
         return $routeMaps;
-
     }
 
     /**
      * Apply route maps into route collection.
      *
-     * @param  ControllerCollection $router    The VontrollerCollection instance
-     * @param  array                $routeMaps List of RouteMap object
+     * @param ControllerCollection $router    The VontrollerCollection instance
+     * @param array                $routeMaps List of RouteMap object
      *
      * @return ControllerCollection
      */
     protected function buildControllerRoute(ControllerCollection $router, array $routeMaps)
     {
-
         foreach ($routeMaps as $map) {
             $options = $map->getOptions();
             $pattern = $map->getPattern();

@@ -24,7 +24,7 @@ interface ModuleInterface
     /**
      * Get module resources including route, config, views, etc.
      *
-     * @return  SilexStarter\Module\ModuleResource
+     * @return SilexStarter\Module\ModuleResource
      */
     public function getResources();
 

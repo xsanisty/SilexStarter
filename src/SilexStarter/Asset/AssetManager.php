@@ -171,13 +171,13 @@ class AssetManager
 
         /* if namespace exists, resolve the namespace */
         if ($namespace) {
-            $file = str_replace($namespace[0], $this->assetBasePath . '/' . $namespace[1] . '/', $file);
+            $file = str_replace($namespace[0], $this->assetBasePath.'/'.$namespace[1].'/', $file);
         } else {
-            $file = $this->assetBasePath . '/' . $file;
+            $file = $this->assetBasePath.'/'.$file;
         }
 
-        return  (($absolute) ? $this->request->getCurrentRequest()->getScheme() . '://' . $this->request->getCurrentRequest()->getHost() : '') .
-                $this->request->getCurrentRequest()->getBasePath() . '/' .
+        return  (($absolute) ? $this->request->getCurrentRequest()->getScheme().'://'.$this->request->getCurrentRequest()->getHost() : '').
+                $this->request->getCurrentRequest()->getBasePath().'/'.
                 ltrim($file, '/');
     }
 }

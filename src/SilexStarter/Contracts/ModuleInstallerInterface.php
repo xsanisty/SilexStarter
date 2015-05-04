@@ -9,7 +9,6 @@ interface ModuleInstallerInterface extends ModuleInterface
      *     - publishing assets file
      *     - creating the database table
      *     - etc.
-     *
      */
     public function install();
 
@@ -18,7 +17,6 @@ interface ModuleInstallerInterface extends ModuleInterface
      *     - dropping table
      *     - removing asset file
      *     - etc.
-     *
      */
     public function uninstall();
 

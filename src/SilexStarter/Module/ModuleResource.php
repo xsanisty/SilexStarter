@@ -13,7 +13,7 @@ class ModuleResource
         'services',
         'config',
         'assets',
-        'migration'
+        'migration',
     ];
 
     public function __construct(array $resources)
@@ -42,8 +42,8 @@ class ModuleResource
     /**
      * Resource setter, so it possible to assign value to resources using $object->resources = value.
      *
-     * @param string $resource  the resource name
-     * @param mixeed $value     the resource value
+     * @param string $resource the resource name
+     * @param mixeed $value    the resource value
      */
     public function __set($resource, $value)
     {

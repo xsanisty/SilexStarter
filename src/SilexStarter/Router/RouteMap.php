@@ -9,7 +9,7 @@ class RouteMap
     protected $action;
     protected $options;
 
-    public function __construct($httpMethod = 'get', $pattern ='/', $action = null, array $options = [])
+    public function __construct($httpMethod = 'get', $pattern = '/', $action = null, array $options = [])
     {
         $this->setPattern($pattern);
         $this->setHttpMethod($httpMethod);
@@ -39,12 +39,12 @@ class RouteMap
 
     public function setPattern($pattern)
     {
-        $this->pattern = '/' . ltrim($pattern, '/');
+        $this->pattern = '/'.ltrim($pattern, '/');
     }
 
     public function setHttpMethod($httpMethod)
     {
-        if($this->isValidHttpMethod($httpMethod)){
+        if ($this->isValidHttpMethod($httpMethod)) {
             $this->httpMethod = $httpMethod;
         }
     }
@@ -59,7 +59,8 @@ class RouteMap
         $this->options = $options;
     }
 
-    protected function isValidHttpMethod($method){
+    protected function isValidHttpMethod($method)
+    {
         return in_array(strtolower($method), ['get', 'post', 'put', 'delete', 'head', 'options', 'patch']);
     }
 }

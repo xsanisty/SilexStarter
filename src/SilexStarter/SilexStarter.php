@@ -108,11 +108,9 @@ class SilexStarter extends Application
                         case 'Silex\Application':
                             $invocationParameters[] = $app;
                             break;
-
                         case 'Symfony\Component\HttpFoundation\Request':
                             $invocationParameters[] = $app['request'];
                             break;
-
                         default:
                             if ($app->offsetExists($parameterClassName)) {
                                 $invocationParameters[] = $app[$parameterClassName];
@@ -128,9 +126,9 @@ class SilexStarter extends Application
 
                 return $controllerReflection->newInstanceArgs($invocationParameters);
 
-            /*
-             * Else, Instantiate the class directly
-             */
+                /*
+                 * Else, Instantiate the class directly
+                 */
             } else {
                 return $controllerReflection->newInstance();
             }
@@ -172,9 +170,11 @@ class SilexStarter extends Application
      */
     public function bind($interface, $service)
     {
-        $this[$interface] = $this->share(function () use ($service) {
-            return $this[$service];
-        });
+        $this[$interface] = $this->share(
+            function () use ($service) {
+                return $this[$service];
+            }
+        );
     }
 
     /**

@@ -6,11 +6,24 @@ class ChildMenuContainer extends MenuContainer
 {
     protected $parent;
 
+    /**
+     * [__construct description].
+     *
+     * @param MenuItem $parent [description]
+     */
     public function __construct(MenuItem $parent)
     {
         $this->parent = $parent;
     }
 
+    /**
+     * [createItem description].
+     *
+     * @param [type] $name       [description]
+     * @param array  $attributes [description]
+     *
+     * @return [type] [description]
+     */
     public function createItem($name, array $attributes)
     {
         $attributes['name'] = $name;
@@ -20,6 +33,11 @@ class ChildMenuContainer extends MenuContainer
         return $this->items[$name];
     }
 
+    /**
+     * [addItem description].
+     *
+     * @param MenuItem $menu [description]
+     */
     public function addItem(MenuItem $menu)
     {
         $menu->setLevel($this->level);

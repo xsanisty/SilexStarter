@@ -16,7 +16,8 @@ use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 class TwigServiceProvider implements ServiceProviderInterface
 {
     /**
-     * The Silex Application instance
+     * The Silex Application instance.
+     *
      * @var \Silex\Application
      */
     protected $app;

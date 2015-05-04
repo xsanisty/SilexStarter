@@ -29,74 +29,33 @@ class ConfigurationContainer implements ArrayAccess
     }
 
     /**
-     * Load the configuration file or array and save the value into array container.
+     * Load the configuration file and save the value into array container.
      *
-     * @param mixed  $config    filename or @namespace.filename, or any data type
+     * @param mixed  $config    filename or @namespace.filename
      * @param string $configKey override the config key, if not specified, the filename will be used
      */
-    public function load($config, $configKey = '')
+    public function load($configFile)
     {
+        $configFile = str_replace('.php', '', $configFile);
 
         /* return immediately when config already loaded */
-        if (isset($this->config[$configKey])) {
-            return;
-        }
+        if ($this->isNamespaced($configFile)) {
+            $namespace = $this->getNamespace($configFile);
+            $configKey = $this->getKey($configFile);
+            $configPath= $this->resolveNamespacedPath($configFile);
 
-        if (is_string($config)) {
-            $this->loadFile($config, $configKey);
+            $this->namespacedConfig[$namespace][$configKey] = require $configPath;
         } else {
-            $this->loadConfig($config, $configKey);
-        }
-    }
+            $configPath = $this->resolvePath($configFile);
+            $configVal  = require $configPath;
 
-    /**
-     * Load the configuration from an array, object, etc.
-     *
-     * @param mixed  $config    the array, object or any type of data
-     * @param string $configKey the configuration key for access it outside container
-     */
-    public function loadConfig($config, $configKey)
-    {
-        if (!$configKey) {
-            throw new InvalidArgumentException('Config key can not be empty');
-        }
-
-        if ($configKey == 'app') {
-            foreach ($config as $param => $value) {
-                $this->app[$param] = $value;
+            if ($configFile === 'app') {
+                foreach ($configVal as $key => $value) {
+                    $this->app[$key] = $value;
+                }
+            } else {
+                $this->config[$configFile] = $configVal;
             }
-
-            return;
-        }
-
-        $this->config[$configKey] = $config;
-    }
-
-    public function loadNamespacedFile($config, $configKey, $namespace)
-    {
-        $this->namespacedConfig[$namespace][$configKey] = $config;
-    }
-
-    /**
-     * Load the configuration from a file.
-     *
-     * @param string $file      the config file path
-     * @param string $configKey the configuration key for access it outside container
-     */
-    public function loadFile($file, $configKey = '')
-    {
-
-        if (!$configKey) {
-            $fragment = explode('.', $file);
-            $configKey = ($this->isNamespaced($file)) ? $fragment[1] : $fragment[0] ;
-        }
-
-        $filePath = $this->resolvePath($file);
-
-        if (!isset($this->config[$configKey])) {
-            $configuration = require($filePath);
-
-            $this->loadConfig($configuration, $configKey);
         }
     }
 
@@ -126,7 +85,7 @@ class ConfigurationContainer implements ArrayAccess
             }
         }
 
-        throw new Exception("Configuration file [$file] can not be found");
+        throw new Exception("Can not resolve the path of $file");
 
     }
 
@@ -139,11 +98,12 @@ class ConfigurationContainer implements ArrayAccess
      */
     protected function resolveNamespacedPath($file)
     {
-        $namespace = $this->getNamespace($file);
-        $file = $this->getKey($file);
+        $namespace  = $this->getNamespace($file);
+        $file       = $this->getKey($file);
+        $filename   = ('.php' === substr($file, -4, 4)) ? $file : $file.'.php';
 
-        $publishedPath = $this->basePath . '/' . $namespace . '/' . $file;
-        $originalPath = $this->namespacedPath[$namespace] . '/' . $file;
+        $publishedPath = $this->basePath . '/' . $namespace . '/' . $filename;
+        $originalPath = $this->namespacedPath[$namespace] . '/' . $filename;
 
         /* try to load published config */
         if (file_exists($publishedPath)) {
@@ -173,6 +133,7 @@ class ConfigurationContainer implements ArrayAccess
             $this->configPath[] = $directory;
         } else {
             $this->namespacedPath[$namespace] = $directory;
+            $this->namespacedConfig[$namespace] = [];
         }
     }
 
@@ -202,6 +163,11 @@ class ConfigurationContainer implements ArrayAccess
         return (empty($namespace)) ? false : $namespace[1];
     }
 
+    /**
+     * Get key part of the namespaced key string
+     * @param  string $key namespaced key
+     * @return string
+     */
     protected function getKey($key)
     {
         return preg_replace("/@(.*?)\./s", '', $key);
@@ -243,10 +209,10 @@ class ConfigurationContainer implements ArrayAccess
     public function get($key)
     {
         if ($this->isNamespaced($key)) {
-            $namespace  = $this->getNamespace($key);
-            $key        = $this->getKey($key);
-
-            return $this->getNamespacedValue($namespace, $key);
+            return $this->getNamespacedValue(
+                $this->getNamespace($key),
+                $this->getKey($key)
+            );
         } else {
             return $this->getValue($key);
         }
@@ -261,6 +227,12 @@ class ConfigurationContainer implements ArrayAccess
      */
     protected function getValue($key)
     {
+        $configFile = explode('.', $key, 2)[0];
+
+        if (!isset($this->config[$configFile])) {
+            $this->load($configFile);
+        }
+
         return $this->parseDotNotation($key, $this->config);
     }
 
@@ -274,6 +246,16 @@ class ConfigurationContainer implements ArrayAccess
      */
     protected function getNamespacedValue($namespace, $key)
     {
+        $configFile = explode('.', $key, 2)[0];
+
+        if (!isset($this->namespacedConfig[$namespace])) {
+            throw new Exception("Namespace $namespace is not registered");
+        }
+
+        if (!isset($this->namespacedConfig[$namespace][$configFile])) {
+            $this->load("@{$namespace}.{$configFile}");
+        }
+
         return $this->parseDotNotation($key, $this->namespacedConfig[$namespace]);
     }
 
@@ -286,10 +268,11 @@ class ConfigurationContainer implements ArrayAccess
     public function set($key, $value)
     {
         if ($this->isNamespaced($key)) {
-            $namespace  = $this->getNamespace($key);
-            $key        = $this->getKey($key);
-
-            $this->setNamespacedValue($namespace, $key, $value);
+            $this->setNamespacedValue(
+                $this->getNamespace($key),
+                $this->getKey($key),
+                $value
+            );
         } else {
             $this->setValue($key, $value);
         }
@@ -344,7 +327,7 @@ class ConfigurationContainer implements ArrayAccess
      */
     public function remove($key)
     {
-        $this->offsetUnset($key);
+        //
     }
 
 

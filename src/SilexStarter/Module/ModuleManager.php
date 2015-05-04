@@ -62,7 +62,7 @@ class ModuleManager
      */
     public function register(ModuleProviderInterface $module)
     {
-        $moduleAccessor = $module->getModuleAccessor();
+        $moduleAccessor = $module->getModuleIdentifier();
 
         /* Check for required module, if not satisfied, throw exception immediately */
         foreach ($module->getRequiredModules() as $requiredModule) {

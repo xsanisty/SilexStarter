@@ -17,7 +17,7 @@ class TwigServiceProvider implements ServiceProviderInterface
 {
     /**
      * The Silex Application instance
-     * @var Silex\Application
+     * @var \Silex\Application
      */
     protected $app;
 

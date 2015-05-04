@@ -66,17 +66,24 @@ class ConfigurationContainerTest extends PHPUnit_Framework_TestCase
 
     public function test_get_namespace()
     {
-        assertEquals(
+        assertSame(
             'namespace',
             $this->getProtected('getNamespace')->invokeArgs($this->config, ['@namespace.config.key'])
         );
+
+        assertFalse($this->getProtected('getNamespace')->invokeArgs($this->config, ['namespace.config.key']));
     }
 
     public function test_get_key()
     {
-        assertEquals(
+        assertSame(
             'config.key',
             $this->getProtected('getKey')->invokeArgs($this->config, ['@namespace.config.key'])
+        );
+
+        assertSame(
+            'namespace.config.key',
+            $this->getProtected('getKey')->invokeArgs($this->config, ['namespace.config.key'])
         );
     }
 
@@ -126,29 +133,23 @@ class ConfigurationContainerTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @expectedException        Exception
+     * @expectedExceptionMessage Namespace nonexistence is not registered
+     */
+    public function test_get_nonexistent_namespace()
+    {
+        $this->config->get('@nonexistence.imaginary.config');
+    }
+
     public function test_load_config()
     {
-        $config = [
-            'key_one'   => 'one',
-            'key_two'   => 'two',
-            'level'     => [
-                'one' => 'level one',
-                'two' => 'level two',
-                'sub_level' => [
-                    'one' => 'sub level one',
-                    'two' => 'sub level two'
-                ],
-            ]
-        ];
+        $this->config->addDirectory(__DIR__ . '/../stubs/unpublished_namespace', 'namespace');
+        $this->config->load('sample');
+        $this->config->load('@namespace.sample');
 
-        $this->config->load($config, 'someKey');
-
-        assertEquals($config, $this->config->get('someKey'));
-        assertEquals($config['key_one'], $this->config->get('someKey.key_one'));
-        assertEquals($config['level'], $this->config->get('someKey.level'));
-        assertEquals($config['level']['one'], $this->config->get('someKey.level.one'));
-        assertEquals($config['level']['sub_level'], $this->config->get('someKey.level.sub_level'));
-        assertEquals($config['level']['sub_level']['one'], $this->config->get('someKey.level.sub_level.one'));
+        assertSame('test_value', $this->config->get('sample.test_key'));
+        assertSame('test_value', $this->config->get('@namespace.sample.test_key'));
     }
 
     public function test_resolve_path()

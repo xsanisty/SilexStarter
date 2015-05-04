@@ -157,6 +157,20 @@ Route::get('/post', 'PostController:index');
 ## Model
 ```file: app/models/*```
 
+SilexStarter use Eloquent ORM as database abstraction layer, so you can extends it to create model classJeyac.
+The configuration of the database can be found in ```app/config/database.php```
+
+```php
+<?php
+
+class Post extends Model{
+    protected $table = 'posts';
+
+    public function comments(){
+        return $this->hasMany('Comment');
+    }
+}
+```
 
 ## View
 ```file: app/views/*```

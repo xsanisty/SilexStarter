@@ -29,13 +29,13 @@ interface ModuleInterface
     public function getResources();
 
     /**
-     * Get the name of the module that will be installed,
-     * this will be  used to register template and config namespace as well
+     * Get the identifier of the module that will be installed,
+     * this will be used to register template and config namespace as well
      * the name should be [a-zA-Z-_].
      *
      * @return string
      */
-    public function getModuleAccessor();
+    public function getModuleIdentifier();
 
     /**
      * Get the required module to be present.

@@ -1,0 +1,54 @@
+<div id="sidebar-wrapper">
+
+    <ul class="sidebar">
+        <li id="toggle" class="sidebar-main">
+            <a href="#">
+                Documentation
+                <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            </a>
+        </li>
+
+        {# Getting Started #}
+        <li class="sidebar-title"><span>Get Started</span></li>
+        <li class="sidebar-list {% if active == '' %} active {% endif %}">
+            <a href="{{ asset('doc') }}">Overview <span class="menu-icon fa fa-search"></span></a>
+        </li>
+        <li class="sidebar-list {% if active == 'get-started/installation' %} active {% endif %}">
+            <a href="{{ url_for('doc/get-started/installation') }}">Installation <span class="menu-icon fa fa-tachometer"></span></a>
+        </li>
+
+        {# Basic Usage#}
+        <li class="sidebar-title"><span>Basic Usage</span></li>
+        <li class="sidebar-list {% if active == 'basic-usage/controller' %} active {% endif %}">
+            <a href="{{ url_for('doc/basic-usage/controller') }}">Controller <span class="menu-icon fa fa-tasks"></span></a>
+        </li>
+        <li class="sidebar-list {% if active == 'basic-usage/view' %} active {% endif %}">
+            <a href="{{ url_for('doc/basic-usage/view') }}">View <span class="menu-icon fa fa-cogs"></span></a>
+        </li>
+        <li class="sidebar-list {% if active == 'basic-usage/model' %} active {% endif %}">
+            <a href="{{ url_for('doc/basic-usage/model') }}">Model <span class="menu-icon fa fa-cogs"></span></a>
+        </li>
+        <li class="sidebar-title separator"><span>QUICK LINKS</span></li>
+        <li class="sidebar-list">
+            <a href="#" target="_blank">Forums <span class="menu-icon fa fa-external-link"></span></a>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer">
+        <div class="col-xs-4">
+            <a href="https://github.com/xsanisty/SilexStarter" target="_blank">
+                Github
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <a href="#" id="about">
+                About
+            </a>
+        </div>
+        <div class="col-xs-4">
+            <a href="#">
+                Support
+            </a>
+        </div>
+    </div>
+</div>

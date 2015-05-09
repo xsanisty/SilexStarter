@@ -1,0 +1,13 @@
+{% set template = config.get('@xsanisty-admin.config.template') %}
+{% extends '@xsanisty-admin/'~ template ~'/index.twig' %}
+{% block topbar %}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include '@silexstarter-doc/sidebar.twig' %}
+{% endblock %}
+
+{% block content %}
+    {% include '@silexstarter-doc/get-started/overview.twig' %}
+{% endblock %}

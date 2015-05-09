@@ -35,6 +35,12 @@ class ResponseBuilder
     }
 
     /**
+     * Generate response based on twig template.
+     *
+     * @param string $template  the template name / template path
+     * @param array  $data      the data needed for rendering the template
+     * @param int    $status    the http status
+     * @param array  $headers   the response headers
      *
      */
     public function view($template, array $data = [], $status = 200, array $headers = [])

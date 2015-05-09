@@ -188,7 +188,7 @@ class ModuleManager
     /**
      * Publish module assets into public asset directory.
      *
-     * @param string $module The module accessor
+     * @param string $module The module identifier
      */
     public function publishAsset($module)
     {
@@ -201,7 +201,7 @@ class ModuleManager
     /**
      * Publish config into application config directory .
      *
-     * @param string $module The module accessor
+     * @param string $module The module identifier
      */
     public function publishConfig($module)
     {

@@ -3,6 +3,7 @@
 namespace SilexStarter\Menu;
 
 use Exception;
+use SilexStarter\Contracts\MenuRendererInterface;
 
 class MenuContainer
 {

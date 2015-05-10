@@ -1,6 +1,8 @@
 <?php
 
-namespace SilexStarter\Menu;
+namespace SilexStarter\Contracts;
+
+use SilexStarter\Menu\MenuContainer;
 
 interface MenuRendererInterface
 {

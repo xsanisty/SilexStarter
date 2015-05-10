@@ -2,6 +2,8 @@
 
 namespace SilexStarter\Menu;
 
+use SilexStarter\Contracts\MenuRendererInterface;
+
 class MenuRenderer implements MenuRendererInterface
 {
     protected $menu;

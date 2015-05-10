@@ -2,17 +2,22 @@
 
 namespace SilexStarter\StaticProxy;
 
-use Illuminate\Support\Facades\Facade as StaticProxy;
+use XStatic\StaticProxy;
 
 class Application extends StaticProxy
 {
-    protected static function getFacadeAccessor()
+    public static function getInstanceIdentifier()
     {
-        return self::$app;
+        return 'app';
+    }
+
+    public static function getInstance()
+    {
+        return static::$container;
     }
 
     public static function make($key)
     {
-        return self::$app[$key];
+        return static::$container->get($key);
     }
 }

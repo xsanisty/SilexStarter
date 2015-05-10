@@ -62,14 +62,6 @@ class SilexStarter extends Application
     }
 
     /**
-     * Registering the application to Facade for StaticProxy access.
-     */
-    public function registerStaticProxy()
-    {
-        StaticProxy::setFacadeApplication($this);
-    }
-
-    /**
      * Register class aliases.
      *
      * @param array $classes the list of alias => fully qualified class name

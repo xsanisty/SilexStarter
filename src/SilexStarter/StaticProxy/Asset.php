@@ -2,11 +2,11 @@
 
 namespace SilexStarter\StaticProxy;
 
-use Illuminate\Support\Facades\Facade as StaticProxy;
+use XStatic\StaticProxy;
 
 class Asset extends StaticProxy
 {
-    protected static function getFacadeAccessor()
+    public static function getInstanceIdentifier()
     {
         return 'asset_manager';
     }

@@ -2,17 +2,17 @@
 
 namespace SilexStarter\StaticProxy;
 
-use Illuminate\Support\Facades\Facade as StaticProxy;
+use XStatic\StaticProxy;
 
 class View extends StaticProxy
 {
-    protected static function getFacadeAccessor()
+    public static function getInstanceIdentifier()
     {
         return 'twig';
     }
 
     public static function make($template, $data = [])
     {
-        return static::$app['twig']->render($template.'.twig', $data);
+        return static::$container->get('twig')->render($template.'.twig', $data);
     }
 }

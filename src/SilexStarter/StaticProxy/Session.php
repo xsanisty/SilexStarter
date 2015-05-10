@@ -2,23 +2,23 @@
 
 namespace SilexStarter\StaticProxy;
 
-use Illuminate\Support\Facades\Facade as StaticProxy;
+use XStatic\StaticProxy;
 
 class Session extends StaticProxy
 {
-    protected static function getFacadeAccessor()
+    public static function getInstanceIdentifier()
     {
         return 'session';
     }
 
     public static function flash($name, $message)
     {
-        static::$app['session']->getFlashBag()->add($name, $message);
+        static::$container->get('session')->getFlashBag()->add($name, $message);
     }
 
     public static function getFlash($name, $default = null)
     {
-        $flash = static::$app['session']->getFlashBag()->get($name);
+        $flash = static::$container->get('session')->getFlashBag()->get($name);
 
         return ($flash) ? $flash[0] : $default;
     }

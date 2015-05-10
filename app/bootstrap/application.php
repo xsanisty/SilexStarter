@@ -16,6 +16,7 @@ use SilexStarter\SilexStarter;
 use SilexStarter\Provider\ConfigServiceProvider;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
+use Xstatic\ProxyManager;
 
 /* Instantiate the extended Silex Application */
 $app = new SilexStarter();
@@ -47,8 +48,10 @@ if ($app['controller_as_service']) {
 
 /* Register Facade / Static Proxy if enabled */
 if ($app['enable_static_proxy']) {
-    $app->registerStaticProxy();
-    $app->registerAliases($app['config']['aliases']);
+    $app['static_proxy_manager']->enable(ProxyManager::ROOT_NAMESPACE_ANY);
+    foreach ($app['config']['aliases'] as $alias => $concrete) {
+        $app['static_proxy_manager']->addProxy($alias, $concrete);
+    }
 }
 
 /* Include the middlewares, load module middleware first to enable override */

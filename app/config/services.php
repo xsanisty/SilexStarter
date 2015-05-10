@@ -6,7 +6,6 @@ return [
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
-        'SilexStarter\Provider\TwigServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
         'SilexStarter\Provider\RouteBuilderServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
@@ -14,6 +13,9 @@ return [
         'SilexStarter\Provider\FilesystemServiceProvider',
         'SilexStarter\Provider\AssetManagerServiceProvider',
         'SilexStarter\Provider\MenuManagerServiceProvider',
+        'SilexStarter\Provider\StaticProxyServiceProvider',
+        'SilexStarter\Provider\TwigServiceProvider',
+
     ],
 
     'development' => [

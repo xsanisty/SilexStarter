@@ -18,6 +18,8 @@
         "illuminate/database": "5.*",
         "illuminate/events" : "5.*",
         "patchwork/utf8" : "*",
+        "jeremeamia/xstatic" : "~1.0",
+        "acclimate/container" : "~1.0",
         "xsanisty/silex-starter-admin" : "dev-develop"
     },
     "require-dev":{

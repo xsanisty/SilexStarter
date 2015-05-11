@@ -4,14 +4,19 @@ namespace SilexStarter\Menu;
 
 class MenuManager
 {
+    /**
+     * A list of MenuContainer object.
+     *
+     * @var array of SilexStarter\Menu\MenuContainer
+     */
     protected $menuContainers = [];
 
     /**
-     * [create description].
+     * Create new MenuContainer object and assign to menu container lists.
      *
-     * @param [type] $name [description]
+     * @param string $name MenuContainer name
      *
-     * @return [type] [description]
+     * @return SilexStarter\Menu\MenuContainer
      */
     public function create($name)
     {
@@ -21,11 +26,11 @@ class MenuManager
     }
 
     /**
-     * [get description].
+     * Get MenuContainer object based on it's name.
      *
-     * @param [type] $name [description]
+     * @param string $name MenuContainer name
      *
-     * @return [type] [description]
+     * @return SilexStarter\Menu\MenuContainer
      */
     public function get($name)
     {
@@ -33,11 +38,11 @@ class MenuManager
     }
 
     /**
-     * [render description].
+     * Render specified MenuContainer.
      *
-     * @param [type] $name [description]
+     * @param string $name MenuContainer name
      *
-     * @return [type] [description]
+     * @return string
      */
     public function render($name)
     {

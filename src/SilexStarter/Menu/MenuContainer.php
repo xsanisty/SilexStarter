@@ -10,7 +10,7 @@ class MenuContainer
     /**
      * List of menu item.
      *
-     * @var SilexStarter\Menu\MenuItem
+     * @var array array of SilexStarter\Menu\MenuItem
      */
     protected $items = [];
 
@@ -36,9 +36,15 @@ class MenuContainer
     protected $level = 0;
 
     /**
-     * [__construct description].
+     * Currently active menu
+     * @var SilexStarter\Menu\MenuItem|null
+     */
+    protected $activeMenu = null;
+
+    /**
+     * Build the MenuCOntainer instance.
      *
-     * @param [type] $name [description]
+     * @param string $name The menu collection name
      */
     public function __construct($name)
     {
@@ -46,9 +52,9 @@ class MenuContainer
     }
 
     /**
-     * [getLevel description].
+     * Get the current level of nested menu container, default is 0.
      *
-     * @return [type] [description]
+     * @return int
      */
     public function getLevel()
     {
@@ -56,9 +62,9 @@ class MenuContainer
     }
 
     /**
-     * [setLevel description].
+     * Set the current level of menu container object.
      *
-     * @param [type] $level [description]
+     * @param int $level The current level of menu container object
      */
     public function setLevel($level)
     {
@@ -69,12 +75,12 @@ class MenuContainer
     }
 
     /**
-     * [createItem description].
+     * Create new MenuItem object inside the MenuContainer.
      *
-     * @param [type] $name       [description]
-     * @param array  $attributes [description]
+     * @param string $name       MenuItem name
+     * @param array  $attributes MenuItem attributes
      *
-     * @return [type] [description]
+     * @return SilexStarter\Menu\MenuItem
      */
     public function createItem($name, array $attributes)
     {
@@ -85,9 +91,9 @@ class MenuContainer
     }
 
     /**
-     * [addItem description].
+     * Add new MenuItem object into container item lists.
      *
-     * @param MenuItem $menu [description]
+     * @param SilexStarter\Menu\MenuItem $menu MenuItem object
      */
     public function addItem(MenuItem $menu)
     {
@@ -95,11 +101,9 @@ class MenuContainer
     }
 
     /**
-     * [removeItem description].
+     * Remove MenuItem object from the container item lists.
      *
-     * @param [type] $name [description]
-     *
-     * @return [type] [description]
+     * @param string $name MenuItem name
      */
     public function removeItem($name)
     {
@@ -109,9 +113,9 @@ class MenuContainer
     }
 
     /**
-     * [setActive description].
+     * Set current active menu in container item list, this will deactivate the currently active menu.
      *
-     * @param [type] $name [description]
+     * @param string $name MenuItem name or dot sparated for multi level menu item
      */
     public function setActive($name)
     {
@@ -128,11 +132,11 @@ class MenuContainer
     }
 
     /**
-     * [getItem description].
+     * Get MenuItem object from the item list.
      *
-     * @param [type] $name [description]
+     * @param string $name MenuItem name
      *
-     * @return [type] [description]
+     * @return SilexStarter\Menu\MenuItem menu item object
      */
     public function getItem($name)
     {
@@ -140,13 +144,13 @@ class MenuContainer
             return $this->items[$name];
         }
 
-        throw new Exception("Can not find menu with name $name", 1);
+        throw new Exception("Can not find menu with name $name");
     }
 
     /**
-     * [getItems description].
+     * Get all registered item inside the container.
      *
-     * @return [type] [description]
+     * @return array array of MenuItem object
      */
     public function getItems()
     {
@@ -154,21 +158,21 @@ class MenuContainer
     }
 
     /**
-     * [render description].
+     * Render menu item list based on registered MenuRenderer.
      *
-     * @return [type] [description]
+     * @return string rendered item list
      */
     public function render()
     {
-        if (!is_null($this->renderer)) {
+        if ($this->renderer) {
             return $this->renderer->render($this);
         }
     }
 
     /**
-     * [setRenderer description].
+     * Set menu renderer to render menu into specific format.
      *
-     * @param MenuRendererInterface $renderer [description]
+     * @param MenuRendererInterface $renderer The menu renderer class
      */
     public function setRenderer(MenuRendererInterface $renderer)
     {

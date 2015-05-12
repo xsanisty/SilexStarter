@@ -107,36 +107,74 @@ class MenuItem
         $this->active = $active;
     }
 
+    /**
+     * Check if the current item has active children, or grand children.
+     *
+     * @return boolean
+     */
     public function hasActiveChildren()
     {
     }
 
+    /**
+     * Check if current item has children.
+     *
+     * @return boolean
+     */
     public function hasChildren()
     {
         return $this->child->hasItem();
     }
 
+    /**
+     * Get the Children menu container object.
+     *
+     * @return ChildMenuContainer
+     */
     public function getChildren()
     {
         return $this->child;
     }
 
+    /**
+     * Get current level of the menu.
+     *
+     * @return int
+     */
     public function getLevel()
     {
         return $this->level;
     }
 
+    /**
+     * Set the current level of item
+     *
+     * @param int $level The current level of menu item
+     */
     public function setLevel($level)
     {
         $this->level = $level;
         $this->child->setLevel($level + 1);
     }
 
+    /**
+     * The attribute getter
+     *
+     * @param  string $name attribute name
+     *
+     * @return mixed        attribute value
+     */
     public function __get($name)
     {
         return $this->getAttribute($name);
     }
 
+    /**
+     * The attribute setter
+     *
+     * @param string $name  attribute name
+     * @param mixed  $value attribute value
+     */
     public function __set($name, $value)
     {
         return $this->setAttribute($name, $value);

@@ -8,6 +8,12 @@ class MenuRenderer implements MenuRendererInterface
 {
     protected $menu;
 
+    /**
+     * Render menu container into formatted html.
+     *
+     * @param  MenuContainer $menu MenuCOntainer object
+     * @return string              html formatted string
+     */
     public function render(MenuContainer $menu)
     {
         return $this->createHtml($menu);

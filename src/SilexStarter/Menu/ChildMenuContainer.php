@@ -4,12 +4,17 @@ namespace SilexStarter\Menu;
 
 class ChildMenuContainer extends MenuContainer
 {
+    /**
+     * Parent Item
+     *
+     * @var SilexStarter\Menu\MenuItem
+     */
     protected $parent;
 
     /**
-     * [__construct description].
+     * Build the child container object.
      *
-     * @param MenuItem $parent [description]
+     * @param MenuItem $parent parent item
      */
     public function __construct(MenuItem $parent)
     {
@@ -17,12 +22,12 @@ class ChildMenuContainer extends MenuContainer
     }
 
     /**
-     * [createItem description].
+     * Create new MenuItem object inside the MenuContainer.
      *
-     * @param [type] $name       [description]
-     * @param array  $attributes [description]
+     * @param string $name       MenuItem name
+     * @param array  $attributes MenuItem attributes
      *
-     * @return [type] [description]
+     * @return SilexStarter\Menu\MenuItem
      */
     public function createItem($name, array $attributes)
     {
@@ -34,9 +39,9 @@ class ChildMenuContainer extends MenuContainer
     }
 
     /**
-     * [addItem description].
+     * Add new MenuItem object into container item lists.
      *
-     * @param MenuItem $menu [description]
+     * @param SilexStarter\Menu\MenuItem $menu MenuItem object
      */
     public function addItem(MenuItem $menu)
     {
@@ -45,9 +50,9 @@ class ChildMenuContainer extends MenuContainer
     }
 
     /**
-     * [hasItem description].
+     * Check if current menu container has item in it.
      *
-     * @return bool [description]
+     * @return bool
      */
     public function hasItem()
     {

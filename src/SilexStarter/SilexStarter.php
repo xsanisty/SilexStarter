@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Facade as StaticProxy;
 
 class SilexStarter extends Application
 {
-    protected $app;
 
     public function __construct()
     {
         parent::__construct();
+        $this['app'] = $this;
     }
 
     /**

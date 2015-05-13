@@ -11,11 +11,6 @@ class Application extends StaticProxy
         return 'app';
     }
 
-    public static function getInstance()
-    {
-        return static::$container;
-    }
-
     public static function make($key)
     {
         return static::$container->get($key);

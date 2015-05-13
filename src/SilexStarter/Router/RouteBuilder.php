@@ -140,23 +140,47 @@ class RouteBuilder
     protected function applyControllerOption($route, array $options)
     {
         foreach ($this->getBeforeHandler() as $before) {
-            $route->before($before);
+            $beforeHandler = is_string($before) ? $this->app->middleware($before) : $before;
+
+            $route->before($beforeHandler);
         }
 
         if (isset($options['before'])) {
-            $route->before($options['before']);
+            $route->before(
+                is_string($options['before'])
+                ? $this->app->middleware($options['before'])
+                : $options['before']
+            );
         }
 
         if (isset($options['after'])) {
-            $route->after($options['after']);
+            $route->after(
+                is_string($options['after'])
+                ? $this->app->middleware($options['after'])
+                : $options['after']
+            );
         }
 
         foreach ($this->getAfterHandler() as $after) {
-            $route->after($after);
+            $afterHandler = is_string($after) ? $this->app->middleware($after) : $after;
+
+            $route->after($afterHandler);
         }
 
         if (isset($options['as'])) {
             $route->bind($options['as']);
+        }
+
+        if (isset($option['assert'])) {
+            foreach ($option['assert'] as $placeholder => $rule) {
+                $route->assert($placeholder, $rule);
+            }
+        }
+
+        if (isset($option['default'])) {
+            foreach ($option['default'] as $placeholder => $value) {
+                $route->value($placeholder, $value);
+            }
         }
 
         return $route;

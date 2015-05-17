@@ -139,46 +139,22 @@ class RouteBuilder
      */
     protected function applyControllerOption($route, array $options)
     {
-        foreach ($this->getBeforeHandler() as $before) {
-            $beforeHandler = is_string($before) ? $this->app->middleware($before) : $before;
+        $this->applyBeforeHandlerStack($route, $options);
 
-            $route->before($beforeHandler);
-        }
-
-        if (isset($options['before'])) {
-            $route->before(
-                is_string($options['before'])
-                ? $this->app->middleware($options['before'])
-                : $options['before']
-            );
-        }
-
-        if (isset($options['after'])) {
-            $route->after(
-                is_string($options['after'])
-                ? $this->app->middleware($options['after'])
-                : $options['after']
-            );
-        }
-
-        foreach ($this->getAfterHandler() as $after) {
-            $afterHandler = is_string($after) ? $this->app->middleware($after) : $after;
-
-            $route->after($afterHandler);
-        }
+        $this->applyAfterHandlerStack($route, $options);
 
         if (isset($options['as'])) {
             $route->bind($options['as']);
         }
 
-        if (isset($option['assert'])) {
-            foreach ($option['assert'] as $placeholder => $rule) {
+        if (isset($options['assert'])) {
+            foreach ($options['assert'] as $placeholder => $rule) {
                 $route->assert($placeholder, $rule);
             }
         }
 
-        if (isset($option['default'])) {
-            foreach ($option['default'] as $placeholder => $value) {
+        if (isset($options['default'])) {
+            foreach ($options['default'] as $placeholder => $value) {
                 $route->value($placeholder, $value);
             }
         }
@@ -404,5 +380,50 @@ class RouteBuilder
         }
 
         return $router;
+    }
+
+    /**
+     * @param $route
+     * @param array $options
+     * @return array
+     */
+    protected function applyBeforeHandlerStack($route, array $options)
+    {
+        foreach ($this->getBeforeHandler() as $before) {
+            $beforeHandler = is_string($before) ? $this->app->middleware($before) : $before;
+
+            $route->before($beforeHandler);
+        }
+
+        if (isset($options['before'])) {
+            $route->before(
+                is_string($options['before'])
+                    ? $this->app->middleware($options['before'])
+                    : $options['before']
+            );
+            return $options;
+        }
+    }
+
+    /**
+     * @param $route
+     * @param array $options
+     * @return array
+     */
+    protected function applyAfterHandlerStack($route, array $options)
+    {
+        if (isset($options['after'])) {
+            $route->after(
+                is_string($options['after'])
+                    ? $this->app->middleware($options['after'])
+                    : $options['after']
+            );
+        }
+
+        foreach ($this->getAfterHandler() as $after) {
+            $afterHandler = is_string($after) ? $this->app->middleware($after) : $after;
+
+            $route->after($afterHandler);
+        }
     }
 }

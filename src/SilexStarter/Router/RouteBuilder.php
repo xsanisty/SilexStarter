@@ -76,7 +76,7 @@ class RouteBuilder
      */
     protected function pushBeforeHandler($beforeHandler)
     {
-        $beforeHandler = is_string($beforeHandler) ? $this->app->filter($beforeHandler) : $beforeHandler;
+        $beforeHandler = is_string($beforeHandler) ? $this->app->middleware($beforeHandler) : $beforeHandler;
         $this->beforeHandlerStack[] = $beforeHandler;
     }
 
@@ -107,7 +107,7 @@ class RouteBuilder
      */
     protected function pushAfterHandler($afterHandler)
     {
-        $afterHandler = is_string($afterHandler) ? $this->app->filter($afterHandler) : $afterHandler;
+        $afterHandler = is_string($afterHandler) ? $this->app->middleware($afterHandler) : $afterHandler;
         array_unshift($this->afterHandlerStack, $afterHandler);
     }
 
@@ -141,13 +141,8 @@ class RouteBuilder
      */
     protected function applyControllerOption($route, array $options)
     {
-        if (isset($options['before'])) {
-            $this->applyBeforeHandlerStack($route, $options['before']);
-        }
-
-        if (isset($options['after'])) {
-            $this->applyAfterHandlerStack($route, $options);
-        }
+        $this->applyBeforeHandlerStack($route, isset($options['before']) ? $options['before'] : null);
+        $this->applyAfterHandlerStack($route, isset($options['after']) ? $options['after'] : null);
 
         if (isset($options['as'])) {
             $route->bind($options['as']);
@@ -172,30 +167,34 @@ class RouteBuilder
      * @param $route
      * @param mixed beforeHandler
      */
-    protected function applyBeforeHandlerStack($route, $beforeHandler)
+    protected function applyBeforeHandlerStack($route, $beforeHandler = null)
     {
         foreach ($this->getBeforeHandler() as $before) {
             $route->before($before);
         }
 
-        $route->before(
-            is_string($beforeHandler)
-            ? $this->app->middleware($beforeHandler)
-            : $beforeHandler
-        );
+        if ($beforeHandler) {
+            $route->before(
+                is_string($beforeHandler)
+                ? $this->app->middleware($beforeHandler)
+                : $beforeHandler
+            );
+        }
     }
 
     /**
      * @param $route
      * @param mixed $afterHandler
      */
-    protected function applyAfterHandlerStack($route, $afterHandler)
+    protected function applyAfterHandlerStack($route, $afterHandler = null)
     {
-        $route->after(
-            is_string($afterHandler)
-            ? $this->app->middleware($afterHandler)
-            : $afterHandler
-        );
+        if ($afterHandler) {
+            $route->after(
+                is_string($afterHandler)
+                ? $this->app->middleware($afterHandler)
+                : $afterHandler
+            );
+        }
 
         foreach ($this->getAfterHandler() as $after) {
             $route->after($after);

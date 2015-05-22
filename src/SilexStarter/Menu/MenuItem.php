@@ -30,7 +30,7 @@ class MenuItem
      *
      * @var null|SilexStarter\Menu\ChildMenuContainer
      */
-    protected $child = null;
+    protected $childContainer;
 
     /**
      * Is menu active.
@@ -56,8 +56,8 @@ class MenuItem
             $this->metaAttributes = $attributes['meta'];
         }
 
-        $this->child = new ChildMenuContainer($this);
-        $this->child->setLevel($this->level + 1);
+        $this->childContainer = new ChildMenuContainer($this);
+        $this->childContainer->setLevel($this->level + 1);
     }
 
     /**
@@ -88,6 +88,31 @@ class MenuItem
     }
 
     /**
+     * Get meta attribute of the current menu.
+     *
+     * @param  string $name the meta attribute name
+     *
+     * @return mixed
+     */
+    public function getMetaAttribute($name)
+    {
+        if (isset($this->metaAttributes[$names])) {
+            return $this->metaAttributes[$name];
+        }
+    }
+
+    /**
+     * Set meta attribute of the current menu.
+     *
+     * @param string $name  attribute name
+     * @param mixed  $value attribute value
+     */
+    public function setMetaAttribute($name, $value)
+    {
+        $this->metaAttributes[$name] = $value;
+    }
+
+    /**
      * Check if the menu is active.
      *
      * @return bool
@@ -114,6 +139,7 @@ class MenuItem
      */
     public function hasActiveChildren()
     {
+        return $this->childContainer->hasActiveItem();
     }
 
     /**
@@ -123,7 +149,20 @@ class MenuItem
      */
     public function hasChildren()
     {
-        return $this->child->hasItem();
+        return $this->childContainer->hasItem();
+    }
+
+    /**
+     * Create new MenuItem instance inside the child menu container.
+     *
+     * @param string $name       menu item name
+     * @param array  $attributes menu item attributes
+     *
+     * @return  MenuItem
+     */
+    public function addChildren($name, array $attributes)
+    {
+        return $this->childContainer->createItem($name, $attributes);
     }
 
     /**
@@ -131,9 +170,9 @@ class MenuItem
      *
      * @return ChildMenuContainer
      */
-    public function getChildren()
+    public function getChildContainer()
     {
-        return $this->child;
+        return $this->childContainer;
     }
 
     /**
@@ -154,7 +193,7 @@ class MenuItem
     public function setLevel($level)
     {
         $this->level = $level;
-        $this->child->setLevel($level + 1);
+        $this->childContainer->setLevel($level + 1);
     }
 
     /**

@@ -38,7 +38,7 @@ class ModuleProvider implements ModuleProviderInterface
 
     public function getRequiredModules()
     {
-        return ['xsanisty-admin'];
+        return ['xsanisty-dashboard'];
     }
 
     public function getResources()

@@ -14,7 +14,7 @@ return [
     'Config'    => 'SilexStarter\StaticProxy\Config',
     'Module'    => 'SilexStarter\StaticProxy\Module',
     'Asset'     => 'SilexStarter\StaticProxy\Asset',
-    'Sentry'    => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+    'Sentry'    => 'SilexStarter\StaticProxy\Sentry',
     'Str'       => 'Illuminate\Support\Str',
     'Model'     => 'Illuminate\Database\Eloquent\Model',
 ];

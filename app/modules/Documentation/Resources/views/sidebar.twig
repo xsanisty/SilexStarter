@@ -11,7 +11,7 @@
         {# Getting Started #}
         <li class="sidebar-title"><span>Get Started</span></li>
         <li class="sidebar-list {% if active == '' %} active {% endif %}">
-            <a href="{{ asset('doc') }}">Overview <span class="menu-icon fa fa-search"></span></a>
+            <a href="{{ url_for('doc') }}">Overview <span class="menu-icon fa fa-search"></span></a>
         </li>
         <li class="sidebar-list {% if active == 'get-started/installation' %} active {% endif %}">
             <a href="{{ url_for('doc/get-started/installation') }}">Installation <span class="menu-icon fa fa-tachometer"></span></a>

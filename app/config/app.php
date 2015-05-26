@@ -8,7 +8,7 @@ return [
     'environment'           => 'development',
 
     /*
-     * When enabled, this will make use the laravel's facade/static proxy as the shortcut to the registered
+     * When enabled, this will make use the XStatic static proxy as the shortcut to the registered
      * services, to people who hate this :D, better to set this false and access the service directly.
      */
     'enable_static_proxy'   => true,
@@ -45,7 +45,7 @@ return [
      * "require" : { "silex/web-profiler" : "1.*" }
      *
      */
-    'enable_profiler'       => false,
+    'enable_profiler'       => true,
 
     /*
      * This will be used by translation service provider as default locale

@@ -1,6 +1,18 @@
 {
     "name": "xsanisty/silex-starter",
     "description": "A starter application based on Silex framework",
+    "license": "MIT",
+    "keywords": ["framework", "silex", "mvc", "eloquent", "twig", "silex starter", "silex dashboard"],
+    "authors": [
+        {
+            "name" : "Ikhsan Agustian",
+            "email" : "ikhsan017@gmail.com"
+        },
+        {
+            "name" : "Xsanisty Dev Team",
+            "email" : "developers@xsanisty.com"
+        }
+    ],
 
     "repositories" : [
         {
@@ -10,12 +22,22 @@
         {
             "type" : "vcs",
             "url" : "https://github.com/xsanisty/SilexStarter-Dashboard"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-ModuleManager"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-UserManager"
         }
     ],
 
     "require": {
         "xsanisty/silex-starter-core" : "dev-develop",
-        "xsanisty/silex-starter-dashboard" : "dev-develop"
+        "xsanisty/silex-starter-dashboard" : "dev-develop",
+        "xsanisty/silex-starter-user-manager" : "dev-develop",
+        "xsanisty/silex-starter-module-manager" : "dev-develop"
     },
     "require-dev": {
         "silex/web-profiler" : "1.*",
@@ -24,7 +46,7 @@
     "autoload": {
         "psr-4": {
             "" : [
-                "src/",
+                "app/commands/",
                 "app/controllers/",
                 "app/models/",
                 "app/middlewares/",
@@ -36,12 +58,5 @@
             ]
         }
     },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Ikhsan Agustian",
-            "email": "ikhsan017@gmail.com"
-        }
-    ],
     "minimum-stability": "stable"
 }

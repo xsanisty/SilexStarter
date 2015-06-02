@@ -1,39 +1,37 @@
 <?php
 
-/**
- * Bootstrapping Silex application, load the configuration, registering controllers,
- * including the routes and middlewares.
- */
-define('ROOT_PATH', realpath(__DIR__ . '/../../') . '/');
-define('VENDOR_PATH', realpath(__DIR__ . '/../../vendor/') . '/');
-define('APP_PATH', realpath(__DIR__ . '/../../app/') . '/');
-define('MODULE_PATH', realpath(__DIR__ . '/../../app/modules/') . '/');
-define('PUBLIC_PATH', realpath(__DIR__ . '/../../public/') . '/');
+$isConsole = defined('CONSOLE');
+if (!$isConsole) {
+    require 'bootstrap.php';
+}
 
-require VENDOR_PATH . '/autoload.php';
-
+use Xstatic\ProxyManager;
 use SilexStarter\SilexStarter;
 use SilexStarter\Provider\ConfigServiceProvider;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
-use Xstatic\ProxyManager;
 
 /* Instantiate the extended Silex Application */
 $app = new SilexStarter();
 
 /* Load the configuration service provider and load base app configuration */
-$app->register(new ConfigServiceProvider(), ['config.path' => APP_PATH . '/config']);
+$app->register(new ConfigServiceProvider(), ['config.path' => APP_PATH . 'config']);
 $app['config']->load('app');
 
-/* register the error handler */
-ErrorHandler::register($app['environment'] == 'development' && $app['debug']);
-ExceptionHandler::register($app['environment'] == 'development' && $app['debug']);
+if (!$isConsole) {
+    ErrorHandler::register();
+    ExceptionHandler::register($app['environment'] == 'development' && $app['debug']);
+}
 
 /* Register the service provider listed in app/config/services.php */
 $app->registerServices($app['config']['services.common']);
 
-if ($app['environment'] == 'development') {
-    $app->registerServices($app['config']['services.development']);
+if (!$isConsole) {
+    $app->registerServices($app['config']['services.web']);
+}
+
+if (!$isConsole && $app['environment'] == 'development') {
+    $app->registerServices($app['config']['services.web_dev']);
 }
 
 /* Load module provider if enabled */
@@ -60,7 +58,7 @@ if ($app['enable_module']) {
         require $middleware;
     }
 }
-require APP_PATH . '/middlewares.php';
+require APP_PATH . 'middlewares.php';
 
 /* Include the routes definition, load module route first to enable override */
 if ($app['enable_module']) {
@@ -68,6 +66,6 @@ if ($app['enable_module']) {
         require $route;
     }
 }
-require APP_PATH . '/routes.php';
+require APP_PATH . 'routes.php';
 
 return $app;

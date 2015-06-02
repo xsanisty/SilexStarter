@@ -3,9 +3,15 @@
 return [
 
     /*
-     * just an environment variable, this can be 'development' or 'production'
+     * Just an environment variable, this can be 'development' or 'production'
      */
     'environment'           => 'development',
+
+    /**
+     * Console environment variable
+     */
+    'console_name'          => 'xpress',
+    'console_version'       => '1.0',
 
     /*
      * When enabled, this will make use the XStatic static proxy as the shortcut to the registered

@@ -15,14 +15,22 @@ return [
         'SilexStarter\Provider\MenuManagerServiceProvider',
         'SilexStarter\Provider\StaticProxyServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
+        'SilexStarter\Provider\MigrationServiceProvider',
+    ],
+
+    'web' => [
 
     ],
 
-    'development' => [
+    'web_dev' => [
         'SilexStarter\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH.'storage/profiler'],
     ],
 
     'console'   => [
         'SilexStarter\Provider\ConsoleServiceProvider',
     ],
+
+    'console_dev' => [
+
+    ]
 ];

@@ -40,7 +40,7 @@
         "xsanisty/silex-starter-module-manager" : "dev-develop"
     },
     "require-dev": {
-        "silex/web-profiler" : "1.*",
+        "silex/web-profiler" : "1.0.5",
         "symfony/var-dumper" : "*"
     },
     "autoload": {

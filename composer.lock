@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "703aca2bbc3fa93646a0c31644ccd553",
+    "hash": "9d924289fbb1a98ec6ccccdf20218043",
     "packages": [
         {
             "name": "acclimate/container",
@@ -879,20 +879,21 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.7.0",
+            "version": "v2.6.9",
+            "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "7f0bec04961c61c961df0cb8c2ae88dbfd83f399"
+                "reference": "b5ec0c11a204718f2b656357f5505a8e578f30dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/7f0bec04961c61c961df0cb8c2ae88dbfd83f399",
-                "reference": "7f0bec04961c61c961df0cb8c2ae88dbfd83f399",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/b5ec0c11a204718f2b656357f5505a8e578f30dd",
+                "reference": "b5ec0c11a204718f2b656357f5505a8e578f30dd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.3.3"
             },
             "require-dev": {
                 "psr/log": "~1.0",
@@ -908,11 +909,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
+                "psr-0": {
                     "Symfony\\Component\\Console\\": ""
                 }
             },
@@ -932,7 +933,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-29 16:22:24"
+            "time": "2015-05-29 14:42:58"
         },
         {
             "name": "symfony/debug",
@@ -1055,20 +1056,21 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.0",
+            "version": "v2.6.9",
+            "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba"
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
+                "reference": "1f8429f72a5bfa58b33fd96824bea146fc4b3f49",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.3.3"
             },
             "require-dev": {
                 "symfony/phpunit-bridge": "~2.7"
@@ -1076,11 +1078,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
-                "psr-4": {
+                "psr-0": {
                     "Symfony\\Component\\Filesystem\\": ""
                 }
             },
@@ -1100,7 +1102,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:33:16"
+            "time": "2015-05-15 13:32:45"
         },
         {
             "name": "symfony/http-foundation",
@@ -1427,12 +1429,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "ad13ab86e956b81b85c466bc4a0ade71f47fc793"
+                "reference": "46db6b2ed625d675c031d6edac68497e32ea2506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/ad13ab86e956b81b85c466bc4a0ade71f47fc793",
-                "reference": "ad13ab86e956b81b85c466bc4a0ade71f47fc793",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/46db6b2ed625d675c031d6edac68497e32ea2506",
+                "reference": "46db6b2ed625d675c031d6edac68497e32ea2506",
                 "shasum": ""
             },
             "require": {
@@ -1444,8 +1446,8 @@
                 "patchwork/utf8": "*",
                 "php": ">= 5.4.0",
                 "silex/silex": "~1.2",
-                "symfony/console": "2.7.*",
-                "symfony/filesystem": "2.7.*",
+                "symfony/console": "2.6.*",
+                "symfony/filesystem": "2.6.*",
                 "twig/twig": "~1.16"
             },
             "require-dev": {
@@ -1478,7 +1480,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2015-06-02 12:14:59"
+            "time": "2015-06-02 13:45:04"
         },
         {
             "name": "xsanisty/silex-starter-dashboard",
@@ -1611,21 +1613,21 @@
     "packages-dev": [
         {
             "name": "silex/web-profiler",
-            "version": "v1.0.6",
+            "version": "v1.0.5",
             "target-dir": "Silex/Provider",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex-WebProfiler.git",
-                "reference": "49ae2ae6fc1fa4e3eec26f0fb5b05b9fe1582a1f"
+                "reference": "f0797151b766e41ab953e81bc66eb9d9114800f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/49ae2ae6fc1fa4e3eec26f0fb5b05b9fe1582a1f",
-                "reference": "49ae2ae6fc1fa4e3eec26f0fb5b05b9fe1582a1f",
+                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/f0797151b766e41ab953e81bc66eb9d9114800f5",
+                "reference": "f0797151b766e41ab953e81bc66eb9d9114800f5",
                 "shasum": ""
             },
             "require": {
-                "silex/silex": "~1.1",
+                "silex/silex": "~1.0",
                 "symfony/stopwatch": "~2.2",
                 "symfony/web-profiler-bundle": "~2.4"
             },
@@ -1652,7 +1654,7 @@
             ],
             "description": "A WebProfiler for Silex",
             "homepage": "http://silex.sensiolabs.org/",
-            "time": "2015-04-19 10:15:17"
+            "time": "2015-03-27 13:32:13"
         },
         {
             "name": "symfony/stopwatch",

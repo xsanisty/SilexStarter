@@ -10,6 +10,9 @@ use SilexStarter\SilexStarter;
 use SilexStarter\Provider\ConfigServiceProvider;
 use Symfony\Component\Debug\ErrorHandler;
 use Symfony\Component\Debug\ExceptionHandler;
+use Symfony\Component\HttpFoundation\Request;
+
+Request::enableHttpMethodParameterOverride();
 
 /* Instantiate the extended Silex Application */
 $app = new SilexStarter();

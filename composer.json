@@ -41,6 +41,7 @@
     },
     "require-dev": {
         "silex/web-profiler" : "1.0.5",
+        "phpunit/phpunit" : "4.*",
         "symfony/var-dumper" : "*"
     },
     "autoload": {

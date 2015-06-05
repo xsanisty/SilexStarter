@@ -5,6 +5,7 @@ return [
         'Silex\Provider\SessionServiceProvider',
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
+        'Silex\Provider\HttpFragmentServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
         'SilexStarter\Provider\RouteBuilderServiceProvider',

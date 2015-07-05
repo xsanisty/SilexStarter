@@ -59,5 +59,21 @@
             ]
         }
     },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod -R 777 app/storage",
+            "php xpress project:init"
+        ],
+        "post-update-cmd": [
+            "php xpress cache:clear"
+        ],
+        "post-create-project-cmd": [
+            "chmod -R 777 app/storage",
+            "php xpress project:init"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
     "minimum-stability": "stable"
 }

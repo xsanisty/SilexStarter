@@ -5,7 +5,6 @@ return [
         'Silex\Provider\SessionServiceProvider',
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
-        'Silex\Provider\HttpFragmentServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
         'SilexStarter\Provider\RouteBuilderServiceProvider',
@@ -13,14 +12,13 @@ return [
         'SilexStarter\Provider\SentryServiceProvider',
         'SilexStarter\Provider\FilesystemServiceProvider',
         'SilexStarter\Provider\AssetManagerServiceProvider',
-        'SilexStarter\Provider\MenuManagerServiceProvider',
         'SilexStarter\Provider\StaticProxyServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
+        'SilexStarter\Provider\MenuManagerServiceProvider',
         'SilexStarter\Provider\MigrationServiceProvider',
     ],
 
     'web' => [
-
     ],
 
     'web_dev' => [

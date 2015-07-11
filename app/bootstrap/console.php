@@ -28,10 +28,10 @@ $app->boot();
  * Search for command and register it
  */
 $app['console']->setDispatcher($app['dispatcher']);
-$app['console']->registerCommandDirectory($app['path.app'] . 'commands');
 $app['console']->registerCommand(new SilexStarter\Console\Command\MigrationCommand);
 $app['console']->registerCommand(new SilexStarter\Console\Command\CacheClearCommand);
 $app['console']->registerCommand(new SilexStarter\Console\Command\SilexStarterInitCommand);
+$app['console']->registerCommandDirectory($app['path.app'] . 'commands');
 
 /**
  * Dispatch console.init event to register command previously registered in module manager

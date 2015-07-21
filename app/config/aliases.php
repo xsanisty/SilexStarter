@@ -2,6 +2,7 @@
 
 return [
     'DB'        => 'SilexStarter\StaticProxy\Database',
+    'Dispatcher'=> 'SilexStarter\StaticProxy\Dispatcher',
     'Url'       => 'SilexStarter\StaticProxy\Url',
     'App'       => 'SilexStarter\StaticProxy\Application',
     'File'      => 'SilexStarter\StaticProxy\Filesystem',

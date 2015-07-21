@@ -50,6 +50,7 @@ return [
      *
      * "require" : { "silex/web-profiler" : "1.*" }
      *
+     * Maybe you will also need to clear cache each time this enabled or disabled
      */
     'enable_profiler'       => true,
 

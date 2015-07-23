@@ -25,6 +25,10 @@
         },
         {
             "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-Datatable"
+        },
+        {
+            "type" : "vcs",
             "url" : "https://github.com/xsanisty/SilexStarter-ModuleManager"
         },
         {
@@ -36,6 +40,7 @@
     "require": {
         "xsanisty/silex-starter-core" : "dev-develop",
         "xsanisty/silex-starter-dashboard" : "dev-develop",
+        "xsanisty/silex-starter-datatable" : "dev-develop",
         "xsanisty/silex-starter-user-manager" : "dev-develop",
         "xsanisty/silex-starter-module-manager" : "dev-develop"
     },
@@ -62,14 +67,14 @@
     "scripts": {
         "post-install-cmd": [
             "chmod -R 777 app/storage",
-            "php xpress project:init"
+            "php xpress silexstarter:init"
         ],
         "post-update-cmd": [
             "php xpress cache:clear"
         ],
         "post-create-project-cmd": [
             "chmod -R 777 app/storage",
-            "php xpress project:init"
+            "php xpress silexstarter:init"
         ]
     },
     "config": {

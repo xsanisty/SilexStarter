@@ -31,6 +31,7 @@ $app['console']->setDispatcher($app['dispatcher']);
 $app['console']->registerCommand(new SilexStarter\Console\Command\MigrationCommand);
 $app['console']->registerCommand(new SilexStarter\Console\Command\CacheClearCommand);
 $app['console']->registerCommand(new SilexStarter\Console\Command\SilexStarterInitCommand);
+$app['console']->registerCommand(new SilexStarter\Console\Command\RouteDebugCommand);
 $app['console']->registerCommandDirectory($app['path.app'] . 'commands');
 
 /**

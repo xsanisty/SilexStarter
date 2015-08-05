@@ -18,4 +18,7 @@ return [
     'Sentry'    => 'SilexStarter\StaticProxy\Sentry',
     'Str'       => 'Illuminate\Support\Str',
     'Model'     => 'Illuminate\Database\Eloquent\Model',
+    'Controller'=> 'SilexStarter\Controller\Controller',
+    'ContainerAwareController' => 'SilexStarter\Controller\ContainerAwareController',
+    'DispatcherAwareController' => 'SilexStarter\Controller\DispatcherAwareController',
 ];

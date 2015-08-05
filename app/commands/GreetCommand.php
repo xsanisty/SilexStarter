@@ -16,15 +16,14 @@ class GreetCommand extends Command
             ->addArgument(
                 'name',
                 InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                'Whom do you want to greet?'
             )
             ->addOption(
-               'yell',
-               null,
-               InputOption::VALUE_NONE,
-               'If set, the task will yell in uppercase letters'
-            )
-        ;
+                'yell',
+                null,
+                InputOption::VALUE_NONE,
+                'If set, the task will yell in uppercase letters'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

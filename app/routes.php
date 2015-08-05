@@ -30,4 +30,3 @@
  *                                                      //method deleteResource will be accessible via DELETE /auto/resource
  *                                                      //method postComment willbe accessible via POST /auto/comment
  */
-Route::get('/', 'MainController:index');

@@ -34,24 +34,18 @@
         {
             "type" : "vcs",
             "url" : "https://github.com/xsanisty/SilexStarter-UserManager"
-        },
-        {
-            "type" : "vcs",
-            "url" : "git@bitbucket.org:xsanisty/leadregistermodule.git"
         }
     ],
 
     "require": {
-        "xsanisty/silex-starter-core" : "dev-develop",
-        "xsanisty/silex-starter-dashboard" : "dev-develop",
-        "xsanisty/silex-starter-datatable" : "dev-develop",
-        "xsanisty/silex-starter-user-manager" : "dev-develop",
-        "xsanisty/silex-starter-module-manager" : "dev-develop",
-        "xsanisty/lead-register-module" : "dev-master",
-        "cartalyst/sentinel": "2.0.*"
+        "xsanisty/silexstarter-core" : "dev-develop",
+        "xsanisty/silexstarter-dashboard" : "dev-develop",
+        "xsanisty/silexstarter-datatable" : "dev-develop",
+        "xsanisty/silexstarter-usermanager" : "dev-develop",
+        "xsanisty/silexstarter-modulemanager" : "dev-develop"
     },
     "require-dev": {
-        "silex/web-profiler" : "1.0.5",
+        "silex/web-profiler" : "~1.0",
         "filp/whoops" : "~1.0",
         "phpunit/phpunit" : "4.*",
         "symfony/var-dumper" : "*"

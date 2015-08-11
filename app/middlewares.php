@@ -7,13 +7,13 @@
  *     //do your action here
  * });
  *
- * App::after(function(Request $req, Response $resp){
+ * App::after(function(Request $req, Response $resp, Application $app){
  *     //do your action here
  * });
  *
  * or registering common middleware to be used in route
  *
- * App::middleware('middleware.name', function(Request $req, Response $resp, Application $app){
+ * App::middleware('middleware.name', function(Request $req, Application $app){
  *     //do your action here
  * });
  *

@@ -6,19 +6,19 @@ return [
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
-        'SilexStarter\Provider\ResponseBuilderServiceProvider',
         'SilexStarter\Provider\RouteBuilderServiceProvider',
         'SilexStarter\Provider\EloquentServiceProvider',
         'SilexStarter\Provider\SentryServiceProvider',
         'SilexStarter\Provider\FilesystemServiceProvider',
         'SilexStarter\Provider\AssetManagerServiceProvider',
-        'SilexStarter\Provider\StaticProxyServiceProvider',
         'SilexStarter\Provider\TwigServiceProvider',
-        'SilexStarter\Provider\MenuManagerServiceProvider',
+        'SilexStarter\Provider\StaticProxyServiceProvider',
         'SilexStarter\Provider\MigrationServiceProvider',
     ],
 
     'web' => [
+        'SilexStarter\Provider\MenuManagerServiceProvider',
+        'SilexStarter\Provider\ResponseBuilderServiceProvider',
     ],
 
     'web_dev' => [

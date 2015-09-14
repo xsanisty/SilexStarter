@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3e7e39cb1b7311b77f00f3716d997313",
+    "hash": "f3d9f47eba837e3950c28f7b91f80c8f",
     "packages": [
         {
             "name": "acclimate/container",
@@ -65,94 +65,6 @@
                 "service locator"
             ],
             "time": "2014-03-19 19:15:54"
-        },
-        {
-            "name": "cartalyst/sentinel",
-            "version": "v2.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cartalyst/sentinel.git",
-                "reference": "9bb1d61ea523744a8d46ad7290c36f459281155c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/sentinel/zipball/9bb1d61ea523744a8d46ad7290c36f459281155c",
-                "reference": "9bb1d61ea523744a8d46ad7290c36f459281155c",
-                "shasum": ""
-            },
-            "require": {
-                "cartalyst/support": "~1.0",
-                "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "illuminate/cookie": "~5.0",
-                "illuminate/database": "~5.0",
-                "illuminate/http": "~5.0",
-                "illuminate/session": "~5.0",
-                "ircmaxell/password-compat": "~1.0",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "illuminate/database": "By default, Sentinel utilizes the powerful Illuminate database layer.",
-                "illuminate/events": "To hook into various events across Sentinel, we recommend using Illuminate's event dispatcher.",
-                "ircmaxell/password-compat": "Default hashing uses PHP 5.5 password_* functions, with forward-compatible support.",
-                "symfony/http-foundation": "Required for native implementations."
-            },
-            "type": "library",
-            "extra": {
-                "component": "package",
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cartalyst\\Sentinel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Ben Corlett",
-                    "email": "ben.corlett@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Cartalyst LLC",
-                    "email": "help@cartalyst.com"
-                },
-                {
-                    "name": "Bruno Gaspar",
-                    "email": "bruno.gaspar@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Syme",
-                    "email": "dan.syme@cartalyst.com",
-                    "role": "Creator & Designer"
-                },
-                {
-                    "name": "Suhayb Wardany",
-                    "email": "su.wardany@cartalyst.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP 5.4+ Fully-featured Authentication & Authorization System",
-            "keywords": [
-                "auth",
-                "cartalyst",
-                "codeigniter",
-                "fuelphp",
-                "laravel",
-                "php",
-                "security"
-            ],
-            "time": "2015-07-21 12:00:09"
         },
         {
             "name": "cartalyst/sentry",
@@ -253,75 +165,6 @@
                 "security"
             ],
             "time": "2015-03-06 03:17:20"
-        },
-        {
-            "name": "cartalyst/support",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cartalyst/support.git",
-                "reference": "c90931d25e89734ba89875a769af6b2e050593a5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cartalyst/support/zipball/c90931d25e89734ba89875a769af6b2e050593a5",
-                "reference": "c90931d25e89734ba89875a769af6b2e050593a5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "illuminate/mail": "~4.1|~5.0",
-                "illuminate/validation": "~4.1|~5.0",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "component": "package",
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cartalyst\\Support\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Cartalyst LLC",
-                    "email": "help@cartalyst.com"
-                },
-                {
-                    "name": "Bruno Gaspar",
-                    "email": "bruno.gaspar@cartalyst.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Dan Syme",
-                    "email": "dan.syme@cartalyst.com",
-                    "role": "Project Lead"
-                },
-                {
-                    "name": "Suhayb Wardany",
-                    "email": "su.wardany@cartalyst.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Support helpers.",
-            "keywords": [
-                "cartalyst",
-                "helper",
-                "laravel",
-                "support"
-            ],
-            "time": "2015-06-24 13:00:53"
         },
         {
             "name": "container-interop/container-interop",
@@ -472,177 +315,6 @@
                 "string"
             ],
             "time": "2014-12-20 21:24:13"
-        },
-        {
-            "name": "guzzlehttp/guzzle",
-            "version": "6.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "a8dfeff00eb84616a17fea7a4d72af35e750410f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a8dfeff00eb84616a17fea7a4d72af35e750410f",
-                "reference": "a8dfeff00eb84616a17fea7a4d72af35e750410f",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/promises": "~1.0",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.0-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
-                "psr-4": {
-                    "GuzzleHttp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle is a PHP HTTP client library",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
-            ],
-            "time": "2015-07-04 20:09:24"
-        },
-        {
-            "name": "guzzlehttp/promises",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/promises.git",
-                "reference": "2ee5bc7f1a92efecc90da7f6711a53a7be26b5b7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/2ee5bc7f1a92efecc90da7f6711a53a7be26b5b7",
-                "reference": "2ee5bc7f1a92efecc90da7f6711a53a7be26b5b7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Promise\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Guzzle promises library",
-            "keywords": [
-                "promise"
-            ],
-            "time": "2015-06-24 16:16:25"
-        },
-        {
-            "name": "guzzlehttp/psr7",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "af0e1758de355eb113917ad79c3c0e3604bce4bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/af0e1758de355eb113917ad79c3c0e3604bce4bd",
-                "reference": "af0e1758de355eb113917ad79c3c0e3604bce4bd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "PSR-7 message implementation",
-            "keywords": [
-                "http",
-                "message",
-                "stream",
-                "uri"
-            ],
-            "time": "2015-06-24 19:55:15"
         },
         {
             "name": "illuminate/container",
@@ -1133,55 +805,6 @@
                 "dependency injection"
             ],
             "time": "2013-11-22 08:30:29"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2015-05-04 20:22:00"
         },
         {
             "name": "psr/log",
@@ -1794,16 +1417,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90"
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/edbeaf43b0a606cdaadc32a11d2673614a377b90",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
                 "shasum": ""
             },
             "require": {
@@ -1812,7 +1435,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.20-dev"
                 }
             },
             "autoload": {
@@ -1847,60 +1470,20 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-31 13:45:26"
+            "time": "2015-08-12 15:56:39"
         },
         {
-            "name": "xsanisty/lead-register-module",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git@bitbucket.org:xsanisty/leadregistermodule.git",
-                "reference": "b98efacce7c6b4c7a358ebbe8b1f6c6fb868912f"
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~6.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Xsanisty\\LeadRegister\\": [
-                        "src/",
-                        "tests/"
-                    ]
-                }
-            },
-            "license": [
-                "propietary"
-            ],
-            "authors": [
-                {
-                    "name": "Xsanisty Dev Team",
-                    "email": "developers@xsanisty.com"
-                },
-                {
-                    "name": "Ikhsan Agustian",
-                    "email": "ikhsan017@gmail.com"
-                },
-                {
-                    "name": "Ari Yulianto",
-                    "email": "sadhean@gmail.com"
-                }
-            ],
-            "description": "Main module for Get Lead app",
-            "time": "2015-08-01 09:13:50"
-        },
-        {
-            "name": "xsanisty/silex-starter-core",
+            "name": "xsanisty/silexstarter-core",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "08edf63a90e3a2492b638f9cb356e5ae2e1a2bda"
+                "reference": "03c7bca6dc36f6d7d452584cf4dfadc734953b95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/08edf63a90e3a2492b638f9cb356e5ae2e1a2bda",
-                "reference": "08edf63a90e3a2492b638f9cb356e5ae2e1a2bda",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/03c7bca6dc36f6d7d452584cf4dfadc734953b95",
+                "reference": "03c7bca6dc36f6d7d452584cf4dfadc734953b95",
                 "shasum": ""
             },
             "require": {
@@ -1946,20 +1529,20 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2015-08-03 11:14:18"
+            "time": "2015-08-12 07:12:19"
         },
         {
-            "name": "xsanisty/silex-starter-dashboard",
+            "name": "xsanisty/silexstarter-dashboard",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Dashboard.git",
-                "reference": "fbcbb2ca096ab458c40b5092f968464fee8de241"
+                "reference": "ca49eecc34fc4a453249e157e389138bc4ccf332"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Dashboard/zipball/fbcbb2ca096ab458c40b5092f968464fee8de241",
-                "reference": "fbcbb2ca096ab458c40b5092f968464fee8de241",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Dashboard/zipball/ca49eecc34fc4a453249e157e389138bc4ccf332",
+                "reference": "ca49eecc34fc4a453249e157e389138bc4ccf332",
                 "shasum": ""
             },
             "require": {
@@ -1991,20 +1574,20 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Dashboard/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Dashboard/issues"
             },
-            "time": "2015-07-30 01:39:13"
+            "time": "2015-08-15 04:22:00"
         },
         {
-            "name": "xsanisty/silex-starter-datatable",
+            "name": "xsanisty/silexstarter-datatable",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Datatable.git",
-                "reference": "f1c2d3f665f8fd5ede364ae5e3c1d0003f2f0d56"
+                "reference": "70d260acef39044f5f770abac515594699348fab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Datatable/zipball/f1c2d3f665f8fd5ede364ae5e3c1d0003f2f0d56",
-                "reference": "f1c2d3f665f8fd5ede364ae5e3c1d0003f2f0d56",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Datatable/zipball/70d260acef39044f5f770abac515594699348fab",
+                "reference": "70d260acef39044f5f770abac515594699348fab",
                 "shasum": ""
             },
             "require": {
@@ -2037,20 +1620,20 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Datatable/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Datatable/issues"
             },
-            "time": "2015-07-20 13:49:10"
+            "time": "2015-08-16 14:09:14"
         },
         {
-            "name": "xsanisty/silex-starter-module-manager",
+            "name": "xsanisty/silexstarter-modulemanager",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-ModuleManager.git",
-                "reference": "a75c2c60a11bf7e74e325a75b932a369a23c0611"
+                "reference": "67bd62e128e7536c9e8a2b58e4c29b39ac1333eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-ModuleManager/zipball/a75c2c60a11bf7e74e325a75b932a369a23c0611",
-                "reference": "a75c2c60a11bf7e74e325a75b932a369a23c0611",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-ModuleManager/zipball/67bd62e128e7536c9e8a2b58e4c29b39ac1333eb",
+                "reference": "67bd62e128e7536c9e8a2b58e4c29b39ac1333eb",
                 "shasum": ""
             },
             "type": "library",
@@ -2080,20 +1663,20 @@
                 "source": "https://github.com/xsanisty/SilexStarter-ModuleManager/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-ModuleManager/issues"
             },
-            "time": "2015-08-04 01:34:11"
+            "time": "2015-08-15 04:24:56"
         },
         {
-            "name": "xsanisty/silex-starter-user-manager",
+            "name": "xsanisty/silexstarter-usermanager",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-UserManager.git",
-                "reference": "492f89c24c077e2cffd4702ff2ca1215ef738022"
+                "reference": "cc82f476db87d3cc97b1b3e39e769688094ce438"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/492f89c24c077e2cffd4702ff2ca1215ef738022",
-                "reference": "492f89c24c077e2cffd4702ff2ca1215ef738022",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/cc82f476db87d3cc97b1b3e39e769688094ce438",
+                "reference": "cc82f476db87d3cc97b1b3e39e769688094ce438",
                 "shasum": ""
             },
             "type": "library",
@@ -2123,7 +1706,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-UserManager/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-UserManager/issues"
             },
-            "time": "2015-07-23 08:06:48"
+            "time": "2015-08-18 01:36:06"
         }
     ],
     "packages-dev": [
@@ -2290,16 +1873,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.4.1",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373"
+                "reference": "4745ded9307786b730d7a60df5cb5a6c43cf95f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
-                "reference": "3132b1f44c7bf2ec4c7eb2d3cb78fdeca760d373",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/4745ded9307786b730d7a60df5cb5a6c43cf95f7",
+                "reference": "4745ded9307786b730d7a60df5cb5a6c43cf95f7",
                 "shasum": ""
             },
             "require": {
@@ -2346,7 +1929,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2015-04-27 22:15:08"
+            "time": "2015-08-13 10:07:40"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2541,16 +2124,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.3",
+            "version": "1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "7a9b0969488c3c54fd62b4d504b3ec758fd005d9"
+                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
-                "reference": "7a9b0969488c3c54fd62b4d504b3ec758fd005d9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
+                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
                 "shasum": ""
             },
             "require": {
@@ -2586,20 +2169,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-06-19 03:43:16"
+            "time": "2015-08-16 08:51:00"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.7.7",
+            "version": "4.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9b97f9d807b862c2de2a36e86690000801c85724"
+                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9b97f9d807b862c2de2a36e86690000801c85724",
-                "reference": "9b97f9d807b862c2de2a36e86690000801c85724",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
+                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
                 "shasum": ""
             },
             "require": {
@@ -2609,7 +2192,7 @@
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "php": ">=5.3.3",
-                "phpspec/prophecy": "~1.3,>=1.3.1",
+                "phpspec/prophecy": "^1.3.1",
                 "phpunit/php-code-coverage": "~2.1",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
@@ -2617,7 +2200,7 @@
                 "phpunit/phpunit-mock-objects": "~2.3",
                 "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
-                "sebastian/environment": "~1.2",
+                "sebastian/environment": "~1.3",
                 "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
                 "sebastian/version": "~1.0",
@@ -2632,7 +2215,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.7.x-dev"
+                    "dev-master": "4.8.x-dev"
                 }
             },
             "autoload": {
@@ -2658,7 +2241,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-07-13 11:28:34"
+            "time": "2015-08-15 04:21:23"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3089,21 +2672,21 @@
         },
         {
             "name": "silex/web-profiler",
-            "version": "v1.0.5",
+            "version": "v1.0.7",
             "target-dir": "Silex/Provider",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex-WebProfiler.git",
-                "reference": "f0797151b766e41ab953e81bc66eb9d9114800f5"
+                "reference": "2afc6ba14f345d0a2ef70fe656e8a59ff52beb49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/f0797151b766e41ab953e81bc66eb9d9114800f5",
-                "reference": "f0797151b766e41ab953e81bc66eb9d9114800f5",
+                "url": "https://api.github.com/repos/silexphp/Silex-WebProfiler/zipball/2afc6ba14f345d0a2ef70fe656e8a59ff52beb49",
+                "reference": "2afc6ba14f345d0a2ef70fe656e8a59ff52beb49",
                 "shasum": ""
             },
             "require": {
-                "silex/silex": "~1.0",
+                "silex/silex": "~1.1",
                 "symfony/stopwatch": "~2.2",
                 "symfony/web-profiler-bundle": "~2.4"
             },
@@ -3130,7 +2713,7 @@
             ],
             "description": "A WebProfiler for Silex",
             "homepage": "http://silex.sensiolabs.org/",
-            "time": "2015-03-27 13:32:13"
+            "time": "2015-06-04 14:27:33"
         },
         {
             "name": "symfony/stopwatch",
@@ -3427,12 +3010,11 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "xsanisty/silex-starter-core": 20,
-        "xsanisty/silex-starter-dashboard": 20,
-        "xsanisty/silex-starter-datatable": 20,
-        "xsanisty/silex-starter-user-manager": 20,
-        "xsanisty/silex-starter-module-manager": 20,
-        "xsanisty/lead-register-module": 20
+        "xsanisty/silexstarter-core": 20,
+        "xsanisty/silexstarter-dashboard": 20,
+        "xsanisty/silexstarter-datatable": 20,
+        "xsanisty/silexstarter-usermanager": 20,
+        "xsanisty/silexstarter-modulemanager": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -1,0 +1,15 @@
+{% set template = config.get('@silexstarter-dashboard.config.template') %}
+{% extends '@silexstarter-dashboard/'~ template ~'/index.twig' %}
+{% block topbar %}
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include '@silexstarter-doc/sidebar.twig' %}
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+    {% include '@silexstarter-doc/get-started/overview.twig' %}
+{% endblock %}

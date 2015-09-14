@@ -1,0 +1,4 @@
+<?php
+
+$app = require 'app/bootstrap/console.php';
+$app->run();

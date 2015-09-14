@@ -1,0 +1,85 @@
+{
+    "name": "xsanisty/silexstarter",
+    "description": "A starter application based on Silex framework",
+    "license": "MIT",
+    "keywords": ["framework", "silex", "mvc", "eloquent", "twig", "silex starter", "silex dashboard"],
+    "authors": [
+        {
+            "name" : "Ikhsan Agustian",
+            "email" : "ikhsan017@gmail.com"
+        },
+        {
+            "name" : "Xsanisty Dev Team",
+            "email" : "developers@xsanisty.com"
+        }
+    ],
+
+    "repositories" : [
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-Core"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-Dashboard"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-Datatable"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-ModuleManager"
+        },
+        {
+            "type" : "vcs",
+            "url" : "https://github.com/xsanisty/SilexStarter-UserManager"
+        }
+    ],
+
+    "require": {
+        "xsanisty/silexstarter-core" : "dev-develop",
+        "xsanisty/silexstarter-dashboard" : "dev-develop",
+        "xsanisty/silexstarter-datatable" : "dev-develop",
+        "xsanisty/silexstarter-usermanager" : "dev-develop",
+        "xsanisty/silexstarter-modulemanager" : "dev-develop"
+    },
+    "require-dev": {
+        "silex/web-profiler" : "~1.0",
+        "filp/whoops" : "~1.0",
+        "phpunit/phpunit" : "4.*",
+        "symfony/var-dumper" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "" : [
+                "app/commands/",
+                "app/controllers/",
+                "app/models/",
+                "app/middlewares/",
+                "app/modules/",
+                "app/repositories/",
+                "app/services",
+                "app/tests/app",
+                "app/tests"
+            ]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "chmod -R 777 app/storage",
+            "php xpress silexstarter:init"
+        ],
+        "post-update-cmd": [
+            "php xpress cache:clear"
+        ],
+        "post-create-project-cmd": [
+            "chmod -R 777 app/storage",
+            "php xpress silexstarter:init"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}

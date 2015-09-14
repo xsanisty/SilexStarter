@@ -5,7 +5,7 @@
  *
  * Sample general route
  *
- * Route::get('/', 'SomeNamespace\OtherController:index');
+ * Route::get('/', 'SomeNamespace\OtherController:index', $options);
  *
  * Sample group route
  *

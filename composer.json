@@ -67,15 +67,14 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "chmod -R 777 app/storage",
-            "php xpress silexstarter:init"
+            "chmod -R 777 app/storage"
         ],
         "post-update-cmd": [
             "php xpress cache:clear"
         ],
         "post-create-project-cmd": [
             "chmod -R 777 app/storage",
-            "php xpress silexstarter:init"
+            "php xpress module:publish-asset"
         ]
     },
     "config": {

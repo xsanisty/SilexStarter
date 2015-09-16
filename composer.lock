@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f3d9f47eba837e3950c28f7b91f80c8f",
+    "hash": "ac5e436237d8d4c62556594981fe1432",
+    "content-hash": "be0f99062c375e3a54702d813e096355",
     "packages": [
         {
             "name": "acclimate/container",
@@ -611,16 +612,16 @@
         },
         {
             "name": "livecontrol/eloquent-datatable",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LiveControl/EloquentDataTable.git",
-                "reference": "901539d3a626100b3374de03f47e69bae7a0fea9"
+                "reference": "49488446f3116ebf725447bb805bb76c28109d1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LiveControl/EloquentDataTable/zipball/901539d3a626100b3374de03f47e69bae7a0fea9",
-                "reference": "901539d3a626100b3374de03f47e69bae7a0fea9",
+                "url": "https://api.github.com/repos/LiveControl/EloquentDataTable/zipball/49488446f3116ebf725447bb805bb76c28109d1b",
+                "reference": "49488446f3116ebf725447bb805bb76c28109d1b",
                 "shasum": ""
             },
             "require": {
@@ -652,7 +653,7 @@
                 "eloquent",
                 "laravel"
             ],
-            "time": "2015-04-17 07:08:45"
+            "time": "2015-09-15 11:39:39"
         },
         {
             "name": "nesbot/carbon",
@@ -846,16 +847,16 @@
         },
         {
             "name": "silex/silex",
-            "version": "v1.3.3",
+            "version": "v1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "13a5c8a595e37e52c9567a51aae157a9f7ac5d26"
+                "reference": "d6de62716fcda76084f3015165125f30b1563517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/13a5c8a595e37e52c9567a51aae157a9f7ac5d26",
-                "reference": "13a5c8a595e37e52c9567a51aae157a9f7ac5d26",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/d6de62716fcda76084f3015165125f30b1563517",
+                "reference": "d6de62716fcda76084f3015165125f30b1563517",
                 "shasum": ""
             },
             "require": {
@@ -919,19 +920,19 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2015-09-08 08:04:26"
+            "time": "2015-09-15 06:53:42"
         },
         {
             "name": "symfony/console",
             "version": "v2.7.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:symfony/Console.git",
+                "url": "https://github.com/symfony/Console.git",
                 "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/f1f7376766394f409b9b33a57a5675a52f8aad93",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "shasum": ""
             },
@@ -1407,16 +1408,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.22.0",
+            "version": "v1.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "204a6c94907c2c2225322c267e09adbb2b1c04fd"
+                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/204a6c94907c2c2225322c267e09adbb2b1c04fd",
-                "reference": "204a6c94907c2c2225322c267e09adbb2b1c04fd",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/b7fc2469fa009897871fb95b68237286fc54a5ad",
+                "reference": "b7fc2469fa009897871fb95b68237286fc54a5ad",
                 "shasum": ""
             },
             "require": {
@@ -1464,7 +1465,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-09-13 17:12:38"
+            "time": "2015-09-15 06:50:16"
         },
         {
             "name": "xsanisty/silexstarter-core",
@@ -1472,12 +1473,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "1af4ce1a0a10930a7d5d873f7aa55442a6ded569"
+                "reference": "f493af02bb4b57e3aae61fcd70711a4dbd5a4a85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/1af4ce1a0a10930a7d5d873f7aa55442a6ded569",
-                "reference": "1af4ce1a0a10930a7d5d873f7aa55442a6ded569",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/f493af02bb4b57e3aae61fcd70711a4dbd5a4a85",
+                "reference": "f493af02bb4b57e3aae61fcd70711a4dbd5a4a85",
                 "shasum": ""
             },
             "require": {
@@ -1523,7 +1524,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2015-09-08 11:15:03"
+            "time": "2015-09-16 10:12:05"
         },
         {
             "name": "xsanisty/silexstarter-dashboard",
@@ -2118,16 +2119,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.6",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b"
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
-                "reference": "3ab72c62e550370a6cd5dc873e1a04ab57562f5b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
                 "shasum": ""
             },
             "require": {
@@ -2163,7 +2164,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-08-16 08:51:00"
+            "time": "2015-09-15 10:49:45"
         },
         {
             "name": "phpunit/phpunit",

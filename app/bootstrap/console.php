@@ -27,11 +27,12 @@ $app->boot();
 /**
  * Search for command and register it
  */
+
+$appReflection  = new ReflectionClass($app);
+$commandPath    = dirname($appReflection->getFileName()) . '/Console/Command';
+
 $app['console']->setDispatcher($app['dispatcher']);
-$app['console']->registerCommand(new SilexStarter\Console\Command\MigrationCommand);
-$app['console']->registerCommand(new SilexStarter\Console\Command\CacheClearCommand);
-$app['console']->registerCommand(new SilexStarter\Console\Command\SilexStarterInitCommand);
-$app['console']->registerCommand(new SilexStarter\Console\Command\RouteDebugCommand);
+$app['console']->registerCommandDirectory($commandPath, 'SilexStarter\Console\Command');
 $app['console']->registerCommandDirectory($app['path.app'] . 'commands');
 
 /**

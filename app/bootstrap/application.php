@@ -38,12 +38,12 @@ if (!$isConsole && $app['environment'] == 'development') {
 }
 
 /* Load module provider if enabled */
-if ($app['enable_module']) {
+if ($app['enable_module'] && !isset($app['optimized_module'])) {
     $app['module']->registerModules($app['config']['modules']);
 }
 
 /* Register all controller as service if enabled */
-if ($app['controller_as_service']) {
+if ($app['controller_as_service'] && !isset($app['optimized_module'])) {
     $app->registerControllerDirectory(APP_PATH . '/controllers');
 }
 
@@ -56,7 +56,7 @@ if ($app['enable_static_proxy']) {
 }
 
 /* Include the middlewares, load module middleware first to enable override */
-if ($app['enable_module']) {
+if ($app['enable_module'] && !isset($app['optimized_module'])) {
     foreach ($app['module']->getMiddlewareFiles() as $middleware) {
         require $middleware;
     }
@@ -64,7 +64,7 @@ if ($app['enable_module']) {
 require APP_PATH . 'middlewares.php';
 
 /* Include the routes definition, load module route first to enable override */
-if ($app['enable_module']) {
+if ($app['enable_module'] && !isset($app['optimized_module'])) {
     foreach ($app['module']->getRouteFiles() as $route) {
         require $route;
     }

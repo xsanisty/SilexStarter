@@ -13,7 +13,7 @@ class CreateUserTable extends Migration
             'users',
             function ($table) {
                 $table->increments('id');
-                $table->int('company_id');
+                $table->integer('company_id');
                 $table->string('email');
                 $table->string('password');
                 $table->string('profile_pic');

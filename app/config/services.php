@@ -14,6 +14,7 @@ return [
         'SilexStarter\Provider\TwigServiceProvider',
         'SilexStarter\Provider\StaticProxyServiceProvider',
         'SilexStarter\Provider\MigrationServiceProvider',
+        'SilexStarter\Provider\RequestHelperServiceProvider',
     ],
 
     'web' => [

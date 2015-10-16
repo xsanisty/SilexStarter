@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 $app = require 'app/bootstrap/console.php';

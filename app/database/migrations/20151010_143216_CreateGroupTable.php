@@ -14,6 +14,7 @@ class CreateGroupTable extends Migration
             function ($table) {
                 $table->increments('id');
                 $table->string('name');
+                $table->text('description');
                 $table->text('permissions')->nullable();
                 $table->timestamps();
 

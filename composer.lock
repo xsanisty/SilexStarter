@@ -1473,12 +1473,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "6d4ab74e23b32d199f8483f82358d06e3a3bb356"
+                "reference": "b8312d183e1a0c4f82243c57944e84ceb0d2d720"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/6d4ab74e23b32d199f8483f82358d06e3a3bb356",
-                "reference": "6d4ab74e23b32d199f8483f82358d06e3a3bb356",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/b8312d183e1a0c4f82243c57944e84ceb0d2d720",
+                "reference": "b8312d183e1a0c4f82243c57944e84ceb0d2d720",
                 "shasum": ""
             },
             "require": {
@@ -1524,7 +1524,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2015-10-20 11:13:12"
+            "time": "2015-10-22 11:57:10"
         },
         {
             "name": "xsanisty/silexstarter-dashboard",
@@ -2168,16 +2168,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.14",
+            "version": "4.8.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b4900675926860bef091644849305399b986efa2"
+                "reference": "be8f7b9eacf8243940f8412f8b4a9a434c73dd7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b4900675926860bef091644849305399b986efa2",
-                "reference": "b4900675926860bef091644849305399b986efa2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be8f7b9eacf8243940f8412f8b4a9a434c73dd7b",
+                "reference": "be8f7b9eacf8243940f8412f8b4a9a434c73dd7b",
                 "shasum": ""
             },
             "require": {
@@ -2236,7 +2236,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-17 15:03:30"
+            "time": "2015-10-22 09:05:37"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

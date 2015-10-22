@@ -15,6 +15,19 @@ and some other third party and built in components.
 SilexStarter aim to help building simple application faster, it built with MVC and modular approach in mind,
 and comes with some basic admin module, including user manager, and module manager.
 
+## Installation
+For now, the installable branch is only develop branch, you can easily install it using composer by using following command
+
+```
+composer create-project xsanisty/silexstarter target_dir dev-develop -s dev
+```
+
+once composer install is completed, you can initialize the app using following command
+```
+$cd target_dir
+$./xpress app:init
+```
+
 Module can be developed directly inside the ```app/modules``` directory and create module on its own namespace
 or build it as separate composer package, module can be enabled or disabled by registering it in ```app/config/modules.php```
 

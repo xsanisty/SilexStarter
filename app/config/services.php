@@ -2,7 +2,8 @@
 
 return [
     'common' => [
-        'Silex\Provider\SessionServiceProvider',
+        /** Set session.storage.handler option when you use custom session handler */
+        'Silex\Provider\SessionServiceProvider' => ['session.storage.handler' => null],
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',

@@ -17,6 +17,10 @@
     "repositories" : [
         {
             "type" : "vcs",
+            "url" : "https://github.com/xsanisty/EloquentDataTable"
+        },
+        {
+            "type" : "vcs",
             "url" : "https://github.com/xsanisty/SilexStarter-Core"
         },
         {

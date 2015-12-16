@@ -1,0 +1,53 @@
+build:
+  type: php
+  version: 5.6
+  stability: production
+  exec:
+    - "composer install --no-interaction --prefer-source"
+  lib_dir: vendor
+
+web1:
+  name: xsanisty-silex-starter
+  type: php
+  version: 5.6
+  stability: production
+  network_dirs:
+    storage1:
+      - app/storage/meta
+      - app/storage/database
+      - app/storage/view
+      - public/assets
+  nonpersistent_writable_dirs:
+    - app/storage/cache
+    - app/storage/profiler
+  httpd_document_root: public
+  php_extensions:
+    - mbstring
+    - mcrypt
+    - pdo_mysql
+    - redis
+    - zip
+    - xcache
+    - json
+  php_session_save_handler: redis
+  php_session_save_path: "tcp://${CACHE1_HOST}:${CACHE1_PORT}"
+  before_deploy:
+    - "php xpress migration:migrate"
+    - "php xpress cache:clear"
+    - "php xpress module:publish-asset"
+    - "php xpress user:create -l admin@admin.com -p password -fn Website -ls Administrator -a"
+
+cache1:
+  type: redis
+  topology: single
+  version: 3.0
+
+database1:
+  type: mysql
+  topology: single
+  version: 5.6
+
+storage1:
+  name: filestore
+  type: nfs
+  topology: single

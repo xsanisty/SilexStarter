@@ -1804,12 +1804,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-UserManager.git",
-                "reference": "35a067000f6e30a77b6c468c3d296167ba6d5a4d"
+                "reference": "ada9a2fe7749a5b951f5de021a62ade68c0bb831"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/35a067000f6e30a77b6c468c3d296167ba6d5a4d",
-                "reference": "35a067000f6e30a77b6c468c3d296167ba6d5a4d",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/ada9a2fe7749a5b951f5de021a62ade68c0bb831",
+                "reference": "ada9a2fe7749a5b951f5de021a62ade68c0bb831",
                 "shasum": ""
             },
             "type": "library",
@@ -1839,7 +1839,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-UserManager/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-UserManager/issues"
             },
-            "time": "2015-12-15 23:16:09"
+            "time": "2015-12-16 00:58:35"
         }
     ],
     "packages-dev": [

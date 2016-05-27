@@ -50,7 +50,7 @@
     },
     "require-dev": {
         "silex/web-profiler" : "~1.0",
-        "filp/whoops" : "~1.0",
+        "filp/whoops" : "~2.0",
         "phpunit/phpunit" : "4.*",
         "symfony/var-dumper" : "*"
     },

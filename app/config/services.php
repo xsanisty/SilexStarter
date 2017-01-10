@@ -19,7 +19,7 @@ return [
     ],
 
     'web' => [
-        'SilexStarter\Provider\MenuManagerServiceProvider',
+        'Xsanisty\Admin\Provider\MenuManagerServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
     ],
 

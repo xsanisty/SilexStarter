@@ -1,7 +1,7 @@
 <?php
 define('CONSOLE', true);
 
-require 'bootstrap.php';
+require_once 'bootstrap.php';
 
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Debug\ErrorHandler;
@@ -20,7 +20,9 @@ $errorHandler->setExceptionHandler(
     }
 );
 
-$app = require 'application.php';
+$app = require_once 'application.php';
+$app['config']['twig.options.cache'] = $app['path.app'] . 'storage/console';
+
 $app->registerServices($app['config']['services.console']);
 $app->boot();
 
@@ -33,7 +35,7 @@ $commandPath    = dirname($appReflection->getFileName()) . '/Console/Command';
 
 $app['console']->setDispatcher($app['dispatcher']);
 $app['console']->registerCommandDirectory($commandPath, 'SilexStarter\Console\Command');
-$app['console']->registerCommandDirectory($app['path.app'] . 'commands');
+$app['console']->registerCommandDirectory($app['path.root'] . 'src/App/Command', 'App\Command');
 
 /**
  * Dispatch console.init event to register command previously registered in module manager

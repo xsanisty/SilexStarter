@@ -37,6 +37,8 @@ return [
      * dependency at the constructor level. Maybe we need some cache mechanism to improvie this?
      *
      * When disabled, it will fallback into default silex approach using the controller provider / closure callback
+     *
+     * running xpress app:optimize will create single service provider that register all available controller as a service
      */
     'controller_as_service' => true,
 
@@ -62,9 +64,10 @@ return [
     /*
      * Path information
      */
+    'path.app'              => APP_PATH,
+    'path.src'              => SRC_PATH,
     'path.root'             => ROOT_PATH,
     'path.vendor'           => VENDOR_PATH,
-    'path.app'              => APP_PATH,
     'path.public'           => PUBLIC_PATH,
     'path.module'           => MODULE_PATH,
 ];

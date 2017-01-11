@@ -1,9 +1,8 @@
 <?php
 
+require_once 'bootstrap.php';
+
 $isConsole = defined('CONSOLE');
-if (!$isConsole) {
-    require 'bootstrap.php';
-}
 
 use Xstatic\ProxyManager;
 use SilexStarter\SilexStarter;
@@ -44,7 +43,7 @@ if ($app['enable_module']) {
 
 /* Register all controller as service if enabled */
 if ($app['controller_as_service'] && !isset($app['optimized_app'])) {
-    $app->registerControllerDirectory(APP_PATH . '/controllers');
+    $app->registerControllerDirectory(ROOT_PATH . '/src/App/Controller');
 }
 
 /* Register Static Proxy if enabled */

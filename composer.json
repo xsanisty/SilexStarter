@@ -20,24 +20,24 @@
             "url" : "https://github.com/xsanisty/EloquentDataTable"
         },
         {
-            "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-Core"
+            "type" : "path",
+            "url" : "/htdocs/www/github/SilexStarter-Core"
         },
         {
-            "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-Dashboard"
+            "type" : "path",
+            "url" : "/htdocs/www/github/SilexStarter-Dashboard"
         },
         {
-            "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-Datatable"
+            "type" : "path",
+            "url" : "/htdocs/www/github/SilexStarter-Datatable"
         },
         {
-            "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-ModuleManager"
+            "type" : "path",
+            "url" : "/htdocs/www/github/SilexStarter-ModuleManager"
         },
         {
-            "type" : "vcs",
-            "url" : "https://github.com/xsanisty/SilexStarter-UserManager"
+            "type" : "path",
+            "url" : "/htdocs/www/github/SilexStarter-UserManager"
         }
     ],
 

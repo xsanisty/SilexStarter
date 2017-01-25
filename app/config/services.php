@@ -24,7 +24,7 @@ return [
     ],
 
     'web_dev' => [
-        'SilexStarter\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH.'storage/profiler'],
+        'SilexStarter\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH . 'storage/profiler'],
         'SilexStarter\Provider\WhoopsServiceProvider'
     ],
 

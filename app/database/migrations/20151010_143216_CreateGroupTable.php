@@ -16,7 +16,7 @@ class CreateGroupTable extends Migration
                 $table->string('name');
                 $table->text('description')->nullable();
                 $table->text('permissions')->nullable();
-                $table->timestamps();
+                $table->nullableTimestamps();
 
                 // We'll need to ensure that MySQL uses the InnoDB engine to
                 // support the indexes, other engines aren't affected.

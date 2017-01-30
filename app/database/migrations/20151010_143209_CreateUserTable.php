@@ -13,10 +13,10 @@ class CreateUserTable extends Migration
             'users',
             function ($table) {
                 $table->increments('id');
-                $table->integer('company_id');
+                $table->integer('company_id')->default(0);
                 $table->string('email');
                 $table->string('password');
-                $table->string('profile_pic');
+                $table->string('profile_pic')->default('');
                 $table->text('permissions')->nullable();
                 $table->boolean('activated')->default(0);
                 $table->string('activation_code')->nullable();
@@ -26,7 +26,7 @@ class CreateUserTable extends Migration
                 $table->string('reset_password_code')->nullable();
                 $table->string('first_name')->nullable();
                 $table->string('last_name')->nullable();
-                $table->timestamps();
+                $table->nullableTimestamps();
 
                 // We'll need to ensure that MySQL uses the InnoDB engine to
                 // support the indexes, other engines aren't affected.

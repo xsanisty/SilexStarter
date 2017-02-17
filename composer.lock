@@ -1833,12 +1833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "3db0409ebcd4e681a2d26ad6feb9e5d8c36beabf"
+                "reference": "6d2dc85aef7a02c1c9f3de4041a85fa9f412588d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/3db0409ebcd4e681a2d26ad6feb9e5d8c36beabf",
-                "reference": "3db0409ebcd4e681a2d26ad6feb9e5d8c36beabf",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/6d2dc85aef7a02c1c9f3de4041a85fa9f412588d",
+                "reference": "6d2dc85aef7a02c1c9f3de4041a85fa9f412588d",
                 "shasum": ""
             },
             "require": {
@@ -1891,7 +1891,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2017-02-16 12:41:39"
+            "time": "2017-02-17 13:26:31"
         },
         {
             "name": "xsanisty/silexstarter-dashboard",

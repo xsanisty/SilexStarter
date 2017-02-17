@@ -2,7 +2,8 @@
 
 return [
     'common' => [
-        'Silex\Provider\SessionServiceProvider',
+        /** Set session.storage.handler option when you use custom session handler */
+        'Silex\Provider\SessionServiceProvider' => ['session.storage.handler' => null],
         'Silex\Provider\ServiceControllerServiceProvider',
         'Silex\Provider\UrlGeneratorServiceProvider',
         'SilexStarter\Provider\ModuleServiceProvider',
@@ -18,12 +19,12 @@ return [
     ],
 
     'web' => [
-        'SilexStarter\Provider\MenuManagerServiceProvider',
+        'Xsanisty\Admin\Provider\MenuManagerServiceProvider',
         'SilexStarter\Provider\ResponseBuilderServiceProvider',
     ],
 
     'web_dev' => [
-        'SilexStarter\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH.'storage/profiler'],
+        'SilexStarter\Provider\WebProfilerServiceProvider' => ['profiler.cache_dir' => APP_PATH . 'storage/profiler'],
         'SilexStarter\Provider\WhoopsServiceProvider'
     ],
 

@@ -33,8 +33,8 @@ web1:
   php_session_save_path: "tcp://${CACHE1_HOST}:${CACHE1_PORT}"
   before_deploy:
     - "php xpress migration:migrate"
-    - "php xpress cache:clear"
     - "php xpress module:publish-asset"
+    - "php xpress user:create -e admin@admin.com -p password -f Website -l Administrator -a"
 
 cache1:
   type: redis

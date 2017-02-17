@@ -7,6 +7,8 @@
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/a30a66f9-8110-40c5-8a35-f3c1697dde55/mini.png)]
 (https://insight.sensiolabs.com/projects/a30a66f9-8110-40c5-8a35-f3c1697dde55)
 
+![screenshot](https://github.com/xsanisty/SilexStarter/blob/develop/screenshot.png)
+
 
 # SilexStarter
 
@@ -202,9 +204,6 @@ class Post extends Model{
 
 ### Module Provider
 ```file: app/modules/**/ModuleProvider.php```
-
-### Module Installer
-```file: app/modules/**/ModuleInstaller.php```
 
 ## Menu
 

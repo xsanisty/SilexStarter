@@ -17,6 +17,10 @@
     "repositories" : [
         {
             "type" : "vcs",
+            "url" : "https://github.com/xsanisty/EloquentDataTable"
+        },
+        {
+            "type" : "vcs",
             "url" : "https://github.com/xsanisty/SilexStarter-Core"
         },
         {
@@ -46,22 +50,16 @@
     },
     "require-dev": {
         "silex/web-profiler" : "~1.0",
-        "filp/whoops" : "~1.0",
+        "filp/whoops" : "~2.0",
         "phpunit/phpunit" : "4.*",
         "symfony/var-dumper" : "*"
     },
     "autoload": {
         "psr-4": {
             "" : [
-                "app/commands/",
-                "app/controllers/",
-                "app/models/",
-                "app/middlewares/",
                 "app/modules/",
-                "app/repositories/",
-                "app/services",
-                "app/tests/app",
-                "app/tests"
+                "tests/",
+                "src"
             ]
         }
     },

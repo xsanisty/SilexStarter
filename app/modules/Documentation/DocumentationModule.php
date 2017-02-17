@@ -53,6 +53,28 @@ class DocumentationModule implements ModuleProviderInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPermissions()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function install()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function uninstall()
+    {
+    }
+
     public function register()
     {
     }

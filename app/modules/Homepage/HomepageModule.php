@@ -19,6 +19,16 @@ class HomepageModule implements ModuleProviderInterface
         $this->app = $app;
     }
 
+    public function getModuleIdentifier()
+    {
+        return 'silexstarter-homepage';
+    }
+
+    public function getRequiredModules()
+    {
+        return [];
+    }
+
     public function getInfo()
     {
         return new ModuleInfo(
@@ -29,16 +39,6 @@ class HomepageModule implements ModuleProviderInterface
                 'repository'    => 'https://github.com/xsanisty/SilexStarter',
             ]
         );
-    }
-
-    public function getModuleIdentifier()
-    {
-        return 'silexstarter-homepage';
-    }
-
-    public function getRequiredModules()
-    {
-        return [];
     }
 
     public function getResources()
@@ -53,10 +53,38 @@ class HomepageModule implements ModuleProviderInterface
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredPermissions()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function install()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function uninstall()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function register()
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function boot()
     {
     }

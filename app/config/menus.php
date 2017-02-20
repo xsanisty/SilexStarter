@@ -1,5 +1,6 @@
 <?php 
 
 return [
-    "admin_sidebar" => []
+    "admin_sidebar" => [
+    ]
 ];

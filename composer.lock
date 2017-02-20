@@ -1833,12 +1833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Core.git",
-                "reference": "6d2dc85aef7a02c1c9f3de4041a85fa9f412588d"
+                "reference": "5d801195a36912b474183ae76061919f72b8dc13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/6d2dc85aef7a02c1c9f3de4041a85fa9f412588d",
-                "reference": "6d2dc85aef7a02c1c9f3de4041a85fa9f412588d",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Core/zipball/5d801195a36912b474183ae76061919f72b8dc13",
+                "reference": "5d801195a36912b474183ae76061919f72b8dc13",
                 "shasum": ""
             },
             "require": {
@@ -1891,7 +1891,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Core/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Core/issues"
             },
-            "time": "2017-02-17 13:26:31"
+            "time": "2017-02-20 02:45:08"
         },
         {
             "name": "xsanisty/silexstarter-dashboard",
@@ -1899,12 +1899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-Dashboard.git",
-                "reference": "3ddf0944f58c1d7966d7a431c1040dcb0b496af3"
+                "reference": "05ef693387175d0a4074b9d282b5e7717f3e6b46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Dashboard/zipball/3ddf0944f58c1d7966d7a431c1040dcb0b496af3",
-                "reference": "3ddf0944f58c1d7966d7a431c1040dcb0b496af3",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-Dashboard/zipball/05ef693387175d0a4074b9d282b5e7717f3e6b46",
+                "reference": "05ef693387175d0a4074b9d282b5e7717f3e6b46",
                 "shasum": ""
             },
             "require": {
@@ -1936,7 +1936,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-Dashboard/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-Dashboard/issues"
             },
-            "time": "2017-02-17 03:58:51"
+            "time": "2017-02-20 02:35:50"
         },
         {
             "name": "xsanisty/silexstarter-datatable",
@@ -1990,12 +1990,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-ModuleManager.git",
-                "reference": "25c89210092da68b24d2555bfc686bc98b69b3df"
+                "reference": "1a2113a0200a8b8552b32cd18635da23b5ce412c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-ModuleManager/zipball/25c89210092da68b24d2555bfc686bc98b69b3df",
-                "reference": "25c89210092da68b24d2555bfc686bc98b69b3df",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-ModuleManager/zipball/1a2113a0200a8b8552b32cd18635da23b5ce412c",
+                "reference": "1a2113a0200a8b8552b32cd18635da23b5ce412c",
                 "shasum": ""
             },
             "type": "library",
@@ -2025,7 +2025,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-ModuleManager/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-ModuleManager/issues"
             },
-            "time": "2017-02-17 04:00:57"
+            "time": "2017-02-20 02:36:19"
         },
         {
             "name": "xsanisty/silexstarter-usermanager",
@@ -2033,12 +2033,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/xsanisty/SilexStarter-UserManager.git",
-                "reference": "a08cd3cceef1bcc3fce1a2b2d0de8a4d4a19ef9f"
+                "reference": "5971a40de6fd38d19b573e63a5c904a3968cf3d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/a08cd3cceef1bcc3fce1a2b2d0de8a4d4a19ef9f",
-                "reference": "a08cd3cceef1bcc3fce1a2b2d0de8a4d4a19ef9f",
+                "url": "https://api.github.com/repos/xsanisty/SilexStarter-UserManager/zipball/5971a40de6fd38d19b573e63a5c904a3968cf3d2",
+                "reference": "5971a40de6fd38d19b573e63a5c904a3968cf3d2",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                 "source": "https://github.com/xsanisty/SilexStarter-UserManager/tree/develop",
                 "issues": "https://github.com/xsanisty/SilexStarter-UserManager/issues"
             },
-            "time": "2017-02-17 04:02:33"
+            "time": "2017-02-20 08:00:45"
         }
     ],
     "packages-dev": [
@@ -2131,16 +2131,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c"
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/2abce9d956589122c6443d6265f01cf7e9388e3c",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/92bdc6800ac6e233c9e161a1768e082389a73530",
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530",
                 "shasum": ""
             },
             "require": {
@@ -2187,7 +2187,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-12-26 16:13:31"
+            "time": "2017-02-18 14:22:27"
         },
         {
             "name": "phpdocumentor/reflection-common",

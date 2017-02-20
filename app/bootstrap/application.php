@@ -43,7 +43,7 @@ if ($app['enable_module']) {
 
 /* Register all controller as service if enabled */
 if ($app['controller_as_service'] && !isset($app['optimized_app'])) {
-    $app->registerControllerDirectory(ROOT_PATH . '/src/App/Controller');
+    $app->registerControllerDirectory(ROOT_PATH . 'src/App/Controller', 'App\Controller');
 }
 
 /* Register Static Proxy if enabled */
